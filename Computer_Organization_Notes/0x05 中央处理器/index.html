@@ -1,0 +1,2368 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
+      
+      
+        <link rel="next" href="../0x06%20%E6%80%BB%E7%BA%BF/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>考研笔记-计算机组成原理：0x05 中央处理器 - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              考研笔记-计算机组成原理：0x05 中央处理器
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x05 中央处理器
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x05 中央处理器
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-cpu" class="md-nav__link">
+    5.1 CPU的功能和基本结构
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 CPU的功能和基本结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu" class="md-nav__link">
+    CPU的功能
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu_1" class="md-nav__link">
+    CPU的基本结构
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU的基本结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    数据通路
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    运算器的基本结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    控制器的基本结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    5.2 指令的执行过程
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 指令的执行过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    指令周期、机器周期、时钟周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    指令周期的数据流
+  </a>
+  
+    <nav class="md-nav" aria-label="指令周期的数据流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    取指周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    间址周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    执行周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    中断周期
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    指令执行方案
+  </a>
+  
+    <nav class="md-nav" aria-label="指令执行方案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    方案一：单指令周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    方案二：多指令周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    方案三：流水线方案
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    5.3 数据通路
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 数据通路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu_2" class="md-nav__link">
+    CPU内部单总线结构
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU内部单总线结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    寄存器之间的数据传送
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu_3" class="md-nav__link">
+    主存与CPU之间的数据传送
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    执行算术或逻辑运算
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    专用数据通路
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    5.4 硬布线控制器的设计
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 硬布线控制器的设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu_4" class="md-nav__link">
+    CPU的控制方式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    设计原理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    设计步骤
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    特点
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    5.5 微程序控制器
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 微程序控制器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    微程序控制器的设计思路
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    微程序控制器的组成和工作原理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    公用微程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    微指令的设计
+  </a>
+  
+    <nav class="md-nav" aria-label="微指令的设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    微指令种类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    微指令的编码方式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    微指令的地址形成方式
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    微程序控制单元的设计
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    5.6 硬布线与微程序的比较
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    5.7 指令流水线
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 指令流水线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    指令执行的方式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    流水线的表示方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    流水线的性能指标
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    指令流水线的影响因素和分类
+  </a>
+  
+    <nav class="md-nav" aria-label="指令流水线的影响因素和分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    机器周期的设置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    影响流水线的因素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    流水线的分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    流水线的多发技术
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    五段式指令流水线
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58" class="md-nav__link">
+    5.8 多处理器
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 多处理器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sisdsimdmimd" class="md-nav__link">
+    SISD、SIMD、MIMD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    硬件多线程
+  </a>
+  
+    <nav class="md-nav" aria-label="硬件多线程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    细粒度多线程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    粗粒度多线程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    同时多线程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    多核处理器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    共享内存多处理器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-cpu" class="md-nav__link">
+    5.1 CPU的功能和基本结构
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 CPU的功能和基本结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu" class="md-nav__link">
+    CPU的功能
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu_1" class="md-nav__link">
+    CPU的基本结构
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU的基本结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    数据通路
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    运算器的基本结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    控制器的基本结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    5.2 指令的执行过程
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 指令的执行过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    指令周期、机器周期、时钟周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    指令周期的数据流
+  </a>
+  
+    <nav class="md-nav" aria-label="指令周期的数据流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    取指周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    间址周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    执行周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    中断周期
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    指令执行方案
+  </a>
+  
+    <nav class="md-nav" aria-label="指令执行方案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    方案一：单指令周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    方案二：多指令周期
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    方案三：流水线方案
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    5.3 数据通路
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 数据通路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu_2" class="md-nav__link">
+    CPU内部单总线结构
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU内部单总线结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    寄存器之间的数据传送
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu_3" class="md-nav__link">
+    主存与CPU之间的数据传送
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    执行算术或逻辑运算
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    专用数据通路
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    5.4 硬布线控制器的设计
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 硬布线控制器的设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cpu_4" class="md-nav__link">
+    CPU的控制方式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    设计原理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    设计步骤
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    特点
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    5.5 微程序控制器
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 微程序控制器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    微程序控制器的设计思路
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    微程序控制器的组成和工作原理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    公用微程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    微指令的设计
+  </a>
+  
+    <nav class="md-nav" aria-label="微指令的设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    微指令种类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    微指令的编码方式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    微指令的地址形成方式
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    微程序控制单元的设计
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    5.6 硬布线与微程序的比较
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    5.7 指令流水线
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 指令流水线">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    指令执行的方式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    流水线的表示方法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    流水线的性能指标
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    指令流水线的影响因素和分类
+  </a>
+  
+    <nav class="md-nav" aria-label="指令流水线的影响因素和分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    机器周期的设置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    影响流水线的因素
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    流水线的分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    流水线的多发技术
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    五段式指令流水线
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58" class="md-nav__link">
+    5.8 多处理器
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 多处理器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sisdsimdmimd" class="md-nav__link">
+    SISD、SIMD、MIMD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    硬件多线程
+  </a>
+  
+    <nav class="md-nav" aria-label="硬件多线程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    细粒度多线程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_40" class="md-nav__link">
+    粗粒度多线程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_41" class="md-nav__link">
+    同时多线程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_42" class="md-nav__link">
+    多核处理器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_43" class="md-nav__link">
+    共享内存多处理器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="_1">第五章 中央处理器</h1>
+<h2 id="51-cpu">5.1 CPU的功能和基本结构</h2>
+<h3 id="cpu">CPU的功能</h3>
+<ul>
+<li>
+<p>指令控制：完成取指令、分析指令和执行指令的操作，即程序的顺序控制</p>
+</li>
+<li>
+<p>操作控制：管理并产生指令对应的操作信号，并把操作信号送往相应的部件，从而控制这些部件按指令的要求进行动作</p>
+</li>
+<li>
+<p>时间控制：为每条指令按时间顺序提供应有的控制信号</p>
+</li>
+<li>
+<p>数据加工：对数据进行算术和逻辑运算</p>
+</li>
+<li>
+<p>中断处理：对计算机运行过程中出现的异常情况和特殊请求进行处理</p>
+</li>
+</ul>
+<h3 id="cpu_1">CPU的基本结构</h3>
+<p>CPU主要由运算器和控制器构成。</p>
+<p>运算器：对数据进行加工</p>
+<p>控制器：协调并控制计算机各部件执行程序的指令序列，基本功能包括取指令、分析指令（操作码译码）、执行指令、中断处理</p>
+<h4 id="_2">数据通路</h4>
+<ul>
+<li>专用数据通路：每个寄存器都分别向ALU的两个端口连线，端口处通过多路选择器或三态门控制通路的输出。</li>
+<li>CPU内部单总线：将所有寄存器的输入端和输出端都连接到一条公共的通路上。结构简单容易实现，但数据传输存在较多冲突现象，性能较低。</li>
+</ul>
+<h4 id="_3">运算器的基本结构</h4>
+<ol>
+<li>算术逻辑单元：主要功能是进行算术/逻辑运算</li>
+<li>通用寄存器组：如AX、BX、CX、DX、SP等，用于存放操作数和各种地址信息。</li>
+<li>暂存寄存器：采用单总线结构，需要增加暂存寄存器，用于暂存从主存读来的数据。这样就不用先将主存读来的数据存储到通用寄存器中，避免对通用寄存器的占用和内容破坏。</li>
+<li>累加寄存器：也是单总线结构下的一种暂存寄存器，但暂存的是ALU的计算结果，避免同一次计算的输入信号和输出信号在总线上的冲突。</li>
+<li>程序状态字（PSW）寄存器：保留由算术逻辑运算指令或测试指令的结果而建立的各种状态信息，如溢出标志、符号标志、零标志、进位标志等。</li>
+<li>移位器：对运算结果进行移位运算（乘除法会大量用到）</li>
+<li>计数器：控制乘除运算的操作步数</li>
+</ol>
+<h4 id="_4">控制器的基本结构</h4>
+<ol>
+<li>程序计数器：用于指出下一条指令在主存中的存放地址</li>
+<li>指令寄存器：用于保存当前正在执行的那条指令</li>
+<li>指令译码器：仅对操作码字段进行译码，向控制器提供特定的操作信号</li>
+<li>微操作信号发生器：根据IR的内容、PSW的内容及时序信号，产生控制整个计算机系统所需的各种控制信号，其结构有组合逻辑型和存储逻辑型两种</li>
+<li>时序系统：用于产生各种时序信号，它们都是由统一时钟（CLOCK）分频得到</li>
+<li>地址寄存器（MAR）（原本是主存的结构之一，但现在一般集成在CPU里面）：用于存放所要访问的主存单元的地址</li>
+<li>数据寄存器（MDR）（原本是主存的结构之一 ，但现在一般集成在CPU里面）：用于存放向主存写入的信息或从主存中读出的信息 </li>
+</ol>
+<h2 id="52">5.2 指令的执行过程</h2>
+<h3 id="_5">指令周期、机器周期、时钟周期</h3>
+<p>指令周期是指CPU从主存中每取出并执行一条指令所需的全部时间。</p>
+<p>在一个指令周期中，CPU需要完成若干阶段的工作，其中一个主要阶段是取指令（也包含对指令译码，但译码时间相对来说非常短），另一个主要阶段是执行指令。取指令的耗时称为取指周期，执行指令的耗时称为执行周期。</p>
+<p>除了取指令和执行指令这两个阶段外，不同的指令还会有其他阶段。</p>
+<ul>
+<li>
+<p>带有中断周期的指令，会在执行周期结束后开始中断周期，用于检查内部是否存在中断指令、保存程序断点；</p>
+</li>
+<li>
+<p>指令为间接寻址，则还需要在取指周期结束后进行间址周期，在这期间访存以取得指令操作数的真实地址。</p>
+</li>
+</ul>
+<p>CPU周期/机器周期：CPU完成一个阶段工作的耗时</p>
+<ul>
+<li>取指令和执行指令各占一个机器周期。</li>
+<li><strong>注意CPU周期/机器周期可以是定长的也可以是不定长的。</strong></li>
+<li><strong>通常由存取周期确定</strong></li>
+</ul>
+<p>一个CPU周期/机器周期又包含若干时钟周期（也称为节拍/T周期/CPU时钟周期），时钟周期是CPU操作（微操作）的最基本单位，也就是CPU主频的倒数。</p>
+<p>每个指令周期内机器周期数可以不等，每个机器周期内的时钟周期也可以不等。</p>
+<h3 id="_6">指令周期的数据流</h3>
+<p>CPU内部设置了4个标志触发器 FE、IND、EX 和 INT，分别对应取指、间址、执行和中断周期，“1”表示有效。</p>
+<h4 id="_7">取指周期</h4>
+<ol>
+<li>当前指令地址送至存储器地址寄存器，(PC)$\rightarrow$MAR</li>
+<li>CU发出控制信号，经控制总线传到主存，要求读取，1$\rightarrow$R</li>
+<li>主存根据MAR中存储的地址找到相应的存储单元，将数据（指令）经由数据总线送入MDR，M(MAR)$\rightarrow$MDR</li>
+<li>将MDR中的内容（指令）送入IR，(MDR)$\rightarrow$IR</li>
+<li><strong>CU发出控制信号，形成下一条指令地址，(PC)+1$\rightarrow$PC</strong></li>
+</ol>
+<p>即取值周期结束后，PC+1</p>
+<h4 id="_8">间址周期</h4>
+<p>需要间接寻址的指令才有间址周期。</p>
+<ol>
+<li>将指令的地址码送入MAR，Ad(IR)$\rightarrow$MAR或Ad(MDR)$\rightarrow$MAR</li>
+<li>CU发出控制信号，经控制总线传到主存，要求读取，1$\rightarrow$R</li>
+<li>主存根据MAR中存储的地址找到相应的存储单元，将数据（指令）经由数据总线送入MDR，M(MAR)$\rightarrow$MDR</li>
+<li>将操作数的真实地址送至指令的地址码字段，(MDR)$\rightarrow$Ad(IR)</li>
+</ol>
+<h4 id="_9">执行周期</h4>
+<ol>
+<li>取操作数</li>
+<li>根据IR中指令字的操作码，通过ALU操作产生执行结果</li>
+</ol>
+<h4 id="_10">中断周期</h4>
+<p><strong>在执行周期结束后响应中断（如果有），进入中断周期</strong></p>
+<p>中断：暂停当前任务去完成其他任务。为了能够恢复当前任务，需要保存断点。一般使用堆栈来保存断点，进栈时先修改SP再存入数据。</p>
+<ol>
+<li>CU控制SP减1，再把修改后的SP中的地址送入MAR。(SP)-1$\rightarrow$SP,(SP)$\rightarrow$MAR</li>
+<li>CU发出控制信号，经控制总线传到主存，要求写入，1$\rightarrow$W</li>
+<li>将断点（PC内容）送入MDR，(PC)$\rightarrow$MDR</li>
+<li>CU控制将中断服务程序的入口地址（由向量地址形成部件产生）送入PC，向量地址$\rightarrow$PC</li>
+</ol>
+<h3 id="_11">指令执行方案</h3>
+<h4 id="_12">方案一：单指令周期</h4>
+<p>即指令周期是等长的，具体耗时长度由所有指令中耗时最长的指令决定。</p>
+<p>指令之间串行执行</p>
+<h4 id="_13">方案二：多指令周期</h4>
+<p>对不同类型的指令选用个不同的执行步骤来完成。</p>
+<p>指令之间串行执行；可选用不同个数的时钟周期来完成不同指令的执行过程。</p>
+<p>需要更复杂的硬件设计。</p>
+<h4 id="_14">方案三：流水线方案</h4>
+<p>在每一个时钟周期启动一条指令，尽量让多条指令同时运行，但各自处在不同的执行步骤中。如同一时间，指令A正在执行阶段，指令B正在取指阶段。</p>
+<p>指令之间并行执行。</p>
+<h2 id="53">5.3 数据通路</h2>
+<p>数据通路的基本结构有以下三种</p>
+<ul>
+<li>CPU内部单总线方式</li>
+<li>CPU内部三总线方式</li>
+<li>专用数据通路方式</li>
+</ul>
+<h3 id="cpu_2">CPU内部单总线结构</h3>
+<p><img alt="image-20221022222813477" src="image-20221022222813477.png" /></p>
+<h4 id="_15">寄存器之间的数据传送</h4>
+<p>描述清楚数据流向和控制信号，如把PC内容送到MAR，则实现传送操作的流程及控制信号为：</p>
+<p>(PC)$\rightarrow$Bus，$PC_{out}$有效，PC内容送总线</p>
+<p>Bus$\rightarrow$MAR，$MAR_{in}$有效，总线内容送MAR</p>
+<h4 id="cpu_3">主存与CPU之间的数据传送</h4>
+<h4 id="_16">执行算术或逻辑运算</h4>
+<p>ALU本身无存储功能，计算两个数时要求两个输入端同时有效。</p>
+<p>一个操作数先送至暂存器保存，暂存器连接ALU的一个输入端并始终有效；另一个操作数通过总线直接送到ALU的另一个输入端。</p>
+<p>运算结果暂存在另一个暂存器中</p>
+<h3 id="_17">专用数据通路</h3>
+<p><img alt="image-20221022221745203" src="image-20221022221745203.png" /></p>
+<p>（1）d寄存器有+1标志，所以是PC；c寄存器单向指向主存，所以是MAR；b既指向PC又指向微操作信号发生器，所以是IR；a与主存、ALU是双向的，所以是MDR。</p>
+<p>（2）(PC)到MAR，M(MAR)到MDR，MDR到IR，完成取指</p>
+<p>（3）取：地址存储在MAR中，CPU向主存发出读控制命令，M(MAR)到MDR，(MDR)再到ALU再到ACC；存：ALU计算完毕后将结果打入ACC，(ACC)再到MDR，MAR存储要写入的地址，CPU向主存发出写控制命令，(MDR)到M(MAR)</p>
+<h2 id="54">5.4 硬布线控制器的设计</h2>
+<h3 id="cpu_4">CPU的控制方式</h3>
+<ul>
+<li>同步控制方式：</li>
+<li>系统有一个统一的时钟，所有的控制信号均来自这个统一的时钟信号，长度以最长的微操作序列和最繁琐的微操作为标准。</li>
+<li>采用完全统一的、具有相同时间间隔和相同数目的节拍作为机器周期</li>
+<li>控制电路简单，但运行速度慢</li>
+<li>异步控制方式：</li>
+<li>各部件按自身固有的速度工作，通过应答方式进行联络</li>
+<li>运行速度快，但控制电路复杂</li>
+<li>联合控制方式：</li>
+<li>介于同步、异步之间的一种折中。</li>
+<li>大部分采用同步控制、小部分采用异步控制</li>
+</ul>
+<h3 id="_18">设计原理</h3>
+<p>根据<strong>指令操作码</strong>、<strong>当前的机器周期</strong>、<strong>节拍信号</strong>、<strong>机器状态条件</strong>，即可确定在目前这个节拍下应该发出哪些微命令。</p>
+<ul>
+<li>
+<p>指令操作码根据指令寄存器中的指令由操作码译码器产生</p>
+</li>
+<li>
+<p>当前机器周期用四个触发器（集成在CU中）表示：FE（取指周期）、IND（间址周期）、EX（执行周期）、INT（中断周期）；四个触发器哪个为1，就表示当前处于哪个机器周期。</p>
+</li>
+<li>节拍信号由机器主频CLK经过节拍发生器产生</li>
+<li>机器状态条件来源比较广泛，可能来自运算器的PSW、ACC的符号位等，也可能来自I/O设备、主存</li>
+</ul>
+<p>CU内部电路综合上述输入信号，直接产生相应的控制信号，也即一个微命令。</p>
+<blockquote>
+<p>CU内部电路如何综合输入信息产生控制信号？</p>
+</blockquote>
+<p>如微操作指令$M(MAR)\rightarrow MDR$，它会在以下情况出现：</p>
+<ul>
+<li>取指阶段的$T_1$节拍（$T_0$节拍是$(PC)\rightarrow MAR$）；</li>
+<li>间址阶段的$T_1$节拍（前提：要执行的操作是ADD、STA、LDA、JMP、BAN其中之一）</li>
+<li>执行阶段的$T_1$节拍（前提：要执行的操作是ADD或LDA）</li>
+</ul>
+<p>所以该微命令的逻辑表达式是：
+$$
+FE \cdot T_1\+IND\cdot T_1(ADD+STA+LDA+JMP+BAN)\+EX\cdot T_1(ADD+LDA)
+$$</p>
+<h3 id="_19">设计步骤</h3>
+<ol>
+<li>分析每个阶段的微操作序列（取指、间址、执行、中断四个阶段）</li>
+<li>选择CPU的控制方式（定长机器周期还是不定长机器周期？每个机器周期安排几个节拍？）</li>
+<li>安排微操作时序（如，如何用3个节拍完成整个机器周期内的所有微操作？哪些微操作可以在同一个节拍内并行？）</li>
+<li>原则一：微操作的先后顺序不得随意更改</li>
+<li>原则二：被控对象不同的微操作尽量安排在一个节拍内完成</li>
+<li>原则三：占用时间较短的微操作尽量安排在一个节拍内完成，并允许有先后顺序（如被控对象是CPU内部寄存器之间时）</li>
+<li>电路设计（确定每个微操作命令的逻辑表达式，并用电路实现）</li>
+<li>列出操作时间表</li>
+<li>写出微操作命令的最简表达式</li>
+<li>画出逻辑图</li>
+</ol>
+<h3 id="_20">特点</h3>
+<p>指令越多，设计和实现就越复杂，一般用于RISC</p>
+<p>如果扩充一条新的指令，则控制器的设计就需要大改，扩充指令困难</p>
+<p>由于使用纯硬件实现控制，执行速度非常快，微操作控制信号由组合逻辑电路即时产生。</p>
+<h2 id="55">5.5 微程序控制器</h2>
+<h3 id="_21">微程序控制器的设计思路</h3>
+<p>一条机器指令对应一个微程序，一个微程序包含多条微指令，一条微指令完成系列微操作/微命令。</p>
+<ul>
+<li>微命令/微操作：控制部件向执行部件发出的各种控制命令，是构成控制序列的最小单位。如打开或关闭某个控制门的电位信号等。微操作是微命令的执行过程</li>
+<li>相容微命令：可以同时产生、共同完成某一些微操作的微命令</li>
+<li>互斥微命令：机器中不允许同时出现的微命令</li>
+<li>微指令：微指令是若干微命令的集合。一条微指令包含<u>操作控制字段</u>和<u>顺序控制字段</u>，前者用于产生各种操作控制信号，后者用于产生下一条要执行的微指令地址</li>
+<li>微周期：从控制存储器中读取一条微指令并执行响应的微操作所需的时间</li>
+<li>控制存储器：用于存放微程序，在CPU内部，用ROM实现</li>
+<li>微程序：微程序是微指令的有序集合。一条机器指令对应一个微程序。</li>
+</ul>
+<h3 id="_22">微程序控制器的组成和工作原理</h3>
+<blockquote>
+<p>微程序从哪来？当前执行的微指令的地址存放在哪里？取出的微指令又存放在哪里？</p>
+</blockquote>
+<p>微程序由厂家在制造时编制好并写入到<strong>控制存储器CM（可用ROM构成）</strong>中。</p>
+<p>微指令基本格式包括操作控制字段和顺序控制字段。操作控制字段表示微指令所需要完成的微操作有哪些；顺序控制字段指明下一条微指令（在CM中的）的地址。</p>
+<p><strong>微地址寄存器CMAR/$\mu$PC</strong>：用于接收微地址形成部件送来的微地址，为在CM中读取微指令作准备。</p>
+<p><strong>地址译码器</strong>：将地址码转化为存储单元控制信号</p>
+<p><strong>微指令寄存器CMDR/$\mu$IR</strong>：用于存放从CM中取出的微指令，它的位数与微指令字长相等。</p>
+<p><strong>微地址形成部件</strong>：产生初始微地址和后继微地址，以保证微指令的连续执行。</p>
+<p><strong>顺序逻辑</strong>：时钟信号、状态标志位等，还可以根据微地址中的寻址特征位判断是否要跳过间址周期</p>
+<h3 id="_23">公用微程序</h3>
+<p>每条指令在取指周期、间址周期和中断周期中所要完成的微操作其实是相同的，因此这三个周期对应的微程序只在CM中存储一份即可。而不同指令在执行周期所要执行的微程序则可能不同，那么也为LDA、STA等指令对应的微程序各准备一份存储在CM中，不同指令只需要在公用的微程序结束后转到不同的执行周期微程序起始地址即可。</p>
+<p>因此，如果某指令系统中有n条机器指令，则CM中微程序段的个数至少是n+1个。其中n为不同机器指令对应的不同执行周期微程序；1为公用的取指周期微程序。因为是“至少”，所以假设没有间址周期和中断周期。</p>
+<p>一条机器指令实际上至少包含了取指周期微程序+执行周期微程序这2个微程序，但它们在逻辑上是一个整体，因此认为“<strong>一条指令对应一个微程序</strong>”也是正确的。</p>
+<h3 id="_24">微指令的设计</h3>
+<h4 id="_25">微指令种类</h4>
+<ol>
+<li>水平型微指令</li>
+</ol>
+<p>一条微指令能定义多个可并行的微命令</p>
+<p>微程序短（微指令数量少），执行速度快；单条微指令长，编写微程序较麻烦。</p>
+<ol>
+<li>垂直型微指令</li>
+</ol>
+<p>一条微指令只能定义一个微命令，由微操作码字段规定具体功能</p>
+<p>微程序长，执行速度慢，工作效率低；单条微指令短、简单、规整，便于编写微程序</p>
+<ol>
+<li>混合型微指令</li>
+</ol>
+<p>在垂直型的基础上增加一些不太复杂的并行操作。</p>
+<p>微指令较短，仍便于编写；微程序也不长，执行速度加快。</p>
+<h4 id="_26">微指令的编码方式</h4>
+<ol>
+<li>直接编码方式</li>
+</ol>
+<p>在微指令的操作控制字段中，每一位代表一个微操作命令</p>
+<p>优点：简单、直观，执行速度快，操作并行性好</p>
+<p>缺点：微指令字长过长，n个微命令就要求微指令的操作字段有n位，造成控存容量极大。</p>
+<ol>
+<li>字段直接编码方式</li>
+</ol>
+<p>将微指令的控制字段分成若干“段”，每段经<strong>译码</strong>后发出控制信号</p>
+<p>分段原则：</p>
+<ul>
+<li>互斥性微命令分在同一段内，相容性微命令分在不同段内</li>
+<li>每个小段中包含的信息位不能太多，否则将增加译码线路的复杂性和译码时间</li>
+<li><strong>一般每个小段还要留出一个状态，表示本段不发出任何微命令</strong>，因此，当某字段的长度为3位时，最多只能表示7个互斥的微命令。通常用000表示不操作</li>
+</ul>
+<p>优点：可以缩短微指令字长</p>
+<p>缺点：要通过译码电路后再发出微命令，因此比直接编码方式慢</p>
+<ol>
+<li>字段间接编码方式</li>
+</ol>
+<p>一个字段的某些微命令需由另一个字段中的某些微命令来解释，由于不是靠字段直接译码发出的微命令，故称为字段间接编码，又称隐式编码。</p>
+<p>优点：可进一步缩短微指令字长</p>
+<p>缺点：削弱了微指令的并行控制能力</p>
+<h4 id="_27">微指令的地址形成方式</h4>
+<ul>
+<li>方式一：由微指令的下一地址字段指出</li>
+</ul>
+<p>微指令格式中设置一个下一地址字段，由该字段直接指出后继微指令的地址。这种方式又称为断定方式</p>
+<ul>
+<li>方式二：根据机器指令的操作码形成</li>
+</ul>
+<p>当机器指令取至指令寄存器后，微指令的地址由操作码经微地址形成部件形成</p>
+<ul>
+<li>方式三：增量计数器法</li>
+</ul>
+<p>(CMAR)+1 → CMAR</p>
+<ul>
+<li>方式四：分支转移</li>
+</ul>
+<p>此方式下微指令格式中有三个字段：操作控制、转移方式和转移地址，转移方式字段指明判别条件，转移地址指明转移成功后的去向</p>
+<ul>
+<li>方式五：通过测试网络</li>
+</ul>
+<p>测试网络即一些逻辑电路，根据顺序逻辑等信号决定下一微地址</p>
+<ul>
+<li>方式六：由硬件产生微程序入口地址</li>
+</ul>
+<p>第一条微地址和中断周期首地址由专门硬件产生（用专门的硬件存储取指周期微程序、中断周期微程序的首地址）</p>
+<h3 id="_28">微程序控制单元的设计</h3>
+<ol>
+<li>
+<p>分析每个阶段的微操作序列</p>
+</li>
+<li>
+<p>写出对应机器指令的微操作命令及节拍安排</p>
+</li>
+</ol>
+<p>（1）写出每个周期所需要的微操作</p>
+<p>（2）补充微程序控制器特有的微操作：</p>
+<ul>
+<li>取指周期：Ad(CMDR) → CMAR、 OP(IR) → CMAR（转入执行周期）</li>
+<li>
+<p>执行周期：Ad(CMDR) → CMAR</p>
+</li>
+<li>
+<p>确定微指令格式</p>
+</li>
+</ul>
+<p>根据微操作个数决定采用何种编码方式，以确定微指令的操作控制字段的位数；</p>
+<p>根据CM中存储的微指令总数，确定微指令的顺序控制字段的位数</p>
+<p>根据操作控制字段的位数和顺序控制字段的位数，确定微指令字长</p>
+<ol>
+<li>编写微指令码点</li>
+</ol>
+<p>根据操作控制字段每一位代表的微操作命令，编写每一条微指令的码点。</p>
+<h2 id="56">5.6 硬布线与微程序的比较</h2>
+<p><img alt="image-20220719011027795" src="image-20220719011027795.png" /></p>
+<h2 id="57">5.7 指令流水线</h2>
+<h3 id="_29">指令执行的方式</h3>
+<p>假设一条指令的执行构成由取指、分析、执行三个阶段构成，且耗时都相等，为$t$</p>
+<ol>
+<li>顺序执行方式</li>
+</ol>
+<p>每条指令依次完成，即指令一完成取指、分析、执行后再开始指令二的取指、分析、执行……则顺序执行$n$条命令的总耗时$T=n\times 3t=3nt$</p>
+<ol>
+<li>一次重叠执行方式</li>
+</ol>
+<p><img alt="image-20220719012304959" src="image-20220719012304959.png" /></p>
+<p>在指令一处于执行阶段时，指令二同时进行取指阶段。在时间轴上，指令与指令之间只有在这部分才会有时间上的重叠，所以是一次重叠。一次重叠执行方式的总耗时$T=3t+(n-1)\times2t$</p>
+<ol>
+<li>二次重叠执行方式</li>
+</ol>
+<p><img alt="image-20220719012239503" src="image-20220719012239503.png" /></p>
+<p>总耗时$T=3t+(n-1)\times t=(2+n)t$</p>
+<h3 id="_30">流水线的表示方法</h3>
+<ol>
+<li>指令执行过程图</li>
+</ol>
+<p>用于分析指令执行过程以及影响流水线的因素</p>
+<p><img alt="image-20220719015137334" src="image-20220719015137334.png" /></p>
+<ol>
+<li>时空图</li>
+</ol>
+<p>用于分析流水线的性能</p>
+<p><img alt="image-20220719015212053" src="image-20220719015212053.png" /></p>
+<h3 id="_31">流水线的性能指标</h3>
+<ol>
+<li>吞吐率</li>
+</ol>
+<p>单位时间内流水线所完成的任务数量，或是输出结果的数量</p>
+<p>设任务数为$n$；完成$n$个任务的总用时为$T_k$；则流水线吞吐率（TP）的最基本公式为
+   $$
+   TP=\frac{n}{T_k}
+   $$
+   设现有$n$条指令，指令周期都相等，都分为$k$个机器周期，其中一个机器周期只包含一个时钟周期$\Delta t$，则流水线的吞吐率为
+   $$
+   TP=\frac{n}{(k-1)\Delta t+n\Delta t}=\frac{n}{(k+n-1)\Delta t}
+   $$
+   其中$(k-1)\Delta t$是流水线装入阶段的耗时；在装入阶段结束后，每经过一个$\Delta t$都会完成一条指令，共会完成$n$条指令。</p>
+<ol>
+<li>加速比</li>
+</ol>
+<p>完成同样一批任务，不使用流水线所用的时间与使用流水线所用的时间之比。</p>
+<p>设$T_0$为不使用流水线时的耗时，$T_k$为使用流水线时的耗时，则流水线加速比($S$)的基本公式为
+   $$
+   S=\frac{T_0}{T_k}
+   $$</p>
+<ol>
+<li>效率</li>
+</ol>
+<p>流水线的设备利用率。在时空图上，流水线的效率为完成$n$个任务占用的时空区有效面积与$n$个任务所用的时间与$k$个流水段所围成的时空区总面积之比。</p>
+<p><img alt="image-20220719020422253" src="image-20220719020422253.png" /></p>
+<h3 id="_32">指令流水线的影响因素和分类</h3>
+<h4 id="_33">机器周期的设置</h4>
+<p>MIPS架构下，指令周期分为取指、译码、执行、访存、写回共5个机器周期，即使某些指令实际上不需要其中的某些机器周期，也必须等待该机器周期的时间。</p>
+<p>为方便流水线的设计，将每个阶段的耗时统一为以最长耗时为准。</p>
+<p>流水线每一个功能段部件后都由一个缓冲寄存器，或称为锁存器，其作用是保存本流水线段的执行结果，提供给下一流水段使用。</p>
+<p>Cache分为两个彼此独立的部件，指令Cache和数据Cache，由于Cache命中率相当高，在这里我们默认所需的指令/数据都可以直接从Cache取得。</p>
+<p>指令Cache和数据Cache彼此独立，使得取指阶段和访存阶段可以并行。</p>
+<p>在指令译码阶段，除了对操作码进行译码之外，还要将操作数从通用寄存器中取出放到锁存器里（RISC架构下，操作数从主存取出后先存储在通用寄存器）。若指令的寻址方式为立即寻址，则将立即数放到专门的Imm寄存器。</p>
+<h4 id="_34">影响流水线的因素</h4>
+<ol>
+<li>结构相关（资源冲突）</li>
+</ol>
+<p>由于多条指令在同一时刻争用同一资源而形成的冲突。</p>
+<p><img alt="image-20220719184303682" src="image-20220719184303682.png" /></p>
+<p>解决方法：</p>
+<ul>
+<li>前一指令访存时，后一相关指令暂停一周期</li>
+<li>
+<p>资源重复配置：如互相独立的指令Cache和数据Cache</p>
+</li>
+<li>
+<p>数据相关</p>
+</li>
+</ul>
+<p>在一个程序中，存在必须等前一条指令执行完才能执行后一条指令的情况，则这两条指令即为数据相关</p>
+<ul>
+<li>写后读（RAW）相关：当前指令将数据写入寄存器后，下一条指令才能从该寄存器读取数据</li>
+<li>读后写（WAR）相关：当前指令读出数据后，下一条指令才能写该寄存器</li>
+<li>写后写（WAW）相关：当前指令写入寄存器后，下一条指令才能写该寄存器</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">add</span><span class="w"> </span><span class="no">r1</span><span class="p">,</span><span class="no">r2</span><span class="p">,</span><span class="no">r3</span>
+<span class="nf">sub</span><span class="w"> </span><span class="no">r4</span><span class="p">,</span><span class="no">r1</span><span class="p">,</span><span class="no">r3</span>
+<span class="nf">and</span><span class="w"> </span><span class="no">r6</span><span class="p">,</span><span class="no">r1</span><span class="p">,</span><span class="no">r7</span>
+<span class="nf">or</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="no">r1</span><span class="p">,</span><span class="no">r9</span>
+<span class="nf">xor</span><span class="w"> </span><span class="no">r10</span><span class="p">,</span><span class="no">r1</span><span class="p">,</span><span class="no">r11</span>
+</code></pre></div>
+<p>如上述指令中，r1寄存器被相继使用，指令彼此之间数据相关。</p>
+<p><img alt="image-20220719202007338" src="image-20220719202007338.png" /></p>
+<p>解决办法：</p>
+<ul>
+<li>把遇到数据相关的指令及其后续指令都暂停一至几个时钟周期，直到数据相关问题消失后再继续执行。可分为硬件阻塞和软件插入（插入空指令）两种方法。</li>
+</ul>
+<p><img alt="image-20220719202059543" src="image-20220719202059543.png" /></p>
+<ul>
+<li>数据旁路技术：例如，在同一个ALU内，将前一指令的结果直接送到另一个寄存器中，供下一条需要用到ALU的指令直接使用这个数据。</li>
+<li>
+<p>编译优化：通过编译器调整指令顺序来解决数据相关。即把后续的无数据相关的指令提前执行。</p>
+</li>
+<li>
+<p>控制相关（控制冲突）</p>
+</li>
+</ul>
+<p>当流水线遇到转移指令和其他改变PC值的指令而造成断流（导致已装入的指令实际上不应该执行）时，会引起控制相关</p>
+<p>解决方法：</p>
+<ul>
+<li>转移指令分支预测。简单预测（永远猜True或False）、动态预测（根据历史情况动态调整）</li>
+<li>预取转移成功和不成功两条控制流上的目标指令（也就是CS:APP上说的两边都执行，再根据转移方向对结果作取舍）</li>
+<li>加快和提前形成条件码（就像加法器里的超前进位）</li>
+<li>提高转移方向的猜准率</li>
+</ul>
+<h4 id="_35">流水线的分类</h4>
+<ol>
+<li>部件功能级、处理机级和处理机间级流水线</li>
+</ol>
+<p>根据流水线使用的级别的不同分类。</p>
+<p>部件功能级流水线就是将复杂的算术逻辑运算组成流水线工作方式。如浮点加法分为求阶差、对阶、尾数相加和结果规格化4个子过程。</p>
+<p>处理机级流水就是把一条指令解释过程分为多个子过程。</p>
+<p>处理机间流水是一种宏流水，其中一个处理机完成某一专门任务，各个处理机所得到的结果存放在与下一个处理机所共享的存储器中。</p>
+<ol>
+<li>单功能流水线和多功能流水线</li>
+</ol>
+<p>按流水线可以完成的功能，流水线可分为单功能流水线和多功能流水线。</p>
+<p>单功能流水线指只能实现一种固定的专门功能的流水线。</p>
+<p>多功能流水线指通过各段间的不同连接方式可以同时或不同时地实现多种功能的流水线（如指令流水线）</p>
+<ol>
+<li>动态流水线和静态流水线</li>
+</ol>
+<p>按同一时间内各段之间的连接方式，流水线可分为静态流水线和动态流水线。</p>
+<p>静态流水线指同一时间内，流水线的各段只能按同一种功能的连接方式工作。如浮点加法流水线。</p>
+<p>动态流水线指同一时间内，当某些段正在实现某种运算时，另一些段却正在进行另一种运算。</p>
+<ol>
+<li>线性流水线和非线性流水线</li>
+</ol>
+<p>按流水线的各个功能段之间是否有反馈信号，流水线可分为线性流水线和非线性流水线</p>
+<h4 id="_36">流水线的多发技术</h4>
+<ol>
+<li>超标量技术</li>
+</ol>
+<p>每个时钟周期内可并发多条独立指令，需要配置多个功能部件，不能调整指令的执行顺序。</p>
+<p>通过编译优化技术，把可并行执行的指令搭配起来。</p>
+<p><img alt="image-20221024093009670" src="image-20221024093009670.png" /></p>
+<ol>
+<li>超流水线技术</li>
+</ol>
+<p><img alt="image-20220719235954194" src="image-20220719235954194.png" /></p>
+<p>通过提高流水线主频的方式提升流水线性能</p>
+<p>但级数越多，用于流水寄存器的开销就越大，所以不是越多越好</p>
+<p>在一个机器周期内再分段，在一个机器周期内一个功能部件使用多次（时分复用）。不能调整指令的执行顺序。</p>
+<p>超流水线CPU在流水线充满后，每个时钟周期还是完成一条指令，CPI=1.</p>
+<p>靠编译程序解决优化问题</p>
+<ol>
+<li>超长指令字技术</li>
+</ol>
+<p><img alt="image-20220720000301594" src="image-20220720000301594.png" /></p>
+<p>由编译程序挖掘出指令间潜在的并行性，将多条能并行操作的指令组合成一条具有多个操作码字段的超长指令字（可达几百个比特）</p>
+<p>对Cache容量要求更大。</p>
+<h3 id="_37">五段式指令流水线</h3>
+<p>要点总结：</p>
+<ul>
+<li>IF阶段有IF阶段的锁存器，用于存放取出的指令数据，并需要等待ID阶段开始来取走锁存器中的内容。</li>
+<li>ID阶段既取走IF段锁存器的指令进行译码，又从通用寄存器中取走需要的数据，并放到ID段锁存器</li>
+<li>对于RISC处理器，只有LOAD指令和STORE指令才能访问主存。且从主存中取出的数据要等到WB阶段才会真正写入到寄存器中。</li>
+<li>运算指令的运算结果也要等到WB阶段才会真正写入到寄存器中</li>
+<li>PC+1通常发生在IF段结束后</li>
+<li><strong>条件转移指令中对PC值的修改发生在M段</strong>而非WB段</li>
+<li><strong>无条件指令中对PC值的修改发生在EX阶段</strong></li>
+</ul>
+<p><img alt="image-20220720004346384" src="image-20220720004346384.png" /></p>
+<p>LOAD指令中，从主存取出的数需要等到WB阶段才会写入到寄存器中。ID阶段既完成指令译码工作，又要完成从寄存器取出相关数据的操作。因此I3的ID阶段需要等到I1和I2指令的WB阶段结束后才能开始。即，I3与I1和I2存在数据相关。</p>
+<p>因为I3的ID阶段被推迟，则I3在IF阶段完成后I3指令数据仍占用着IF段锁存器，I4的IF阶段因此也无法紧接着开始，只能推迟到I3的ID阶段开始时。</p>
+<h2 id="58">5.8 多处理器</h2>
+<h3 id="sisdsimdmimd">SISD、SIMD、MIMD</h3>
+<ul>
+<li>单指令流单数据流结构（SISD）</li>
+</ul>
+<p>传统串行计算机结构，通常只包含<u>一个处理器和一个存储器</u>，处理器在一段时间内仅执行一条指令。有些SISD计算机采用流水线的方式</p>
+<ul>
+<li>单指令流多数据流（SIMD）</li>
+</ul>
+<p>一个指令流同时对多个数据流进行处理，又称<strong>数据级并行</strong>技术。由一<u>个指令控制部件、多个处理单元</u>组成。不同处理单元执行的同一条指令所处理的数据不同。</p>
+<p>在使用for循环处理数组时最有效，如一条分别对16对数据进行运算的SIMD指令若在16个ALU中同时运算，则只需要一次运算时间。在使用case或switch语句时效率最低</p>
+<ul>
+<li>
+<p>向量处理器：SIMD的变体，是一种实现了直接操作一维数组（向量）指令集的CPU。</p>
+</li>
+<li>
+<p>多指令流单数据流（MISD）</p>
+</li>
+</ul>
+<p>同时执行多条指令，处理同一个数据。但实际上不存在这样的计算机</p>
+<ul>
+<li>
+<p>多指令流多数据流（MIMD）</p>
+</li>
+<li>
+<p>线程级并行或线程级以上并行，与数据级并行相比并行程度更高</p>
+</li>
+<li>
+<p>多计算机系统（消息传递MIMD）：每个节点都有各自的私有存储器，具有独立的主存地址空间。节点之间只能通过消息传递方式进行数据传送。</p>
+</li>
+<li>
+<p>多处理器系统（共享存储MIMD）：具有共享的单一地址空间，通过存取指令访问系统中的所有存储器</p>
+</li>
+</ul>
+<h3 id="_38">硬件多线程</h3>
+<p>即在OS中学习线程时所说的，为了降低线程切换过程中的开销，为每个线程提供单独的通用寄存器组、单独的程序计数器，从而线程切换只需激活选中的寄存器，而不必把数据先搬到主存来腾出寄存器位置。</p>
+<h4 id="_39">细粒度多线程</h4>
+<p>处理器能在<strong>每个时钟周期内</strong>切换线程</p>
+<p>多个线程之间轮流交叉执行指令。这多个线程之间指令不相关，可以乱序并行执行。</p>
+<h4 id="_40">粗粒度多线程</h4>
+<p>处理器仅在<strong>一个线程出现了较大开销的阻塞时</strong>切换线程，如Cache缺失</p>
+<p>发生流水线阻塞时，要先清除被阻塞的流水线，重载后再执行新线程的指令。切换开销比细粒度多线程更大</p>
+<h4 id="_41">同时多线程</h4>
+<p>在实现指令级并行的同时，实现线程级并行。</p>
+<p>即，在同一个时钟周期中，它发射<u>多个不同线程</u>中的<u>多条指令</u></p>
+<p>Intel处理器中的超线程技术就是同时多线程</p>
+<p><img alt="image-20221024111750896" src="image-20221024111750896.png" /></p>
+<h3 id="_42">多核处理器</h3>
+<p>将多个处理单元集成到单个CPU中，每个处理单元称为一个核</p>
+<p>每个核可以有自己的Cache，也可以共享同一个Cache</p>
+<p>多核上的多个线程是在物理上并行执行的；而单核上的多线程实际是交错执行</p>
+<h3 id="_43">共享内存多处理器</h3>
+<p>共享内存多处理器（SMP）：具有共享的单一物理地址空间的多处理器</p>
+<p>处理器通过存储器中的共享变量相互通信，通过存取指令访问任何存储器的位置。</p>
+<ul>
+<li>UMA（统一存储访问）：每个处理器对所有存储单元的访问时间大致相同，与处理器和访存单元都无关</li>
+<li>NUMA（非统一存储访问）：某些访存请求要比其他的要快，取决于处理器和要访问的字。这是因为主存被分割并被分配给了同一机器上的不同处理器或内存控制器</li>
+</ul>
+<p>NUMA解决了多核、多CPU争用前端总线的问题，它令每个CPU都有独立的内存控制器，且每个CPU都独立连接到一部分内存。<u>直连的内存被称为本地内存</u>。<u>通过QPI总线访问其他CPU直连的内存称为远程内存</u>。</p>
+<p>访问本地内存明显要快于访问远程内存。</p>
+<p>操作共享变量时需要同步，常用方法是对共享变量加锁。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2074 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>0x06 应用层.md - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0x06" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0x06 应用层.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x06 应用层.md
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x06 应用层.md
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、网络应用模型
+  </a>
+  
+    <nav class="md-nav" aria-label="一、网络应用模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 客户机/服务器模型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-p2p" class="md-nav__link">
+    1.2 P2P模型
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dns" class="md-nav__link">
+    二、 域名系统DNS
+  </a>
+  
+    <nav class="md-nav" aria-label="二、 域名系统DNS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-dns" class="md-nav__link">
+    2.1 DNS概述
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 DNS概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    功能
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    协议与端口
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 层次域名空间
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 层次域名空间">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    域名与域划分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    顶级域名
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    2.3 域名服务器
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 域名服务器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    根域名服务器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    顶级域名服务器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    授权域名服务器（权限域名服务器）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    本地域名服务器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    2.4 域名解析过程
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 域名解析过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    正向解析与反向解析
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    纯递归查询
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    递归与迭代相结合的查询
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    报文数量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    高速缓存
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ftp" class="md-nav__link">
+    三、文件传输协议FTP
+  </a>
+  
+    <nav class="md-nav" aria-label="三、文件传输协议FTP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ftp" class="md-nav__link">
+    3.1 FTP的工作原理
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 FTP的工作原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    功能
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    服务与端口
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 控制连接与数据连接
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 控制连接与数据连接">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    控制连接
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    数据连接
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ftpnfs" class="md-nav__link">
+    3.3 FTP与NFS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    四、电子邮件
+  </a>
+  
+    <nav class="md-nav" aria-label="四、电子邮件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 电子邮件系统的构成
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 电子邮件系统的构成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ua" class="md-nav__link">
+    用户代理（UA）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    邮件服务器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    邮件发送协议和读取协议
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-mime" class="md-nav__link">
+    4.2 电子邮件格式与MIME
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 电子邮件格式与MIME">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    电子邮件格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mime" class="md-nav__link">
+    MIME
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    4.3 邮件传输协议
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 邮件传输协议">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smtp" class="md-nav__link">
+    SMTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pop3" class="md-nav__link">
+    POP3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imap" class="md-nav__link">
+    IMAP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    基于万维网的电子邮件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#www" class="md-nav__link">
+    五、万维网WWW
+  </a>
+  
+    <nav class="md-nav" aria-label="五、万维网WWW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    5.1 万维网的概念与组成结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-http" class="md-nav__link">
+    5.2 超文本传输协议HTTP
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 超文本传输协议HTTP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http" class="md-nav__link">
+    HTTP过程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http_1" class="md-nav__link">
+    HTTP特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http_2" class="md-nav__link">
+    HTTP请求报文常用方法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、网络应用模型
+  </a>
+  
+    <nav class="md-nav" aria-label="一、网络应用模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 客户机/服务器模型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-p2p" class="md-nav__link">
+    1.2 P2P模型
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dns" class="md-nav__link">
+    二、 域名系统DNS
+  </a>
+  
+    <nav class="md-nav" aria-label="二、 域名系统DNS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-dns" class="md-nav__link">
+    2.1 DNS概述
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 DNS概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    功能
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    协议与端口
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 层次域名空间
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 层次域名空间">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    域名与域划分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    顶级域名
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    2.3 域名服务器
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 域名服务器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    根域名服务器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    顶级域名服务器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    授权域名服务器（权限域名服务器）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    本地域名服务器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    2.4 域名解析过程
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 域名解析过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    正向解析与反向解析
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    纯递归查询
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    递归与迭代相结合的查询
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    报文数量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    高速缓存
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ftp" class="md-nav__link">
+    三、文件传输协议FTP
+  </a>
+  
+    <nav class="md-nav" aria-label="三、文件传输协议FTP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ftp" class="md-nav__link">
+    3.1 FTP的工作原理
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 FTP的工作原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    功能
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    服务与端口
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 控制连接与数据连接
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 控制连接与数据连接">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    控制连接
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    数据连接
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ftpnfs" class="md-nav__link">
+    3.3 FTP与NFS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    四、电子邮件
+  </a>
+  
+    <nav class="md-nav" aria-label="四、电子邮件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 电子邮件系统的构成
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 电子邮件系统的构成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ua" class="md-nav__link">
+    用户代理（UA）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    邮件服务器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    邮件发送协议和读取协议
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-mime" class="md-nav__link">
+    4.2 电子邮件格式与MIME
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 电子邮件格式与MIME">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    电子邮件格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mime" class="md-nav__link">
+    MIME
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    4.3 邮件传输协议
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 邮件传输协议">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smtp" class="md-nav__link">
+    SMTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pop3" class="md-nav__link">
+    POP3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imap" class="md-nav__link">
+    IMAP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    基于万维网的电子邮件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#www" class="md-nav__link">
+    五、万维网WWW
+  </a>
+  
+    <nav class="md-nav" aria-label="五、万维网WWW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    5.1 万维网的概念与组成结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-http" class="md-nav__link">
+    5.2 超文本传输协议HTTP
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 超文本传输协议HTTP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#http" class="md-nav__link">
+    HTTP过程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http_1" class="md-nav__link">
+    HTTP特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http_2" class="md-nav__link">
+    HTTP请求报文常用方法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0x06">0x06 应用层</h1>
+<h2 id="_1">一、网络应用模型</h2>
+<h3 id="11">1.1 客户机/服务器模型</h3>
+<p>特点：</p>
+<ul>
+<li>网络中各计算机地位不平等，整个网络的管理工作由少数服务器担当，网络的管理非常集中和方便</li>
+<li>客户机相互之间不直接通信</li>
+<li>可扩展性不佳。受服务器硬件和网络带宽的限制，服务器支持的客户机数量有限</li>
+</ul>
+<h3 id="12-p2p">1.2 P2P模型</h3>
+<p>特点：</p>
+<ul>
+<li>整个网络中的传输内容不再被保存在中心服务器上，每个结点同时具有下载、上传功能，权利和义务大体对等</li>
+<li>减轻了服务器的计算压力，消除了对某个服务器的完全依赖，可以将任务分配到各个结点上大大提高了系统效率和资源利用率</li>
+<li>多个客户机之间可以直接共享文档</li>
+<li>可扩展性好，传统服务器有响应和带宽的限制</li>
+<li>网络健壮性强，单个结点失效不会影响其他结点</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>获得服务的同时还要提供服务，占用较多内存，影响整机速度</li>
+</ul>
+<h2 id="dns">二、 域名系统DNS</h2>
+<h3 id="21-dns">2.1 DNS概述</h3>
+<h4 id="_2">功能</h4>
+<ul>
+<li>把便于人们记忆的具有特定含义的主机名转换为便于机器处理的IP地址</li>
+<li>联机分布式的数据库系统</li>
+</ul>
+<h4 id="_3">协议与端口</h4>
+<ul>
+<li>采用客户/服务器模型</li>
+<li>基于UDP协议</li>
+<li>端口53</li>
+</ul>
+<h3 id="22">2.2 层次域名空间</h3>
+<h4 id="_4">域名与域划分</h4>
+<ul>
+<li>采用层次树状结构的命名方法，使得任何一个连接到因特网的主机或路由器，都有一个唯一的层次结构名称</li>
+<li>域名规则</li>
+<li>以"."隔开的各个部分称为“标号”</li>
+<li>英文不区分大小写</li>
+<li>除了连字符(-)外不允许使用其他标点符号</li>
+<li>每个标号不超过63个字符，多标号组成的完整域名最长不超过255个字符</li>
+<li>级别最低的域名在最左边（如www.baidu.com中，www是三级域名），级别最高的域名在最右边（com是顶级域名）</li>
+<li>管理</li>
+<li>每个域分别由不同的组织进行管理</li>
+<li>每个组织可以把域再分成一定数量的子域，再将子域委托给其他组织管理</li>
+</ul>
+<h4 id="_5">顶级域名</h4>
+<ol>
+<li>国家（地区）顶级域名。如“.cn”表示中国，“.us”表示美国，".uk"表示英国</li>
+<li>通用顶级域名。如“.com”（公司）、".net"（网络服务机构）、".org"（非盈利性组织）、".gov"（国家或政府部门）等</li>
+<li>基础结构域名。只有一个，即“arpa”，用于反向域名解析</li>
+</ol>
+<h3 id="23">2.3 域名服务器</h3>
+<ul>
+<li>区：一个服务器所负责管辖的范围，而不是以域为单位。一个区内的所有结点必须是能够连通的</li>
+<li>每个区有相应的<strong>权限域名服务器</strong>，用于保存该区中的所有主机域名到IP地址的映射。</li>
+<li>每个域名服务器不仅能进行域名到IP地址的解析，还必须具有连向其他域名服务器的信息</li>
+<li>没有一台域名服务器具有因特网上所有主机的映射</li>
+</ul>
+<h4 id="_6">根域名服务器</h4>
+<p>所有的根域名服务器都知道所有的顶级域名服务器的IP地址</p>
+<p>共有13个根服务器。</p>
+<p>根域名服务器不直接完成域名解析，而是只告诉本地域名服务器下一步应当找哪个顶级域名服务器查询。</p>
+<h4 id="_7">顶级域名服务器</h4>
+<p>负责管理在改顶级域名服务器注册的所有二级域名。</p>
+<p>收到DNS查询请求时，给出相应回答</p>
+<ul>
+<li>直接完成域名解析，给出IP地址</li>
+<li>不给出IP地址，而是给出下一步应当查找的域名服务器的IP地址</li>
+</ul>
+<h4 id="_8">授权域名服务器（权限域名服务器）</h4>
+<p>每台主机都必须在授权域名服务器处登记。</p>
+<p>为了可靠性，一台主机最好至少有两个授权域名服务器。</p>
+<p>许多域名服务器都同时充当本地域名服务器和授权域名服务器。</p>
+<p>收到DNS查询请求时，总能直接完成域名解析，给出IP地址。</p>
+<h4 id="_9">本地域名服务器</h4>
+<p>每个ISP，一所大学，甚至一所大学中的各个系，都可以拥有一个本地域名服务器</p>
+<p>当一台主机发出DNS查询请求时，查询请求报文发送给该主机的本地域名服务器</p>
+<h3 id="24">2.4 域名解析过程</h3>
+<h4 id="_10">正向解析与反向解析</h4>
+<ul>
+<li>正向解析：将域名映射成IP地址</li>
+<li>反向解析：将IP地址映射成域名</li>
+</ul>
+<h4 id="_11">纯递归查询</h4>
+<ul>
+<li>
+<p>会给根服务器造成过大负载，很少用</p>
+</li>
+<li>
+<p>流程</p>
+</li>
+</ul>
+<p>请求链：主机→本地域名服务器→根服务器→顶级域名服务器→权限域名服务器</p>
+<p>响应链：权限域名服务器→顶级域名服务器→根服务器→本地域名服务器→主机</p>
+<h4 id="_12">递归与迭代相结合的查询</h4>
+<ul>
+<li>主机向本地域名服务器的查询采用递归查询</li>
+</ul>
+<p>即，主机向本地域名服务器查询一个域名的IP地址，若本地域名服务器知道，则直接回答IP；否则自己迭代查询得到IP，再向主机回答IP。</p>
+<ul>
+<li>本地域名服务器向根域名服务器的查询采用迭代查询</li>
+</ul>
+<p>若本地域名服务器不知道对应IP地址，则向根域名服务器发起请求；</p>
+<p>根域名服务器回复一个顶级域名服务器IP，本地域名服务器向顶级域名服务器发起请求；</p>
+<p>顶级域名服务器回复一个权限域名服务器IP，本地域名服务器向权限域名服务器发起请求；</p>
+<p>权限域名服务器回复一个最终IP，本地域名服务器再回复给主机</p>
+<h4 id="_13">报文数量</h4>
+<p>对于一个三级域名的查询，最多产生8个UDP报文。</p>
+<ol>
+<li><u>主机</u>发给<u>本地</u>域名服务器的请求报文</li>
+<li><u>本地</u>域名服务器发给<u>根</u>域名服务器的请求报文</li>
+<li><u>根</u>域名服务器发给<u>本地</u>域名服务器的响应报文</li>
+<li><u>本地</u>域名服务器发给<u>顶级</u>域名服务器的请求报文</li>
+<li><u>顶级</u>域名服务器发给<u>本地</u>域名服务器的响应报文</li>
+<li>本地域名服务器发给<u>权限</u>域名服务器的请求报文</li>
+<li><u>权限</u>域名服务器发给<u>本地</u>域名服务器的响应报文</li>
+<li><u>本地</u>域名服务器发给<u>主机</u>的响应报文</li>
+</ol>
+<h4 id="_14">高速缓存</h4>
+<p>当一个DNS服务器接收到DNS查询结果时，将该DNS信息缓存在高速缓存中，以便下一次询问时直接提供IP地址。</p>
+<p>高速缓存中的信息有生存期，到期自动丢弃。</p>
+<h2 id="ftp">三、文件传输协议FTP</h2>
+<h3 id="31-ftp">3.1 FTP的工作原理</h3>
+<h4 id="_15">概述</h4>
+<ul>
+<li>FTP是因特网上使用得最广泛的文件传输协议</li>
+<li>提供交互式访问，允许客户指明文件类型与格式，允许文件具有存取权限</li>
+<li>屏蔽了各计算机系统的细节，适合于在<strong>异构网络中的任意计算机</strong>之间传送文件</li>
+</ul>
+<h4 id="_16">功能</h4>
+<ul>
+<li>提供不同种类主机系统之间的文件传输能力</li>
+<li>以<strong>用户权限管理</strong>的方式提供用户对远程FTP服务器上的文件管理能力</li>
+<li>以<strong>匿名FTP</strong>的方式提供公用文件共享的能力</li>
+</ul>
+<h4 id="_17">服务与端口</h4>
+<ul>
+<li>采用客户/服务器的工作方式</li>
+<li>使用TCP</li>
+<li>控制连接端口号21，数据连接端口号20</li>
+<li>一个FTP服务器进程可同时为多个客户进程提供服务</li>
+</ul>
+<h3 id="32">3.2 控制连接与数据连接</h3>
+<p>FTP在工作时使用2个并行的TCP连接：控制连接和数据连接</p>
+<h4 id="_18">控制连接</h4>
+<ul>
+<li>监听21端口，等待客户连接</li>
+<li>用于传输控制信息，都以7位ASCⅡ传送</li>
+<li>控制连接在整个会话期间一直保持打开状态</li>
+</ul>
+<h4 id="_19">数据连接</h4>
+<ul>
+<li>数据连接用于连接客户端和服务器的数据传送进程</li>
+<li>数据传送进程实际完成文件的传送</li>
+<li>主动模式PORT（服务器连接到客户端的开放端口）</li>
+<li>客户端连接到服务器的21端口，登录成功后，客户端随机开放一个端口，并通知服务器</li>
+<li>服务器收到PORT命令和端口号后，通过20端口与该开放端口连接，发送数据</li>
+<li>被动模式PASV（客户端连接到服务器的开放端口）</li>
+<li>客户端要读取数据时，发送PASV命令到服务器，服务器随机开放一个端口，并通知客户端</li>
+<li>客户端连接到服务器开放的端口进行数据传输</li>
+</ul>
+<h3 id="33-ftpnfs">3.3 FTP与NFS</h3>
+<ul>
+<li>使用FTP修改服务器上的文件，需要将此文件传送到本地主机，再将修改后的文件副本传回服务器，较为耗时</li>
+<li>使用NFS修改服务器上的文件，进程只需打开一个远程文件，并在文件的某个特定位置开始读写数据，用户只需要复制一个大文件中一个很小的片段，不需要复制整个大文件</li>
+</ul>
+<h2 id="_20">四、电子邮件</h2>
+<h3 id="41">4.1 电子邮件系统的构成</h3>
+<h4 id="ua">用户代理（UA）</h4>
+<ul>
+<li>用户与电子邮件系统的接口</li>
+<li>用户代理至少应当具有撰写、显示和邮件处理的功能</li>
+<li>通常情况下，用户代理是一个运行在PC上的程序，如Outlook</li>
+</ul>
+<h4 id="_21">邮件服务器</h4>
+<ul>
+<li>发送和接收邮件，向发信人报告邮件传送的情况</li>
+<li>邮件服务器采用客户/服务器方式工作，但必须能够同时充当客户和服务器</li>
+<li>发送端邮件服务器的邮件发送协议（如SMTP），只要发现邮件缓存中有待发送的邮件，就向运行在接收端邮件服务器的邮件发送协议（如SMTP）发起TCP连接。所有邮件发送完毕后关闭TCP连接。</li>
+</ul>
+<h4 id="_22">邮件发送协议和读取协议</h4>
+<ul>
+<li>邮件发送协议：SMTP</li>
+<li>邮件读取协议：POP3、IMAP</li>
+</ul>
+<h3 id="42-mime">4.2 电子邮件格式与MIME</h3>
+<h4 id="_23">电子邮件格式</h4>
+<ul>
+<li>信封</li>
+<li>用户写好首部后，邮件系统自动提取信息并写到信封</li>
+<li>内容</li>
+<li>首部<ul>
+<li>To（必需关键字）：可以填入一个或多个收件人的电子邮件地址。电子邮件地址格式规定为：收件人邮箱名@邮箱所在主机的域名，如abc@cdf.com。abc这个名字在cdf.com这个服务器上必须唯一</li>
+<li>From（必需关键字）：通常由邮件系统自动填入</li>
+<li>Subje（可选关键字）：邮件主题</li>
+</ul>
+</li>
+<li>主体<ul>
+<li>用户自由撰写的邮件内容</li>
+</ul>
+</li>
+</ul>
+<h4 id="mime">MIME</h4>
+<ul>
+<li>SMTP只能传送7位ASCII码邮件，无法支持其他语言，也无法传送可执行文件及其他二进制对象</li>
+<li>MIME在SMTP的基础上增加了邮件主题的结构，定义了传送非ASCII码的编码规则</li>
+<li>内容</li>
+<li>5个新的邮件首部字段，包括MIME版本、内容描述、内容标识、传送编码、内容类型</li>
+<li>定义了许多邮件内容的格式，对多媒体电子邮件的表示方法进行了标准化</li>
+<li>定义了传送编码，可对任意内容格式进行转换，而不会被邮件系统改变</li>
+</ul>
+<h3 id="43">4.3 邮件传输协议</h3>
+<h4 id="smtp">SMTP</h4>
+<ul>
+<li>负责发送邮件的SMTP进程是SMTP客户，负责接收邮件的SMTP进程是SMTP服务器</li>
+<li>TCP连接，端口号25</li>
+<li>SMTP不使用中间的邮件服务器，TCP连接在发送方和接收方两个邮件服务器之间直接建立</li>
+<li>通信过程</li>
+<li>连接建立：<ol>
+<li>SMTP客户定期扫描邮件缓存，若发现有待发送邮件，则使用端口号25与SMTP服务器建立TCP连接。</li>
+<li>连接建立后，SMTP服务器发出220 Service ready</li>
+<li>SMTP客户回应HELO命令，并附上发送方主机名</li>
+</ol>
+</li>
+<li>邮件传送：<ol>
+<li>SMTP客户发出MAIL命令，后跟发件人地址。</li>
+<li>SMTP服务器回答250 OK。</li>
+<li>SMTP客户发送一个或多个RCPT（收件人）命令，后跟收件人地址。</li>
+<li>每一个RCPT命令，服务器都要回答250 OK或550 No such user here。以此检查收件人地址是否正确。</li>
+<li>若收件人地址OK，则SMTP客户发送DATA命令，表示开始传输内容</li>
+<li>SMTP回复 354 Start mail input; end with <CRLF>.<CRLF>（回车换行）。</li>
+<li>SMTP客户开始传输邮件内容，并用<CRLF>.<CRLF>表示邮件结束</li>
+</ol>
+</li>
+<li>连接释放<ol>
+<li>邮件发送完毕后，SMTP客户发送QUIT命令</li>
+<li>SMTP服务器回答221（服务关闭），表示服务器同意释放TCP连接</li>
+</ol>
+</li>
+</ul>
+<h4 id="pop3">POP3</h4>
+<ul>
+<li>客户/服务器工作方式</li>
+<li>接收方邮件服务器为POP3服务器，用户代理为POP3客户</li>
+<li>TCP连接，端口号110</li>
+<li><strong>在传输层明文传输密码</strong></li>
+<li>基于ASCII码，但可以使用MIME发送非ACSII码数据</li>
+<li>工作模式</li>
+<li>下载并保留：用户读取邮件后，邮件依然保存在邮件服务器上</li>
+<li>下载并删除：用户读取邮件后，删除邮件服务器上的邮件</li>
+</ul>
+<h4 id="imap">IMAP</h4>
+<ul>
+<li>比POP3复杂，提供了创建文件夹、在不同文件夹之间移动邮件、在远程文件夹中查询邮件等联机命令</li>
+<li>允许用户代理只获取报文的某些部分，如只读取首部。适合低带宽的情况。</li>
+<li>需要维护会话用户的状态信息</li>
+</ul>
+<h4 id="_24">基于万维网的电子邮件</h4>
+<ul>
+<li>如Hotmial、Gmail等</li>
+<li>用户浏览器与邮件服务器之间的邮件发送或接收使用的是HTTP</li>
+<li>仅在不同邮件服务器之间传送邮件时才使用SMTP</li>
+</ul>
+<h2 id="www">五、万维网WWW</h2>
+<h3 id="51">5.1 万维网的概念与组成结构</h3>
+<ul>
+<li>
+<p>万维网是一个分布式、联机式的信息存储空间（不等于因特网！）</p>
+</li>
+<li>
+<p>万维网的内核部分构成</p>
+</li>
+<li>
+<p>统一资源定位符（URL）：负责标识万维网上的各种文档，并使每个文档在整个万维网的范围内有唯一的标识符</p>
+</li>
+<li>超文本传输协议（HTTP）：应用层协议，使用TCP</li>
+<li>
+<p>超文本标记语言（HTML）：一种文档结构的标记语言，描述页面上的各种信息</p>
+</li>
+<li>
+<p>URL的一般形式：</p>
+</li>
+</ul>
+<p>&lt;协议&gt;://&lt;主机&gt;:&lt;端口&gt;/&lt;路径&gt;</p>
+<ul>
+<li>协议指获得万维网文档的方式，如http、ftp</li>
+<li>主机是存放资源的主机在因特网中的域名或IP地址</li>
+<li>端口和路径有时可省略</li>
+<li>不区分大小写</li>
+</ul>
+<h3 id="52-http">5.2 超文本传输协议HTTP</h3>
+<h4 id="http">HTTP过程</h4>
+<p>用户在浏览器地址栏输入网站并回车之后发生的事件顺序：</p>
+<ol>
+<li>浏览器分析链接指向页面的URL（http://www.tsinghua.edu.cn/chn/index.htm）</li>
+<li>浏览器向DNS请求解析域名www.tsinghua.edu.cn</li>
+<li>DNS解析出域名对应的IP地址</li>
+<li>浏览器与该服务器建立TCP连接（默认端口80）</li>
+<li>浏览器发出HTTP请求：GET /chn/index.htm</li>
+<li>服务器通过HTTP响应将文件index.htm发送给浏览器</li>
+<li>释放TCP连接</li>
+<li>浏览器解释文件index.htm，并将页面显示给用户</li>
+</ol>
+<h4 id="http_1">HTTP特点</h4>
+<ul>
+<li>无连接：通信双方在交换HTTP报文时不需要建立HTTP连接</li>
+<li>无状态：同一个客户第二次访问同一个服务器上的页面时，服务器的响应与第一次被访问时相同</li>
+<li>Cookie：网站服务器为访问用户生成的唯一识别码，添加在HTTP响应报文的"Set-cookie"字段并发回给用户；用户自身也管理了一个特定Cookie文件，收到该报文后，会在文件中添加该网站服务器的主机名和Cookie识别码。当用户继续浏览这个网站时，会在HTTP请求报文中自动添加Cookie发给服务器，服务器根据该Cookie识别用户，从自己数据库中找到相关活动记录，进而执行一些个性化工作</li>
+<li>非持久连接与持久连接</li>
+<li>非持久连接：对于每个网页元素对象的传输都要单独建立一个TCP连接。<strong>每个对象引用都需要2个RTT</strong></li>
+<li>持久连接（HTTP1.1默认方式）：网站服务器在发送响应后仍保持TCP连接，服务双方继续在该连接上传送后续的HTTP请求和响应报文<ul>
+<li>非流水线方式：客户收到一个响应报文后才能发下一个请求。<strong>每个对象引用都需要1个RTT</strong></li>
+<li>流水线方式：客户每遇到一个对象引用就立即发出一个请求，可以连续发送请求。<strong>所有对象引用共计只需要1个RTT延迟</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="http_2">HTTP请求报文常用方法</h4>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>请求读取由URL标识的信息</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td>请求读取由URL标识的信息的首部，不会返回请求对象</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>给服务器添加信息</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>用于代理服务器</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

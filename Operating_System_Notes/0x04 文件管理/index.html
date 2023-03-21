@@ -1,0 +1,2224 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+      
+      
+        <link rel="next" href="../0x05%20IO%E7%AE%A1%E7%90%86/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>0x04 文件管理 - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0x04" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0x04 文件管理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x04 文件管理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x04 文件管理
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、文件的基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="一、文件的基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 文件的定义与组成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 文件控制块与索引结点
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 文件控制块与索引结点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fcb" class="md-nav__link">
+    文件控制块（FCB）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    索引结点
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    二、文件操作
+  </a>
+  
+    <nav class="md-nav" aria-label="二、文件操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 基本操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 打开与关闭
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    三、文件保护
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    四、文件的逻辑结构
+  </a>
+  
+    <nav class="md-nav" aria-label="四、文件的逻辑结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 无结构文件（流式文件）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    4.2 有结构文件（记录式文件）
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 有结构文件（记录式文件）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    顺序文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    索引文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    索引顺序文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    直接文件/散列文件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    五、文件的物理结构
+  </a>
+  
+    <nav class="md-nav" aria-label="五、文件的物理结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    5.1 连续分配
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    5.2 链接分配
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 链接分配">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    隐式链接
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    显式链接
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    5.3 索引分配
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 索引分配">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    链接索引
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    多层索引
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    混合索引
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    三种分配方式的比较
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    六、目录
+  </a>
+  
+    <nav class="md-nav" aria-label="六、目录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    6.1 目录的基本概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    6.2 目录结构
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 目录结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    单级目录结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    两级目录结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    树形目录结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    无环图目录结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    6.3 目录操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    6.4 文件共享
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    七、文件系统
+  </a>
+  
+    <nav class="md-nav" aria-label="七、文件系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 文件系统的全局结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    7.2 文件系统在外存中的结构
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 文件系统在外存中的结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    主引导记录
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    引导块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    超级块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    不同文件系统的分区结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    7.3 文件系统在内存中的结构
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 文件系统在内存中的结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    目录缓存
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    系统打开文件表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    进程打开文件表
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    7.4 外存空闲空间管理
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 外存空闲空间管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    空闲表法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    空闲链表法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    位示图法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    成组链接法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75" class="md-nav__link">
+    7.5 虚拟文件系统
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#76" class="md-nav__link">
+    7.6 文件系统挂载
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    八、习题
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、文件的基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="一、文件的基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 文件的定义与组成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 文件控制块与索引结点
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 文件控制块与索引结点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fcb" class="md-nav__link">
+    文件控制块（FCB）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    索引结点
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    二、文件操作
+  </a>
+  
+    <nav class="md-nav" aria-label="二、文件操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 基本操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 打开与关闭
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    三、文件保护
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    四、文件的逻辑结构
+  </a>
+  
+    <nav class="md-nav" aria-label="四、文件的逻辑结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 无结构文件（流式文件）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    4.2 有结构文件（记录式文件）
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 有结构文件（记录式文件）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    顺序文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    索引文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    索引顺序文件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    直接文件/散列文件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    五、文件的物理结构
+  </a>
+  
+    <nav class="md-nav" aria-label="五、文件的物理结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    5.1 连续分配
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    5.2 链接分配
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 链接分配">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    隐式链接
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    显式链接
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    5.3 索引分配
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 索引分配">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    链接索引
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    多层索引
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    混合索引
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    三种分配方式的比较
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    六、目录
+  </a>
+  
+    <nav class="md-nav" aria-label="六、目录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    6.1 目录的基本概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    6.2 目录结构
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 目录结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    单级目录结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    两级目录结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    树形目录结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    无环图目录结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    6.3 目录操作
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    6.4 文件共享
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    七、文件系统
+  </a>
+  
+    <nav class="md-nav" aria-label="七、文件系统">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 文件系统的全局结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    7.2 文件系统在外存中的结构
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 文件系统在外存中的结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    主引导记录
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    引导块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    超级块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    不同文件系统的分区结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    7.3 文件系统在内存中的结构
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 文件系统在内存中的结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    目录缓存
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    系统打开文件表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    进程打开文件表
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    7.4 外存空闲空间管理
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 外存空闲空间管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    空闲表法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    空闲链表法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    位示图法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    成组链接法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75" class="md-nav__link">
+    7.5 虚拟文件系统
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#76" class="md-nav__link">
+    7.6 文件系统挂载
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    八、习题
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0x04">0x04 文件管理</h1>
+<h2 id="_1">一、文件的基本概念</h2>
+<h3 id="11">1.1 文件的定义与组成</h3>
+<ul>
+<li>文件的定义</li>
+</ul>
+<p>文件是以硬盘为载体的存储在计算机上的信息集合，可以是文本文档、图片、程序等。
+  用户进行的输入、输出中，以文件为基本单位。</p>
+<ul>
+<li>文件的结构</li>
+<li>数据项：文件系统中最低级的数据组织方式<ul>
+<li>基本数据项：数据中的最小逻辑单位，用于描述一个对象的某种属性的一个值，如某个学生的年龄</li>
+<li>组合数据项：由多个基本数据项组成</li>
+</ul>
+</li>
+<li>记录：一组相关的数据项的集合，用于描述一个对象在某方面的属性</li>
+<li>文件：创建者所定义的、具有文件名的一组相关元素的集合<ul>
+<li>有结构文件：文件由若干个相似的记录组成，如一个班的学生记录</li>
+<li>无结构文件：被视为一个字符流，如一个二进制文件</li>
+</ul>
+</li>
+<li>文件的属性/文件元数据</li>
+<li>名称：文件名唯一</li>
+<li>类型</li>
+<li>创建者</li>
+<li>所有者</li>
+<li>位置</li>
+<li>大小</li>
+<li>保护：对文件进行保护的访问控制信息</li>
+<li>创建时间、最后一次修改时间、最后一次存取时间</li>
+</ul>
+<h3 id="12">1.2 文件控制块与索引结点</h3>
+<h4 id="fcb">文件控制块（FCB）</h4>
+<ul>
+<li>用来存放控制文件所需要的各种信息的数据结构，实现“按名存取”</li>
+<li>FCB的内容</li>
+<li>基本信息：如文件名、文件物理位置、文件逻辑结构、文件物理结构等</li>
+<li>存取控制信息</li>
+<li>实用信息：如文件建立时间、上次修改时间等</li>
+<li>一个文件目录也视为一个文件，称为目录文件</li>
+</ul>
+<h4 id="_2">索引结点</h4>
+<p>文件名和文件描述信息分离，文件描述信息单独形成一个数据结构——索引结点/ i 结点。
+一个目录项仅有一个文件名和一个指向索引结点的指针构成
+这种做法使同样大小的盘块可以存放更多目录项，减少查找时启动磁盘的次数</p>
+<ul>
+<li>磁盘索引结点</li>
+<li>存放在磁盘上的索引结点，每个文件唯一</li>
+<li>文件主标识符：拥有该文件的个人或组的标识符</li>
+<li>文件类型</li>
+<li>文件存取权限</li>
+<li>文件物理地址</li>
+<li>文件长度</li>
+<li>文件链接计数</li>
+<li>文件存取时间</li>
+<li>内存索引结点</li>
+<li>索引结点编号：用于标识内存索引结点</li>
+<li>状态：指示结点是否被上锁或修改</li>
+<li>访问计数：每当有一进程要访问此结点时，计数+1；访问结束-1</li>
+<li>逻辑设备号：文件所属文件系统的逻辑设备号</li>
+<li>链接指针：设置分别指向空闲链表和散列队列的指针</li>
+</ul>
+<h2 id="_3">二、文件操作</h2>
+<h3 id="21">2.1 基本操作</h3>
+<ul>
+<li>创建文件：1. 为新文件分配必要的外存空间；2. 在目录中为之创建一个目录项</li>
+<li>写文件：执行系统调用。系统要为文件维护一个写位置的指针。发生写操作时更新写指针。</li>
+<li>读文件：执行系统调用。系统要为文件维护一个读位置的指针。读写可以用同一个指针，因为一个进程通常只对一个文件读或写。</li>
+<li>重新定位文件：将文件位置指针重新定位到给定值。不涉及读写文件。</li>
+<li>删除文件：检索目录，释放该文件所占内存空间，以便被其他文件重复使用，并删除目录条目</li>
+<li>截断文件：允许文件所有属性不变，并删除文件内容，将其长度置为0并释放空间。</li>
+</ul>
+<h3 id="22">2.2 打开与关闭</h3>
+<ul>
+<li>打开：系统调用open根据文件名搜索目录，将指明文件的属性（包括该文件在外存上的物理位置），从外存复制到内存打开文件表的一个表目中，并将该表目的编号返回给用户。</li>
+<li>关闭：系统调用close从打开文件表中删除这一条目</li>
+<li>两级表：每个进程的打开文件表、整个系统的打开文件表</li>
+<li>文件名不必存储在打开文件表中，因为它只是用于查找FCB在磁盘上的位置的。</li>
+</ul>
+<h2 id="_4">三、文件保护</h2>
+<ul>
+<li>访问类型：读、写、执行、添加、删除、列表清单（列出文件名和文件属性）</li>
+<li>访问控制</li>
+<li>基于身份访问：<ul>
+<li>使用访问控制列表：每个目录和文件都有一个控制列表，规定每个用户名及其允许的访问类型</li>
+<li>使用精简的访问列表：拥有者、组、其他三种用户类型</li>
+</ul>
+</li>
+<li>基于口令访问：用户在建立文件时提供口令，系统在PCB中附上相应口令。时间和空间的开销都不多，但口令直接存在系统内部，不够安全</li>
+<li>基于密码访问：用户对文件进行加密，文件被访问时需要使用密钥。保密性强、节省存储空间，但编码和译码需要花费一定时间</li>
+<li>现代操作系统常用的文件保护方法：将访问控制列表与用户、组和其他成员访问控制方案组合使用</li>
+<li>对于多级目录结构，需要提供目录保护机制。</li>
+</ul>
+<h2 id="_5">四、文件的逻辑结构</h2>
+<h3 id="41">4.1 无结构文件（流式文件）</h3>
+<ul>
+<li>有序相关信息项的集合，以字节为单位</li>
+<li>没有结构，对记录的访问只能用穷举搜索的方式</li>
+<li>适用于对基本信息单位操作不多的文件，如源程序文件、目标代码文件</li>
+</ul>
+<h3 id="42">4.2 有结构文件（记录式文件）</h3>
+<h4 id="_6">顺序文件</h4>
+<ul>
+<li>串结构：记录之间的顺序与关键字无关，通常按存入时间的先后进行排列。检索时必须从头开始顺序依次查找</li>
+<li>顺序结构：对文件中的所有记录按关键字排列，可采用折半查找法</li>
+<li>要读、写一大批记录时，顺序文件效率最高</li>
+<li>要经常需要查找、修改、增加或删除单个记录，顺序文件性能较差</li>
+</ul>
+<h4 id="_7">索引文件</h4>
+<ul>
+<li>为变长记录文件建立一张索引表，每个记录建立一个表项，每个表项包含：变长记录的指针（即逻辑起始地址）、记录长度。</li>
+<li>索引表按关键字排序，本身也是一个定长记录的顺序文件</li>
+<li>在查找文件时，可以直接随机检索定长记录索引文件</li>
+</ul>
+<h4 id="_8">索引顺序文件</h4>
+<ul>
+<li>顺序文件按关键字分组有序排列；每个组的第一条记录的关键字值与起始位置作为索引表的一个表项。</li>
+</ul>
+<p><img alt="image-20221027103600452" src="image-20221027103600452.png" /></p>
+<ul>
+<li>查找一条记录时，先在索引表中找到其所属组的起始地址；再在该组中顺序查找。</li>
+</ul>
+<h4 id="_9">直接文件/散列文件</h4>
+<ul>
+<li>给定记录的键值或通过散列函数转换的键值直接决定记录的物理地址。</li>
+<li>有很高的存取速度，但会发生冲突</li>
+</ul>
+<h2 id="_10">五、文件的物理结构</h2>
+<h3 id="51">5.1 连续分配</h3>
+<ul>
+<li>
+<p>目录项结构：文件名+起始块号+文件长度</p>
+</li>
+<li>
+<p>每个文件在磁盘上<strong>占有一组连续的块</strong></p>
+</li>
+<li>支持<strong>顺序访问</strong>和<strong>直接访问</strong></li>
+<li>优点：实现简单、存取速度快</li>
+<li>缺点：文件长度不宜动态增加，一旦增加可能需要移动大量盘块；为保证文件有序性，删除或插入记录时，还需要对相邻的记录作物理上的移动；反复增删文件后会产生外部碎片；很难确定一个文件需要的空间大小，只适用于长度固定的文件</li>
+</ul>
+<h3 id="52">5.2 链接分配</h3>
+<h4 id="_11">隐式链接</h4>
+<ul>
+<li>
+<p>目录项结构：文件名+起始块号+结束块号</p>
+</li>
+<li>
+<p>除了最后一个盘块外，每个盘块都含有指向文件下一个盘块的指针</p>
+</li>
+<li>
+<p>从而，每个文件都对应一个磁盘块的链表</p>
+</li>
+<li>缺点：只适合顺序访问；稳定性差，如果丢失了链表中的指针，会导致文件数据的丢失</li>
+<li>改进：将几个盘块组成簇，按簇分配。会增加内部碎片</li>
+</ul>
+<h4 id="_12">显式链接</h4>
+<ul>
+<li>目录项结构：文件名+起始块号</li>
+<li>将隐式链接中存储在盘块内的指针提取出来，显式地存放在内存中的一张链接表中——文件分配表FAT。</li>
+<li>文件分配表的每个表项包含盘块号及该盘块的下一块盘块号。可以通过特定数字区分空闲盘块号和文件的最后一块。</li>
+<li>FAT在系统启动时就读入内存，所有查找操作都在内存中进行，显著地提高了检索速度</li>
+</ul>
+<p><img alt="image-20221027111339898" src="image-20221027111339898.png" /></p>
+<h3 id="53">5.3 索引分配</h3>
+<ul>
+<li>
+<p>允许文件离散地分散在各磁盘块中，用一张索引表建立文件的逻辑块号与物理块号的对应关系，类似于页表</p>
+</li>
+<li>
+<p>索引表存放的磁盘块称为索引块</p>
+</li>
+</ul>
+<p><img alt="image-20221028094028675" src="image-20221028094028675.png" /></p>
+<ul>
+<li>
+<p>用户给出要访问的逻辑块号i→OS根据逻辑块号找到文件对应的FCB→从FCB中获得索引表位置→读入索引表→根据逻辑块号从索引表中找到对应的物理块号</p>
+</li>
+<li>
+<p>优点：支持随机访问</p>
+</li>
+</ul>
+<blockquote>
+<p>如果索引表太大，一个索引块存不下，怎么办？</p>
+</blockquote>
+<h4 id="_13">链接索引</h4>
+<p>索引块组织成链表，但这样访问最后一个索引块需要遍历所有索引块，很低效</p>
+<h4 id="_14">多层索引</h4>
+<ul>
+<li>类似于多级页表，建立多层索引。但要求每个索引表的大小都不能超过一个磁盘块。所以对于一个确定层数的多层索引，可以算出它允许的文件最大长度。</li>
+<li>使用k层索引，且顶层索引表未调入内存，则找到一个数据块需要k+1次读磁盘操作（前k次都是读索引表，最后一次读数据块）</li>
+</ul>
+<h4 id="_15">混合索引</h4>
+<ul>
+<li>多层索引中每一层索引表的内容，可以包含单层索引表（单层索引表中的索引项都是逻辑块号-物理块号的键值对）的地址（即一级间接），也可以包含二层索引表的地址（即二级间接），还包含一些直接索引，直接存放逻辑块号—物理块号的键值对。</li>
+<li>有利于小文件的查找，小文件访问一个数据块所需的读磁盘次数更少</li>
+</ul>
+<p><img alt="image-20221028102552571" src="image-20221028102552571.png" /></p>
+<h4 id="_16">三种分配方式的比较</h4>
+<p><img alt="image-20221028103418841" src="image-20221028103418841.png" /></p>
+<h2 id="_17">六、目录</h2>
+<h3 id="61">6.1 目录的基本概念</h3>
+<ul>
+<li>文件目录：FCB的有序集合，一个FCB就是一个文件目录项</li>
+<li>目录管理的基本要求：</li>
+<li>实现“按名存取”：在目录中要建立文件名-文件所在物理块号的映射关系</li>
+<li>提高检索速度</li>
+<li>访问控制：允许多个用户共享一个文件</li>
+<li>树形结构：允许不同用户对不同文件采用相同的名字，要求目录管理用树形结构来解决和实现</li>
+</ul>
+<h3 id="62">6.2 目录结构</h3>
+<h4 id="_18">单级目录结构</h4>
+<ul>
+<li>整个文件系统中只建立一张目录表，每个文件占一个目录项</li>
+<li>实现了“按名存取”，但查找速度慢、文件不允许重名、不便于文件共享等缺点，不适用于多用户操作系统</li>
+</ul>
+<h4 id="_19">两级目录结构</h4>
+<ul>
+<li>分为<u>主文件目录</u>和<u>用户文件目录</u>两级</li>
+<li>主文件目录项记录用户名及相应用户文件目录所在的存储位置</li>
+<li>用户文件目录项记录该用户文件的FCB信息</li>
+<li>提高了检索速度、解决了多用户之间的文件重名问题、可以在目录上实现访问限制。但缺乏灵活性，不能对文件分类</li>
+</ul>
+<h4 id="_20">树形目录结构</h4>
+<ul>
+<li>绝对路径：从根目录出发的路径</li>
+<li>相对路径：从当前目录出发的路径。<strong>进程对个文件的访问都是相对于当前目录进行的</strong></li>
+<li>方便对文件进行分类、层次结构清晰、能够更有效地进行文件的管理和保护、容易对文件赋予不同的存取权限；但需要按路径名逐级访问中间结点，增加了磁盘访问次数，影响查询速度</li>
+<li>大多数操作系统都采用树形文件目录</li>
+</ul>
+<h4 id="_21">无环图目录结构</h4>
+<ul>
+<li>在树形目录结构的基础上增加一些指向同一结点的有向边</li>
+<li>当用户要求删除一个共享结点时，将共享计数器-1；若减为0则真正删除该结点。</li>
+<li>方便地实现了文件共享，但也使得系统的管理变得更加复杂</li>
+</ul>
+<h3 id="63">6.3 目录操作</h3>
+<ul>
+<li>create创建目录：</li>
+<li>除了要为之分配磁盘空间外，还要在它的父目录表中新建对应表项</li>
+<li>每一个新建空目录都会有两个默认FCB，分别是<code>.</code>和<code>..</code>，分别指向当前目录和父目录</li>
+<li>delete删除目录</li>
+<li>方式一：要求只有空目录才能被直接删除。若要删除一个非空目录，则必须先删除目录中的所有文件，再递归地删除子目录</li>
+<li>方式二：非空目录可以被直接删除。当删除一个非空目录时，其文件和子目录同时被删除</li>
+<li>opendir打开目录：和打开普通文件一样，只将对应FCB读入内存，而不是把目录文件的数据全部读入内存。</li>
+<li>readdir读目录：必须先opendir才能readdir，且不一定每次readdir都要访问磁盘，因为可能整个磁盘块都已经调入内存，可以直接访问。</li>
+<li>移动目录</li>
+<li>显示目录：用户可以请求显示目录的内容，如目录中的所有文件及树形</li>
+<li>修改目录：某些文件属性保存在目录中，这些属性发生变化时需要修改相应的目录项。</li>
+</ul>
+<h3 id="64">6.4 文件共享</h3>
+<ul>
+<li>
+<p>基于索引结点的共享方式（硬链接）</p>
+</li>
+<li>
+<p>（回忆）为减小文件目录的长度，将文件名及文件信息相分离，文件信息作为一个单独的数据结构（索引结点）进行存储，目录表项中仅保留文件名及指向相应索引结点的指针。</p>
+</li>
+<li>当不同用户需要共享同一个文件时，只需在各自的目录中增加该文件的表项（文件名可以不同），并将指针指向同一个索引结点。</li>
+<li>索引结点中也要维护一个计数器，用于记录当前链接到该索引结点的目录表项数。如计数器为2时，说明有2个用户在共享此文件。一个用户删除该文件时，计数器-1；当计数器为0时操作系统真正删除该结点，从而删除文件。</li>
+</ul>
+<p><img alt="image-20221028153022539" src="image-20221028153022539.png" /></p>
+<ul>
+<li>
+<p>基于符号链的共享方式（软链接）</p>
+</li>
+<li>
+<p>用户可以创建一个特殊的Link型的文件A，这个文件记录另一个文件B的存放路径。文件A的文件名可以随意命名</p>
+</li>
+<li>当用户访问这个Link型文件A时，系统会根据其中记录的存放路径找到并打开文件B</li>
+<li>当文件B被删除时，文件A依然存在，但访问时会查找失败。</li>
+<li>当文件A被删除时，文件B不受任何影响。</li>
+<li>访问软链接需要多次磁盘I/O，会更慢。</li>
+</ul>
+<h2 id="_22">七、文件系统</h2>
+<h3 id="71">7.1 文件系统的全局结构</h3>
+<ol>
+<li>I/O控制</li>
+<li>设备驱动程序+中断处理程序，在内存和磁盘系统之间传输信息。</li>
+<li>基本文件系统</li>
+<li>向对应的设备驱动程序发送通用命令，以读取和写入磁盘的物理块，每个物理块由磁盘地址标识。</li>
+<li>管理内存缓冲区、保存各种文件系统、目录和数据块的缓存</li>
+<li>文件组织模块</li>
+<li>组织文件、逻辑块、物理块</li>
+<li>可以将逻辑块地址转换成物理块地址，每个文件的逻辑块从0到N编号</li>
+<li>包括空闲空间管理器，用于跟踪未分配的块，并根据需求提供给文件组织模块</li>
+<li>逻辑文件系统</li>
+<li>管理元数据信息。元数据包括文件系统的所有结构，但不包括实际数据（文件内容）</li>
+<li>管理目录结构，以便根据给定文件名称给文件组织模块提供所需要的信息</li>
+<li>通过文件控制块维护文件结构</li>
+<li>负责文件保护</li>
+</ol>
+<h3 id="72">7.2 文件系统在外存中的结构</h3>
+<p><img alt="image-20221129153713486" src="image-20221129153713486.png" /></p>
+<h4 id="_23">主引导记录</h4>
+<p>MBR位于磁盘的0号扇区，用于引导计算机启动，MBR后是分区表，给出每个分区的起始和结束地址。表中的一个分区被标记为活动分区。MBR需要做的第一件事情就是读取分区表、确定活动分区并读入它的第一块，即引导块。</p>
+<h4 id="_24">引导块</h4>
+<p>引导块存储启动分区中操作系统的程序。</p>
+<p>每个分区都有自己的引导块，若这个分区没有安装操作系统，则引导块内容为空。</p>
+<p>Windows称引导块为分区引导扇区。</p>
+<h4 id="_25">超级块</h4>
+<p>包含文件系统的所有关键信息。</p>
+<p>在计算机启动时、或在该文件系统首次使用时，超级块被载入内存</p>
+<p>包括分区的块的数量、块的大小、空闲块的数量和指针、空闲的FCB数量和FCB指针等。</p>
+<h4 id="_26">不同文件系统的分区结构</h4>
+<p>在UNIX文件系统（UFS）中，初始化信息包含：</p>
+<ul>
+<li>引导块</li>
+<li>超级块</li>
+<li>空闲空间管理：如位示图</li>
+<li>i结点区（索引结点区）</li>
+<li>根目录</li>
+</ul>
+<p>在FAT文件系统中，初始化信息包含：</p>
+<ul>
+<li>引导块</li>
+<li>空闲空间管理：如FAT表</li>
+<li>根目录</li>
+</ul>
+<h3 id="73">7.3 文件系统在内存中的结构</h3>
+<h4 id="_27">目录缓存</h4>
+<p>近期访问过的目录文件会缓存在内存中，不用每次都从磁盘读入，加快目录检索速度</p>
+<h4 id="_28">系统打开文件表</h4>
+<p>整个系统只有一张。</p>
+<p>执行系统调用open时，系统根据路径一级一级读入目录，找到目标文件FCB，复制到系统打开文件表。</p>
+<p>表项包含：索引、目录项、打开计数</p>
+<h4 id="_29">进程打开文件表</h4>
+<p>每个进程都有一张。</p>
+<p>执行系统调用open时，在FCB复制到系统打开文件表后，也在进程打开文件表中新建一个条目，并<strong>返回文件描述符</strong>。</p>
+<p>表项包含：索引、打开方式、系统打开文件表索引等。</p>
+<h3 id="74">7.4 外存空闲空间管理</h3>
+<p>文件存储设备分成大小相同的物理块，以块为单位交换信息。</p>
+<p>需要管理空闲块，包括空闲块的组织、分配、回收</p>
+<h4 id="_30">空闲表法</h4>
+<ul>
+<li>空闲盘块表表项：第一个空闲盘块号+空闲盘块数</li>
+<li>将连续的空闲块视为一个盘区，每个盘区都在空闲盘块表中拥有一个表项</li>
+<li>适用物理结构：连续分配方式</li>
+<li>磁盘块的分配：与内存管理中的动态分区分配类似，为一个文件分配连续的存储空间，算法有首次适应、最佳适应、最坏适应等</li>
+<li>磁盘块的回收：也与内存管理中的动态分区分配类似，如果回收的磁盘块与已有的空闲磁盘块相邻，则在空闲盘块表中合并表项。</li>
+</ul>
+<h4 id="_31">空闲链表法</h4>
+<p>分为空闲<u>盘块</u>链组织法和空闲<u>盘区</u>链组织法，区别在于链表的元素是一个单独的空闲盘块还是由若干个连续空闲盘块构成的一个空闲盘区。</p>
+<p>连续分配、离散分配都适用</p>
+<ul>
+<li>空闲盘块链</li>
+<li>每个盘块保存指向下一个盘块的指针</li>
+<li>磁盘块的分配：文件申请K个磁盘块，则从空闲盘块链中从链头开始依次摘下K个盘块进行分配，修改链头指针。</li>
+<li>磁盘块的回收：回收的磁盘块挂到链尾，并修改空闲链的链尾指针</li>
+<li>空闲盘区链</li>
+<li>在盘区的第一个盘块保存<u>指向下一个盘区的指针</u>以及<u>盘区的长度</u>，而链头、链尾指针由操作系统保存。</li>
+<li>磁盘块的分配：文件申请K个磁盘块，则从空闲盘区链中从链头开始应用首次适应等算法找到符合条件的盘区，分配给文件。如果没有合适的盘区，也可以将不同盘区的盘块同时分配给一个文件</li>
+<li>磁盘块的回收：若回收的磁盘块与某个已有的空闲盘区相邻，则合并链表结点，否则单独挂到链尾</li>
+</ul>
+<h4 id="_32">位示图法</h4>
+<ul>
+<li>
+<p>一个n行m列的矩阵，m=字长，n=字数。理解为包含若干个字的二进制串就行，每个二进制位都表示某个盘块空闲与否（0空闲、1已分配）。</p>
+</li>
+<li>
+<p>显然盘块号b与位示图中的第i个字第j位是能一一对应的。默认顺序编号，如盘块号0对应第0个字的第0位，盘块号1对应第0个字的第1位。</p>
+</li>
+<li>
+<p>注意盘块号、字号、位号是从0开始还是从1开始</p>
+</li>
+<li>
+<p>磁盘块的分配：文件申请K个磁盘块，分配步骤如下</p>
+</li>
+<li>
+<p>顺序扫描位示图，找到K个相邻或不相邻的0</p>
+</li>
+<li>根据字号、位号算出对应盘块号，将相应盘块分配给文件</li>
+<li>
+<p>将相应位设置为1</p>
+</li>
+<li>
+<p>磁盘块的回收：</p>
+</li>
+<li>
+<p>根据回收的盘块号计算出对应的字号、位号</p>
+</li>
+<li>
+<p>将相应为设置为0</p>
+</li>
+<li>
+<p>连续分配、离散分配都适用</p>
+</li>
+</ul>
+<h4 id="_33">成组链接法</h4>
+<p>在<u>文件卷的目录区</u>中专门设置一个磁盘块作为“超级块”。系统启动时将超级块读入内存，并保证内存与外存的超级块数据一致。</p>
+<p>在成组链接法中，超级块作为起始的第一个成组链接块，存储第一组的盘块数量及第一组的所有盘块号。第一组的第一个空闲盘块作为成组链接块，存储下一组的盘块数量及下一组的所有盘块号，以此类推。</p>
+<p>如超级块中存放数据：第一组的空闲盘块数3，空闲块号有300、273、986。在盘块号为300的盘块中，继续存放数据：第二组的空闲盘块数100，空闲块号有200、201、202……以此类推</p>
+<p>成组链接块本身也是空闲盘块，若它也被分配出去了则说明该组已经没有空闲盘块了，而成组链接块中的数据需要另外保存，见下。</p>
+<ul>
+<li>磁盘块的分配：</li>
+<li>首先从内存中找到超级块，查看第一组的空闲盘块数是否≥K块</li>
+<li>若满足条件，则将第一组的末尾K个空闲盘块都分配出去，同时将超级块中记录的第一组盘块数量-K</li>
+<li>若第一组的盘块要全部分配出去（包括成组链接块）才能满足要求，则将成组链接块的数据复制到超级块中保存。从而第二组自动成为新的第一组</li>
+<li>磁盘块的回收：</li>
+<li>假设每个分组最多为100个空闲块，则检查第一组是否已满，若未满则将新的空闲盘块号保存到第一组</li>
+<li>若第一组已满，假设要回收1个盘块，则将超级块中的数据复制到新回收的空闲盘块中，让新回收的块成为第一组；超级块保存该空闲盘块的块号及第一组的空闲块数1.</li>
+</ul>
+<h3 id="75">7.5 虚拟文件系统</h3>
+<ul>
+<li>
+<p>为用户程序提供统一的文件系统操作接口，屏蔽不同文件系统的差异和操作细节，使用户程序可以通过统一的调用函数，如open()等操作不同文件系统的文件。</p>
+</li>
+<li>
+<p>面向对象。抽象了一个通用的文件系统模型，定义了一系列接口，新的文件系统只要支持并实现这些接口，即可安装和使用。</p>
+</li>
+<li>
+<p>Linux实现VFS的方式：</p>
+</li>
+<li>
+<p>超级块对象：表示一个已安装/挂载的特定文件系统</p>
+</li>
+<li>索引结点对象：表示一个特定的文件</li>
+<li>目录项对象：表示一个特定的目录项</li>
+<li>文件对象：表示一个与进程相关的已打开文件</li>
+</ul>
+<p><img alt="image-20221129160314101" src="image-20221129160314101.png" /></p>
+<ul>
+<li>
+<p>VFS的作用</p>
+</li>
+<li>
+<p>提高系统性能。将最近最常使用的目录项对象放在目录项高速缓存的磁盘缓存中，以加速从文件路径名到最后一个路径分量的索引结点的转换过程</p>
+</li>
+<li>用户不需要关心不同文件系统的具体实现细节。</li>
+<li>VFS并不是一个实际的文件系统，它只存在于内存中，不存在于任何外存空间中。它在系统启动时建立，在系统关闭时消亡</li>
+</ul>
+<h3 id="76">7.6 文件系统挂载</h3>
+<h2 id="_34">八、习题</h2>
+<p><img alt="image-20221211103436885" src="image-20221211103436885.png" /></p>
+<p><img alt="image-20221211103449167" src="image-20221211103449167.png" /></p>
+<p>（2）注意读文件J前（根目录常驻内存）需要先读目录A文件、目录D文件、最后才是文件J中的某一页。<u>由题干，目录A文件、目录D文件大小都不超过一个磁盘块</u>，因此读2次磁盘块即可找到文件J的FCB。读入FCB所在磁盘块（第3次启动磁盘），读三级索引表所在磁盘块（第4次启动磁盘）、读二级索引表所在磁盘块（第5次启动磁盘）、读一级索引表所在磁盘块（第6次启动磁盘）、读数据所在磁盘块（第7次启动磁盘），共7次访问磁盘块。</p>
+<p>（3）同上，目录C、I、P、U各需固定的一次磁盘访问，W的FCB需要固定的一次磁盘访问，W的一页数据最少需要一次磁盘访问，共4+1+1=6次</p>
+<p>（4）在根目录下建立文件W的链接文件，从而可以直接读入W的FCB所在磁盘块，W的一页数据最多需要4次磁盘访问，共1+4=5次。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

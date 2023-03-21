@@ -1,0 +1,3074 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">
+      
+      
+        <link rel="next" href="../0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>0x04 网络层.md - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0x04" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0x04 网络层.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x04 网络层.md
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x04 网络层.md
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、网络层功能
+  </a>
+  
+    <nav class="md-nav" aria-label="一、网络层功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 异构网络互联
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 路由与转发
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-sdn" class="md-nav__link">
+    1.3 SDN
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 SDN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sdn" class="md-nav__link">
+    SDN（软件定义网络）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openflow" class="md-nav__link">
+    OpenFlow
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    流表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    优点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    问题
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    1.4 拥塞控制
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    二、网络层设备
+  </a>
+  
+    <nav class="md-nav" aria-label="二、网络层设备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 冲突域与广播域
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 路由器的组成和功能
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 路由器的组成和功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    路由器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    路由选择与分组转发
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    2.3 路由表与转发表
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 路由表与转发表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    路由表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    转发表
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    三、路由算法
+  </a>
+  
+    <nav class="md-nav" aria-label="三、路由算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 静态路由与动态路由
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 静态路由与动态路由">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    静态路由
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    动态路由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-" class="md-nav__link">
+    3.2 距离-向量路由算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 链路状态路由算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    3.4 层次路由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    四、路由协议
+  </a>
+  
+    <nav class="md-nav" aria-label="四、路由协议">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 自治系统
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-igp" class="md-nav__link">
+    4.2 内部网关协议 IGP
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 内部网关协议 IGP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rip" class="md-nav__link">
+    路由信息协议 RIP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ospf" class="md-nav__link">
+    开放最短路径优先协议 OSPF
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-egp" class="md-nav__link">
+    4.3 外部网关协议 EGP
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 外部网关协议 EGP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bgp" class="md-nav__link">
+    BGP定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgp_1" class="md-nav__link">
+    BGP要解决的问题
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgp_2" class="md-nav__link">
+    BGP工作原理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgp_3" class="md-nav__link">
+    BGP特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgp_4" class="md-nav__link">
+    BGP报文
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipv4" class="md-nav__link">
+    五、IPv4
+  </a>
+  
+    <nav class="md-nav" aria-label="五、IPv4">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-ipv4" class="md-nav__link">
+    5.1 IPv4分组格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-ip" class="md-nav__link">
+    5.2 IP数据报的分片与重组
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 IP数据报的分片与重组">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    如何分片
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    分片计算
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    重组
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    不需要分片的情况
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-ipv4nat" class="md-nav__link">
+    5.3 IPv4地址与NAT
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 IPv4地址与NAT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ipv4_1" class="md-nav__link">
+    IPv4地址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nat" class="md-nav__link">
+    网络地址转换 NAT
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-cidr" class="md-nav__link">
+    5.4 子网划分、子网掩码、CIDR
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 子网划分、子网掩码、CIDR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    子网划分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    子网掩码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cidr" class="md-nav__link">
+    无分类编址CIDR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    计算技巧
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    5.5 网络层转发分组
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 网络层转发分组">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    转发表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    分组转发算法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-arpdhcpicmp" class="md-nav__link">
+    5.6 ARP、DHCP、ICMP
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 ARP、DHCP、ICMP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ip" class="md-nav__link">
+    IP地址与硬件地址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arp" class="md-nav__link">
+    地址解析协议 ARP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dhcp" class="md-nav__link">
+    动态主机配置协议（DHCP）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icmp" class="md-nav__link">
+    网际控制报文协议（ICMP）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipv6" class="md-nav__link">
+    六、IPv6
+  </a>
+  
+    <nav class="md-nav" aria-label="六、IPv6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-ipv6" class="md-nav__link">
+    6.1 IPv6特点
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 IPv6特点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    主要特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipv4_2" class="md-nav__link">
+    相对于IPv4的改进
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-ipv6" class="md-nav__link">
+    6.2 IPv6数据报
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 IPv6数据报">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    目的地址类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    地址表示法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    分级概念扩展
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    兼容与过渡
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip_1" class="md-nav__link">
+    七、IP组播
+  </a>
+  
+    <nav class="md-nav" aria-label="七、IP组播">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 组播的概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-ip" class="md-nav__link">
+    7.2 IP组播地址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-igmp" class="md-nav__link">
+    7.3 IGMP与组播路由算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    7.4 广播帧与组播帧的过滤区别
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip_2" class="md-nav__link">
+    八、移动IP
+  </a>
+  
+    <nav class="md-nav" aria-label="八、移动IP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-ip" class="md-nav__link">
+    8.1 移动IP基本概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-ip" class="md-nav__link">
+    8.2 移动IP通信过程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、网络层功能
+  </a>
+  
+    <nav class="md-nav" aria-label="一、网络层功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 异构网络互联
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 路由与转发
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-sdn" class="md-nav__link">
+    1.3 SDN
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 SDN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sdn" class="md-nav__link">
+    SDN（软件定义网络）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openflow" class="md-nav__link">
+    OpenFlow
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    流表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    优点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    问题
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    1.4 拥塞控制
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    二、网络层设备
+  </a>
+  
+    <nav class="md-nav" aria-label="二、网络层设备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 冲突域与广播域
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 路由器的组成和功能
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 路由器的组成和功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    路由器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    路由选择与分组转发
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    2.3 路由表与转发表
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 路由表与转发表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    路由表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    转发表
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    三、路由算法
+  </a>
+  
+    <nav class="md-nav" aria-label="三、路由算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 静态路由与动态路由
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 静态路由与动态路由">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    静态路由
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    动态路由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-" class="md-nav__link">
+    3.2 距离-向量路由算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 链路状态路由算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    3.4 层次路由
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    四、路由协议
+  </a>
+  
+    <nav class="md-nav" aria-label="四、路由协议">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 自治系统
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-igp" class="md-nav__link">
+    4.2 内部网关协议 IGP
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 内部网关协议 IGP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rip" class="md-nav__link">
+    路由信息协议 RIP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ospf" class="md-nav__link">
+    开放最短路径优先协议 OSPF
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-egp" class="md-nav__link">
+    4.3 外部网关协议 EGP
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 外部网关协议 EGP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bgp" class="md-nav__link">
+    BGP定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgp_1" class="md-nav__link">
+    BGP要解决的问题
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgp_2" class="md-nav__link">
+    BGP工作原理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgp_3" class="md-nav__link">
+    BGP特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgp_4" class="md-nav__link">
+    BGP报文
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipv4" class="md-nav__link">
+    五、IPv4
+  </a>
+  
+    <nav class="md-nav" aria-label="五、IPv4">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-ipv4" class="md-nav__link">
+    5.1 IPv4分组格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-ip" class="md-nav__link">
+    5.2 IP数据报的分片与重组
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 IP数据报的分片与重组">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    如何分片
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    分片计算
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    重组
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    不需要分片的情况
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-ipv4nat" class="md-nav__link">
+    5.3 IPv4地址与NAT
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 IPv4地址与NAT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ipv4_1" class="md-nav__link">
+    IPv4地址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nat" class="md-nav__link">
+    网络地址转换 NAT
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-cidr" class="md-nav__link">
+    5.4 子网划分、子网掩码、CIDR
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 子网划分、子网掩码、CIDR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    子网划分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    子网掩码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cidr" class="md-nav__link">
+    无分类编址CIDR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    计算技巧
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    5.5 网络层转发分组
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 网络层转发分组">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    转发表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    分组转发算法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-arpdhcpicmp" class="md-nav__link">
+    5.6 ARP、DHCP、ICMP
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 ARP、DHCP、ICMP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ip" class="md-nav__link">
+    IP地址与硬件地址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arp" class="md-nav__link">
+    地址解析协议 ARP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dhcp" class="md-nav__link">
+    动态主机配置协议（DHCP）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icmp" class="md-nav__link">
+    网际控制报文协议（ICMP）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ipv6" class="md-nav__link">
+    六、IPv6
+  </a>
+  
+    <nav class="md-nav" aria-label="六、IPv6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-ipv6" class="md-nav__link">
+    6.1 IPv6特点
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 IPv6特点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    主要特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ipv4_2" class="md-nav__link">
+    相对于IPv4的改进
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-ipv6" class="md-nav__link">
+    6.2 IPv6数据报
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 IPv6数据报">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    目的地址类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    地址表示法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    分级概念扩展
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    兼容与过渡
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip_1" class="md-nav__link">
+    七、IP组播
+  </a>
+  
+    <nav class="md-nav" aria-label="七、IP组播">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 组播的概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-ip" class="md-nav__link">
+    7.2 IP组播地址
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-igmp" class="md-nav__link">
+    7.3 IGMP与组播路由算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    7.4 广播帧与组播帧的过滤区别
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip_2" class="md-nav__link">
+    八、移动IP
+  </a>
+  
+    <nav class="md-nav" aria-label="八、移动IP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-ip" class="md-nav__link">
+    8.1 移动IP基本概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-ip" class="md-nav__link">
+    8.2 移动IP通信过程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0x04">0x04 网络层</h1>
+<h2 id="_1">一、网络层功能</h2>
+<h3 id="11">1.1 异构网络互联</h3>
+<p>网络互联：指用路由器进行网络互联和路由选择。</p>
+<p>虚拟IP网络：使用相同IP协议参加互联的计算机网络，屏蔽了各物理网络的异构性，看上去好像是一个统一的网络。</p>
+<h3 id="12">1.2 路由与转发</h3>
+<p>路由选择：按照复杂的分布式算法，根据从各相邻路由器所得到的关于整个网络拓扑的变化情况，动态地改变所选择的路由</p>
+<p>分组转发：路由器根据转发表将用户的IP数据报从合适的端口转发出去</p>
+<h3 id="13-sdn">1.3 SDN</h3>
+<ul>
+<li>传统互联网：路由器既有转发表（数据层面）又有路由选择软件（控制层面），即路由器既要负责与其他路由器交换路由信息、动态改变路由，又要负责转发数据</li>
+<li>SDN是一种新型网络体系结构</li>
+</ul>
+<h4 id="sdn">SDN（软件定义网络）</h4>
+<p>在网络的控制层面设置一个逻辑上的远程控制器，掌握各主机和整个网络的状态，并为每个分组计算出最佳路由，再将<strong>转发表下发</strong>给路由器。从而，路由器只需要负责数据层面的工作，即收到分组、查找转发表、转发分组。</p>
+<ul>
+<li>在这种模式下，网络变成了集中控制的，但这并不意味着SDN要将整个互联网改造成集中控制的。SDN适用于一些大型数据中心之间的广域网，可以提高网络运行效率。</li>
+<li>基于流的转发</li>
+<li>数据层面与控制层面分离</li>
+<li>SDN具有很好的可编程性</li>
+</ul>
+<p><img alt="image-20221210120153320" src="image-20221210120153320.png" /></p>
+<h4 id="openflow">OpenFlow</h4>
+<p>是SDN体系结构中控制层面和数据层面之间的通信接口，使得控制层面的控制器可以对数据层面中的物理设备进行直接访问和控制。</p>
+<p>SDN并未规定必须使用OpenFlow，只是大多数SDN都使用OpenFlow</p>
+<p>OpenFlow交换机可处理的帧：数据链路层的帧、网际层的IP数据报、传输层的TCP/UDP报文</p>
+<h4 id="_2">流表</h4>
+<p>对应传统路由器的路由表，但与路由表有区别。</p>
+<ul>
+<li>
+<p>流：穿过网络的一种分组序列，每个分组都共享首部某些字段的值，如某个流可以是具有相同源IP地址和目的IP地址的一连串分组</p>
+</li>
+<li>
+<p>流表：SDN远程控制器来管理的</p>
+</li>
+<li>
+<p>每个OpenFlow交换机有一个或多个流表，每个流表可以包含多个流表项</p>
+</li>
+</ul>
+<p><img alt="image-20221210115543892" src="image-20221210115543892.png" /></p>
+<ul>
+<li>
+<p>首部字段值包含一组字段，用于匹配分组</p>
+</li>
+<li>
+<p>既有MAC首部，又有IP首部，还有TCP/IP首部</p>
+<p><img alt="image-20221210115749372" src="image-20221210115749372.png" /></p>
+</li>
+<li>
+<p>交换机可采用的动作有</p>
+<ul>
+<li>将分组从对应端口转发出去</li>
+<li>丢弃分组</li>
+<li>复制分组并从多个端口转发出去</li>
+<li>重写分组的首部字段（三层协议的首部都可重写）</li>
+</ul>
+</li>
+</ul>
+<h4 id="_3">优点</h4>
+<ul>
+<li>全局集中式控制和分布式高速转发，既利于控制层面的全局优化，又利于高性能的网络抓饭</li>
+<li>灵活可编程与性能的平衡，控制和转发功能分离后，使得网络可以由专有的自动化工具以编程方式配置</li>
+<li>降低城北，实现了网络设备的制造与功能软件的开发相分离</li>
+</ul>
+<h4 id="_4">问题</h4>
+<ul>
+<li>集中管理易受攻击，若崩溃则整个网络都受影响</li>
+<li>瓶颈问题，网络规模扩大，控制器可能称为网络性能的瓶颈</li>
+</ul>
+<h3 id="14">1.4 拥塞控制</h3>
+<p>拥塞判断：观察网络吞吐量与网络负载</p>
+<ul>
+<li>轻度拥塞：随着网络负载的增加，网络吞吐量明显小于正常吞吐量</li>
+<li>拥塞状态：网络吞吐量随着网络负载的增大而下降</li>
+<li>死锁状态：网络吞吐量下降到零</li>
+</ul>
+<p>拥塞控制：</p>
+<ul>
+<li>开环控制：设计网络时事先将有关因素考虑周到。是一种静态预防方法。在做决定时不考虑当前网络状态</li>
+<li>闭环控制：采用检测网络系统监视并及时检测哪里发生了拥塞，将拥塞信息传到合适的地方以便调整网络系统的运行。是基于反馈环路的概念，是一种动态的方法。</li>
+</ul>
+<p>拥塞控制与流量控制的区别：</p>
+<ul>
+<li>流量控制是指发送端与接收端之间点对点通信量的控制，只需要抑制发送方的发送速率</li>
+<li>流量控制必须要确保通信子网能够传送待传送的数据，是一个全局性的问题，涉及网络中所有的主机、路由器及导致网络传输能力下降的所有因素</li>
+</ul>
+<h2 id="_5">二、网络层设备</h2>
+<h3 id="21">2.1 冲突域与广播域</h3>
+<ul>
+<li>冲突域：连接到同一物理介质上的所有结点的集合，结点之间存在介质争用的现象。</li>
+<li>集线器、中继器等不能划分冲突域</li>
+<li>网桥、交换机、路由器等可以划分冲突域</li>
+<li>广播域：接收同样广播消息的结点集合。</li>
+<li>集线器、交换机等设备所连接的结点都属于同一个广播域</li>
+<li>路由器可以划分广播域</li>
+</ul>
+<h3 id="22">2.2 路由器的组成和功能</h3>
+<h4 id="_6">路由器</h4>
+<ul>
+<li>路由器是一种具有多个输入/输出端口的专用计算机，用于连接异构网络并完成路由转发。多个广播域互联时必须使用路由器。</li>
+<li>路由器的功能：路由选择、分组转发</li>
+<li><strong>一个存储转发设备实现了某一层功能，则意味着它可以互联该层及该层以下使用不同协议的两个网段。</strong></li>
+<li>路由器实现了网络层功能，意味着路由器可以<u>互联两个网络层、数据链路层、物理层协议都不同</u>的网段。</li>
+<li>网桥实现了数据链路层功能，意味着网桥可以<u>互联两个数据链路层、物理层协议都不同的网段</u>，但要求网络层及以上层次的协议要相同。</li>
+<li>中继器实现了物理层功能，但它不是存储转发设备，互联的两个网段物理层协议必须相同。</li>
+<li>直接交付：若目的主机和源主机位于同一个网络上，则数据报无须经过路由器</li>
+<li>间接交付：目的主机和源主机位于不同网络上，数据报需要经过路由器选择路由转发给下一个路由器</li>
+<li>路由器是面向协议的，依据网络地址进行操作，一般提供对多种协议的支持，如OSI、TCP/IP、IPX等。而网桥与高层协议无关。</li>
+</ul>
+<h4 id="_7">路由选择与分组转发</h4>
+<ul>
+<li>路由选择部分也称为<u>控制部分</u></li>
+<li>构成：路由选择处理机、路由表、路由选择协议</li>
+<li>核心构件：路由选择处理机</li>
+<li>任务：根据所选定的路由选择协议构造路由表，定时或经常地与相邻路由器交换路由信息而不断更新和维护路由表</li>
+<li>分组转发部分</li>
+<li>构成：交换结构、一组输入端口、一组输出端口</li>
+<li>处理流程：<ul>
+<li>输入端口从在物理层接收到的比特流中提取出数据链路层帧，进而从帧中提取出网络层数据报</li>
+<li>输出端口与输入端口操作相反</li>
+<li>交换结构根据转发表对分组进行处理，将来自输入端口的分组从一个合适的输出端口转发。有三种常用交换方法：通过存储器交换、通过总线交换、通过互联网络交换</li>
+</ul>
+</li>
+<li>交换结构本身就是一个网络</li>
+</ul>
+<h3 id="23">2.3 路由表与转发表</h3>
+<h4 id="_8">路由表</h4>
+<p>路由表根据路由选择算法得出，通常具有4个项目：目的网络IP地址、子网掩码、下一跳IP地址、接口.</p>
+<p>例如，对于图中的网路拓扑：</p>
+<p><img alt="image-20221117161808020" src="image-20221117161808020.png" /></p>
+<p>R1的路由表如下：</p>
+<table>
+<thead>
+<tr>
+<th>目的网络IP地址</th>
+<th>子网掩码</th>
+<th>下一跳IP地址</th>
+<th>接口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>202.114.1.0</td>
+<td>255.255.255.0</td>
+<td>Direct</td>
+<td>E1</td>
+</tr>
+<tr>
+<td>202.114.2.0</td>
+<td>255.255.255.0</td>
+<td>Direct</td>
+<td>L0</td>
+</tr>
+<tr>
+<td>202.114.3.0</td>
+<td>255.255.255.0</td>
+<td>202.114.2.2</td>
+<td>L0</td>
+</tr>
+<tr>
+<td>0.0.0.0</td>
+<td>0.0.0.0</td>
+<td>202.114.2.2</td>
+<td>L0</td>
+</tr>
+</tbody>
+</table>
+<p>路由表的结构追求对网络拓扑变化的计算最优化.</p>
+<h4 id="_9">转发表</h4>
+<p>转发表由路由表得出，其表项与路由表项有直接对应关系。</p>
+<p>转发表格式与路由表格式不同，且其结构追求使查找过程最优化。</p>
+<p>表项：目的地址、下一跳MAC地址</p>
+<p>默认路由：用于代替所有具有相同“下一跳”MAC地址的项目，从而减少转发表的重复项目。默认路由设置得比其他项目的优先级低。</p>
+<table>
+<thead>
+<tr>
+<th>目的站</th>
+<th>下一跳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>直接</td>
+</tr>
+<tr>
+<td>3</td>
+<td>MAC1</td>
+</tr>
+<tr>
+<td>默认</td>
+<td>MAC2</td>
+</tr>
+</tbody>
+</table>
+<p>分组的实际转发是靠直接查找转发表，而不是直接查找路由表。</p>
+<h2 id="_10">三、路由算法</h2>
+<h3 id="31">3.1 静态路由与动态路由</h3>
+<h4 id="_11">静态路由</h4>
+<p>由网络管理员手工配置的路由信息，不能及时适应网络状态的变化，适用于简单的小型网络</p>
+<ul>
+<li>优点：简便、开销较小</li>
+</ul>
+<h4 id="_12">动态路由</h4>
+<p>路由器上的路由表项通过相互连接的路由器之间彼此交换信息，然后按照一定的算法优化得到。这些路由信息会在一定时间内不断更新，以适应不断变化的网络。</p>
+<ul>
+<li>优点：能改善网络性能并有助于流量控制</li>
+<li>缺点：算法复杂，会增加网络的负担。</li>
+</ul>
+<h3 id="32-">3.2 距离-向量路由算法</h3>
+<ul>
+<li>路由选择表：每条路径的目的地（另一个结点）、路径的代价（距离）</li>
+<li>所有结点定期将它们的整个路由选择表传送给所有与之直接相邻的结点</li>
+<li>所有结点都监听从其他结点传来的路由选择更新信息，并在以下情况下更新自己的路由选择表</li>
+<li>更新信息中包含了自己路由表中不存在的路由，新增该路由</li>
+<li>更新信息中包含一条已有的但距离更短的路由信息，替换该路由</li>
+<li>网络中结点数越多，更新报文越大</li>
+<li>可能遇到路由环路等问题</li>
+<li>最常见的距离-向量路由算法是RIP算法，采用“跳数”作为距离的度量</li>
+</ul>
+<h3 id="33">3.3 链路状态路由算法</h3>
+<ul>
+<li>每个结点都具有完全的网络拓扑信息。</li>
+<li>每个结点检查自己所有直接链路的状态，并将链路状态信息发送给网络中的其他所有结点</li>
+<li>
+<p>结点收到链路状态信息后，更新自己的网络拓扑和状态“视野图”，若链路状态发生变化，则结点对更新的网络图利用Dijkstra最短路径算法重新计算路由。</p>
+</li>
+<li>
+<p>特征：</p>
+</li>
+<li>向本自治系统中所有路由器发送信息，使用泛洪法，即通过所有端口向所有相邻路由发送信息，收到信息的相邻路由器又将此信息发往其所有相邻路由器（但不再发送给发来信息的那个路由器）</li>
+<li>发送的信息是路由器的直接链路状态</li>
+<li>只有当链路状态发生变化时，路由器才向所有路由器发送此信息。</li>
+<li>优点：</li>
+<li>每个路由结点使用同样的原始状态数据独立地计算路径，不依赖中间结点地计算</li>
+<li>链路状态报文仅包含单个结点的直接链路信息，其大小与网络中路由结点数量无关，因此具有更好的规模可伸展性。</li>
+</ul>
+<h3 id="34">3.4 层次路由</h3>
+<p>是OSPF路由协议所采用的，即将一个AS再划分为若干区域，每个路由器知道在本区域内的转发路由，而不必知道其他区域的内部结构。</p>
+<h2 id="_13">四、路由协议</h2>
+<h3 id="41">4.1 自治系统</h3>
+<p>自治系统（AS）是指单一技术管理下的一组路由器。</p>
+<ul>
+<li>对于AS内部的分组转发，这些路由器使用AS内部的路由选择协议和共同的度量来确定转发路由</li>
+<li>对于AS之间的分组转发，这些路由器使用AS之间的路由选择协议来确定转发路由</li>
+</ul>
+<p>一个自治系统内的所有网络由一个行政单位管辖</p>
+<p>一个自治系统的所有路由器必须是连通的</p>
+<p>域内路由：AS内部的路由</p>
+<p>域外路由：AS之间的路由</p>
+<h3 id="42-igp">4.2 内部网关协议 IGP</h3>
+<h4 id="rip">路由信息协议 RIP</h4>
+<ul>
+<li>RIP是内部网关协议中最先得到广泛应用的协议，其最大优点是简单</li>
+<li>RIP规定</li>
+<li>网络中的每个路由器都要维护从<strong>它自身</strong>到<strong>其他每个目的网络</strong>的距离记录（距离向量）</li>
+<li>距离/跳数：规定一个路由器到其直接连接网络的距离为1，每经过一个路由器，距离+1</li>
+<li>优先选择跳数少的路径</li>
+<li>一条路径最多只能包含15个路由器，当距离为16时，表示网络不可达。因此RIP只适用于小型互联网。最高跳数的设置可以防止数据报不断循环在环路上</li>
+<li>默认任意两个使用RIP的路由器之间每30秒广播一次RIP路由更新信息，以自动建立并维护路由表</li>
+<li>RIP中每个网络的子网掩码必须相同。但在新的RIP2中，支持变长子网掩码和CIDR。</li>
+<li>RIP特点</li>
+<li>仅与相邻路由器交换信息</li>
+<li>交换的信息是当前路由器所知道的全部信息，即自己的路由表</li>
+<li>按固定的时间间隔交换路由信息</li>
+<li><strong>RIP是应用层协议</strong>，使用UDP传送数据（端口520）. RIP选择的路径不一定是时间最短的，但一定是具有最少路由器的路径。</li>
+<li><strong>算法流程（即距离-向量路由算法）</strong></li>
+<li>收到来自路由器X的RIP报文，先修改此报文中的所有项目：将“下一跳”字段都修改为X，并将“距离”字段的值+1</li>
+<li>对于修改后的报文中的每个项目：<ul>
+<li>本路由表中没有该项目的目的网络N，将该项目添加到本路由表中</li>
+<li>本路由表中有该项目的目的网络N，且对应下一跳地址也为X，用收到的项目替换原项目</li>
+<li>本路由表中有该项目的目的网络N，但对应下一跳地址不是X，则比较距离大小。若收到的项目距离更小，则用收到的项目替换原项目，否则什么也不做。</li>
+</ul>
+</li>
+<li>如果180秒后还没有收到相邻路由器的RIP报文，则把该路由器标记为不可达路由器（即把距离设置为16）</li>
+<li>RIP优点</li>
+<li>实现简单</li>
+<li>开销小</li>
+<li>收敛过程较快</li>
+<li>RIP缺点</li>
+<li>限制了网络规模，最大距离为15</li>
+<li>路由器之间交换的是完整路由表，因此网络规模越大，开销越大</li>
+<li>网络出现故障时，会出现慢收敛现象，即坏消息传得慢，使得更新过程的收敛时间长</li>
+</ul>
+<h4 id="ospf">开放最短路径优先协议 OSPF</h4>
+<ul>
+<li>
+<p>OSPF是使用分布式链路状态路由算法的典型代表</p>
+</li>
+<li>
+<p>OSPF特点</p>
+</li>
+<li>
+<p>向本自治系统中的所有路由器发送信息，使用泛洪法</p>
+</li>
+<li>交换的信息是当前路由器所知道的部分信息，即与本路由器相邻的所有路由器的链路状态</li>
+<li>只有当链路状态发生变化时，路由器才用泛洪法向所有路由器发送此信息，并且更新过程收敛快，不会出现RIP算法中“坏消息传得慢”的问题。</li>
+<li><strong>OSPF是网络层协议</strong>，不使用UDP或TCP，而直接用IP数据报传送（首部协议字段89）.</li>
+<li>对不同链路可根据IP分组的不同服务类型设置为不同的代价，从而对不同的业务可计算出不同的路由，灵活性强</li>
+<li>多路径间的负载平衡：若到同一目的网络有多条相同代价的路径，则将通信量分配给这几条路径</li>
+<li>分组具有鉴别功能，保证了仅在可信赖的路由器之间交换链路状态信息</li>
+<li>支持可变长度的子网划分和无分类编址CIDR</li>
+<li>
+<p>每个链路状态都带上一个32位的序号，序号越大，状态就越新</p>
+</li>
+<li>
+<p>OSPF工作原理</p>
+</li>
+<li>
+<p>所有路由器上都能建立一个链路状态数据库/全网的拓扑结构图</p>
+<ul>
+<li>为确保链路状态数据库全网同步，规定每隔一段时间刷新一次数据库的链路状态</li>
+</ul>
+</li>
+<li>每个路由器根据这个拓扑结构图，使用Dijkstra最短路径算法计算从自己到各目的网络的最优路径，从而构造自己的路由表</li>
+<li>
+<p>为了使OSPF能应用于规模很大的网络，OSPF将一个自治系统划分为若干个更小的“区域”</p>
+<ul>
+<li>泛洪法交换链路信息的范围局限在每个“区域”上，从而减少整个网络上的通信量。</li>
+<li>一个区域内的路由器只知道自己区域的网络拓扑</li>
+<li>区域有层次划分，处于上层的区域称为“主干区域”，负责连通其他下层区域，有时还连接其他自治域</li>
+</ul>
+</li>
+<li>
+<p>OSPF分组类型</p>
+</li>
+<li>
+<p>问候分组：用于发现和维持邻站的可达性</p>
+<ul>
+<li>每隔10秒，每两个相邻路由器要交换一次问候分组</li>
+</ul>
+</li>
+<li>
+<p>数据库描述分组：向邻站给出自己的链路状态数据库中所有链路状态项目的摘要信息</p>
+<ul>
+<li>路由器刚开始工作时，相邻路由器需要用数据库描述分组交换摘要信息，以同步数据库</li>
+</ul>
+</li>
+<li>
+<p>链路状态请求分组：向对方请求发送某些链路状态项目的详细信息</p>
+</li>
+<li>
+<p>链路状态更新分组：用泛洪法对全网更新链路状态</p>
+</li>
+<li>
+<p>链路状态确认分组：对链路更新分组的确认</p>
+<p><img alt="image-20221121083910004" src="image-20221121083910004.png" /></p>
+</li>
+<li>
+<p>OSPF优点</p>
+</li>
+<li>
+<p>适用于网络规模很大的情况，没有“坏消息传得慢”的问题</p>
+</li>
+</ul>
+<h3 id="43-egp">4.3 外部网关协议 EGP</h3>
+<h4 id="bgp">BGP定义</h4>
+<ul>
+<li>边界网关协议（BGP）是一种外部网关协议，用于不同自治系统的路由器之间交换路由信息。</li>
+<li>力求找到一条能够到达目的网络且比较好的路由（不能兜圈子），而不是最佳路由</li>
+<li>采用路径向量路由选择协议，与距离向量协议和链路状态协议有很大区别</li>
+<li><strong>BGP是应用层协议</strong>，<strong>使用TCP报文传送</strong></li>
+</ul>
+<h4 id="bgp_1">BGP要解决的问题</h4>
+<ul>
+<li>自治系统之间路由选择困难</li>
+<li>对于自治系统之间的路由选择，要寻找最佳路由是很不现实的</li>
+<li>自治系统之间的路由必须考虑有关策略</li>
+</ul>
+<h4 id="bgp_2">BGP工作原理</h4>
+<ul>
+<li>自治系统管理员选择一个或多个路由器作为该自治系统的“BGP发言人“</li>
+<li>BGP发言人负责与其他自治系统的BGP发言人交换路由信息</li>
+<li>交换路由信息时，首先要建立TCP连接</li>
+<li>在TCP连接上交换BGP报文以建立BGP会话</li>
+<li>利用BGP会话交换路由信息</li>
+<li>所有BGP发言人都相互交换网络可达性信息后，即可找出到达各自治系统的较好路由</li>
+<li>BGP发言人既要运行BGP，也要运行自己所属AS所用的内部网关协议</li>
+</ul>
+<h4 id="bgp_3">BGP特点</h4>
+<ul>
+<li>BGP交换路由信息的结点的数量级是自治系统的数量级，比自治系统中的网络数少很多</li>
+<li>每个自治系统中BGP发言人数量很少，使得路由选择不至于过分复杂</li>
+<li>BGP支持CIDR</li>
+<li>路由表表项既包含目的网络前缀、下一跳路由器，还要包括到达该目的网络所要经过的<u>各个自治系统序列</u></li>
+<li>在BGP刚开始运行时，BGP的邻站交换整个BGP路由表；随后只在发生变化时更新有变化的部分。节省网络带宽和处理开销。</li>
+</ul>
+<h4 id="bgp_4">BGP报文</h4>
+<ul>
+<li>打开报文：用来与相邻的另一个BGP发言人建立关系</li>
+<li>更新报文：用来发送某一路由的信息，以及列出要撤销的多条路由</li>
+<li>保活报文：用来确认打开报文并周期性地证实邻站关系</li>
+<li>通知报文：用来发送检测到的差错</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>RIP</strong></th>
+<th><strong>OSPF</strong></th>
+<th>BGP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>内部网关协议</td>
+<td>内部网关协议</td>
+<td>外部网关协议</td>
+</tr>
+<tr>
+<td>路由算法</td>
+<td>距离-向量</td>
+<td>链路状态</td>
+<td>路径-向量</td>
+</tr>
+<tr>
+<td>路径选择</td>
+<td>跳数最少</td>
+<td>代价最低</td>
+<td>较好，非最佳</td>
+</tr>
+<tr>
+<td><strong>信息交换范围</strong></td>
+<td>仅与相邻路由器</td>
+<td>洪泛法向全网路由器发送</td>
+<td>仅与相邻路由器</td>
+</tr>
+<tr>
+<td><strong>交换的信息内容</strong></td>
+<td>自己的路由表</td>
+<td>与本路由器相邻的链路状态</td>
+<td>首次：整个路由表非首次：有变化的部分</td>
+</tr>
+<tr>
+<td><strong>交换时机</strong></td>
+<td>按固定时间间隔交换</td>
+<td>仅在链路状态更新时交换</td>
+<td>/</td>
+</tr>
+<tr>
+<td><strong>所在层次</strong></td>
+<td>应用层（端口520），UDP数据报传送</td>
+<td>网络层，IP数据报传送</td>
+<td>应用层，TCP数据报传送</td>
+</tr>
+<tr>
+<td><strong>对变长子网掩码和CIDR的支持</strong></td>
+<td>不支持，要求每个网络子网掩码都相同</td>
+<td>支持</td>
+<td>支持CIDR</td>
+</tr>
+<tr>
+<td><strong>距离的定义</strong></td>
+<td>规定一个路由器到其直接连接网络的距离为1</td>
+<td>可为不同服务给出不同定义，灵活性强</td>
+<td>/</td>
+</tr>
+<tr>
+<td><strong>优点</strong></td>
+<td>实现简单；开销小</td>
+<td>适用于网络规模很大的情况，没有“坏消息传得慢的问题”</td>
+<td>/</td>
+</tr>
+<tr>
+<td><strong>缺点</strong></td>
+<td>“坏消息传得慢”、网络规模有限（最大距离为15）</td>
+<td>/</td>
+<td>/</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ipv4">五、IPv4</h2>
+<h3 id="51-ipv4">5.1 IPv4分组格式</h3>
+<p><img alt="image-20221121094132678" src="image-20221121094132678.png" /></p>
+<p>IPv4的首部分为固定部分和可变部分。</p>
+<ul>
+<li>固定部分：长度固定，共20B，所有IP分组都具有，因此IPv4的首部至少为20B</li>
+<li>可变部分：包含一些可选字段，其长度可变</li>
+</ul>
+<p><strong>首部的重要字段</strong></p>
+<ul>
+<li>版本：IP协议的版本</li>
+<li>首部长度：4bit，最多可表示15个单位，而<strong><em><u>单位为4B</u></em></strong>。因此该字段可表示的最长首部长度为15×4B=60B，即一个IP数据报的首部至少为20B，至多为60B，且首部长度必须为4B的整数倍</li>
+<li>总长度：16bit，最多可表示2^16个单位，而<strong><em><u>单位为1B</u></em></strong>。指首部和数据之和的长度。因此一个IP数据报的最大长度为65535B。然而，IP数据报交到数据链路层作为以太网帧的数据部分时，由于以太网帧的MTU值为1500B，若一个IP数据报的总长度超出该值，则需要分片封装成多个以太网帧。</li>
+<li>标识：16bit，是一个计数器，每产生一个数据报就+1，但不是序号。IP数据报分片时，每个分片的标识都相同</li>
+<li>标志：3bit</li>
+<li>最低位为MF（More Fragment），MF=1时表示后面还有分片，MF=0时表示最后一个分片</li>
+<li>中间一位为DF（Don't Fragment），DF=0时才允许分片</li>
+<li>片偏移：13bit，最多可表示2^13个单位，而<strong><em><u>单位为8B</u></em></strong>。指出一个分片在原数据报中的相对位置。</li>
+<li>这个相对位置不含首部。即记数据部分的开头为相对位置0.</li>
+<li><strong>每个分片（除最后一个分片外）的数据部分长度一定是8B的整数倍</strong></li>
+<li>生存时间（TTL）：8bit，数据报在网络中可通过的路由器的最大值，每通过一个路由器，TTL-1，当TTL被减为0时丢弃该分组，以免分组在网络中永远循环</li>
+<li>协议：8bit，指出此数据报携带的数据使用何种协议，即应该上交给传输层的哪个协议进行处理。6表示TCP，17表示UDP</li>
+<li>首部校验和：16bit，只校验数据报的首部，不校验数据部分</li>
+<li>源地址字段：4B，发送方的IP地址</li>
+<li>目的地址字段：4B，接收方的IP地址</li>
+</ul>
+<p><strong>必须记住的内容</strong></p>
+<p>首部长度字段的单位是4B</p>
+<p>总长度字段的单位是1B</p>
+<p>片偏移字段的单位是8B</p>
+<p>每个分片（除最后一个分片外）的数据部分长度一定是8B的整数倍</p>
+<h3 id="52-ip">5.2 IP数据报的分片与重组</h3>
+<h4 id="_14">如何分片</h4>
+<p>IP数据报下发给数据链路层进行封装时，由于数据链路层的各个协议都有MTU限制（如以太网帧为1500字节），可能需要将一个IP数据报分片并封装成多个帧，以符合MTU要求。</p>
+<ul>
+<li>每个片都是一个IP数据报。</li>
+<li>每个片都具有与原数据报基本相同的首部（个别字段不同）。</li>
+</ul>
+<h4 id="_15">分片计算</h4>
+<p>例，一个长4000B（首部20B，数据部分3980B）的IP数据报需要转发到一条MTU为1500B的链路上。则：</p>
+<ul>
+<li>一个分片中可包含20B首部和1480B数据部分，又总数据部分为3980B，所以需要为分为3个分片</li>
+<li>每个分片的首部标识字段与原数据报的首部标识字段相同</li>
+<li>第1个分片的MF=1，DF=0，片偏移=0</li>
+<li>第2个分片的MF=1，DF=0，片偏移为185，即从原数据报的第185×8=1480字节开始，因为第1个分片已包含了数据部分的前1480字节。</li>
+<li>第3个分片的MF=0，DF=0，片偏移为370，即从原数据报的第2960字节开始。</li>
+</ul>
+<h4 id="_16">重组</h4>
+<ul>
+<li>分片在目的主机的网络层被重新组装</li>
+<li>目的主机检查数据报的标识号，具有同一标识号的数据报即属于同一个原始数据报的分片。然后根据片偏移字段确定分片的先后顺序。</li>
+</ul>
+<h4 id="_17">不需要分片的情况</h4>
+<p>广域网中的分组不必分片。</p>
+<p>因为广域网所能通过的分组最大长度是广域网中的所有结点都事先知道的，源结点不会发送网络不支持的过长分组。</p>
+<h3 id="53-ipv4nat">5.3 IPv4地址与NAT</h3>
+<h4 id="ipv4_1">IPv4地址</h4>
+<p>IP地址分为网络号和主机号两部分</p>
+<ul>
+<li>网络号：标识主机或路由器所连接的网络，在整个因特网范围内唯一</li>
+<li>主机号：标识主机或路由器，必须在所属网络中唯一</li>
+</ul>
+<p>特殊用途的IP地址：</p>
+<ul>
+<li>主机号全0：表示本网络本身</li>
+<li>主机号全1：表示本网络的广播地址</li>
+<li>127.x.x.x：保留为环回自检地址，表示任意主机本身。以此类IP地址位目的地址的IP数据报永远不会出现在任何网络上（只会占用A类地址的网络号）</li>
+<li>32位全0（0.0.0.0）：表示本网络上的本主机（只会占用A类地址的网络号）</li>
+<li>32位全1（255.255.255.255）：表示整个TCP/IP网络的广播地址，由于存在路由器对广播域的隔离，一般等效位本网络的广播地址（只会占用E类地址的网络号）</li>
+</ul>
+<p>IP地址特点：</p>
+<ul>
+<li>是分等级的地址结构，由网络号和主机号两部分组成</li>
+<li>IP地址管理机构在分配IP地址时只分配网络号，而主机号则由对应单位自行分配，方便管理</li>
+<li>路由器仅根据目的主机所连接的网络号来转发分组，减小了路由表所占存储空间</li>
+<li>IP地址是标识一台主机和一条链路的接口。当一台主机同时连接到两个网络时，该主机必须同时具有两个相应的IP地址。因此路由器都至少有两个IP地址</li>
+<li>用转发器或桥接器连接的若干LAN仍然是同一个网络</li>
+<li>所有分配到网络号的网络（无论是LAN还是WAN）都是平等的</li>
+<li>在同一个局域网上的主机或路由器的IP中的网络号必须相同。</li>
+</ul>
+<p>IP地址分类：</p>
+<p><img alt="image-20221121102316053" src="image-20221121102316053.png" /></p>
+<table>
+<thead>
+<tr>
+<th>网络类别</th>
+<th>最大可用网络数</th>
+<th>第一个可用网络号</th>
+<th>最后一个可用网络号</th>
+<th>一个网络中的最大主机数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>$2^7-2$</td>
+<td>0</td>
+<td>126</td>
+<td>$2^{24}-2$</td>
+</tr>
+<tr>
+<td>B</td>
+<td>$2^{14}$</td>
+<td>128.0</td>
+<td>191.255</td>
+<td>$2^{16}-2$</td>
+</tr>
+<tr>
+<td>C</td>
+<td>$2^{21}$</td>
+<td>192.0.0</td>
+<td>223.255.255</td>
+<td>$2^8-2$</td>
+</tr>
+</tbody>
+</table>
+<h4 id="nat">网络地址转换 NAT</h4>
+<ul>
+<li>作用：将专用网络地址转换为公用地址，从而对外隐藏内部管理的IP地址。</li>
+<li>好处</li>
+<li>整个专用网络只需要一个全球IP地址就可以与因特网连通。</li>
+<li>
+<p>隐藏了内部网络结构，降低了内部网络收到攻击的风险</p>
+</li>
+<li>
+<p>私有IP地址/可重用地址</p>
+</li>
+<li>
+<p>只用于LAN，不用于WAN</p>
+</li>
+<li>必须通过NAT转换成公用地址后才能用于因特网的地址。</li>
+<li>路由器收到目的地址为私有地址的数据报时，一律不进行转发。</li>
+<li>
+<p>网段：</p>
+<ul>
+<li>1个A类网段，即<strong>10</strong>.0.0.0~<strong>10</strong>.255.255.255</li>
+<li>16个B类网段，即<strong>172.16</strong>.0.0~<strong>172.31</strong>.255.255</li>
+<li>256个C类网段，即<strong>192.168.0.</strong>0~<strong>192.168.255</strong>.255</li>
+</ul>
+</li>
+<li>
+<p>NAT转换表</p>
+</li>
+<li>
+<p>表项：{本地IP地址:端口} {全球IP地址:端口}</p>
+</li>
+<li>多个私有IP地址可以映射到同一个全球IP地址</li>
+</ul>
+<p><img alt="image-20221121112342753" src="image-20221121112342753.png" /></p>
+<ul>
+<li>普通路由器转发IP数据报时，不改变其源IP地址和目的IP地址，仅工作在网络层</li>
+</ul>
+<p>NAT路由器转发IP数据报时，一定要更换其IP地址（转换源IP地址或目的IP地址），还需要查看和转换端口号（传输层）</p>
+<h3 id="54-cidr">5.4 子网划分、子网掩码、CIDR</h3>
+<h4 id="_18">子网划分</h4>
+<ul>
+<li>子网划分是一个单位内部的事情，对外表现为没有划分子网的网络</li>
+<li>子网号占用了原本两级结构中主机号的一部分</li>
+<li>划分子网后的IP地址，其网络号不改变</li>
+<li>分类地址中，子网号不能为全1或全0；CIDR中，子网号可以为全1或全0</li>
+</ul>
+<h4 id="_19">子网掩码</h4>
+<p>若使用子网掩码，则</p>
+<ol>
+<li>一台主机在设置IP地址信息时，必须设置子网掩码</li>
+<li>同属于一个子网的所有主机及路由器的相应端口，必须设置相同的子网掩码</li>
+<li>路由器的路由表中，所包含信息的主要内容有目的网络地址、子网掩码、下一跳地址</li>
+</ol>
+<h4 id="cidr">无分类编址CIDR</h4>
+<p>采用CIDR时，IP地址的记法为：IP地址/网络前缀所占比特数。如128.14.32.5/20，表示IP地址前20位是网络前缀，后12位是主机号</p>
+<p>CIDR没有在32位地址中指明若干位作为子网字段，但单位内部仍可按照需要划分子网。如对地址块/20，可再从主机号中借用3位，从而划分出8个子网，此时单位内部的IP地址为IP地址/23</p>
+<p>CIDR地址块：</p>
+<ul>
+<li>网络前缀都相同的连续IP地址组成CIDR地址块</li>
+<li>一个CIDR地址块可以表示很多地址，称为路由聚合/构成超网</li>
+<li>有利于减少路由器之间的信息交换，提高网络性能</li>
+<li>地址数一定是2的整数次幂，实际可指派地址为$2^N-2$，主机号全0和全1的地址都不使用</li>
+</ul>
+<p>CIDR优点：</p>
+<ul>
+<li>网络前缀长度灵活。上层网络前缀长度较短，路由表项目少；网络内部又可自行延长网络前缀划分子网</li>
+</ul>
+<p>最长前缀匹配（最佳匹配）：</p>
+<ul>
+<li>使用CIDR时，路由表的每个项目构成：网络前缀+下一跳地址，可能不止一个结果</li>
+<li>从匹配结果中选择具有最长网络前缀的路由</li>
+<li>最常用的数据结构：二叉线索</li>
+</ul>
+<h4 id="_20">计算技巧</h4>
+<p>192 = 1100 0000</p>
+<p>168 = 1010 1000</p>
+<p>96 = 0110 0000</p>
+<p>240 = 1111 0000</p>
+<p>224 = 1110 0000</p>
+<h3 id="55">5.5 网络层转发分组</h3>
+<h4 id="_21">转发表</h4>
+<p>分组转发是基于目的主机所在网络的。</p>
+<p>转发表必包含两条信息：目的网络-下一跳地址</p>
+<p>特殊路由：</p>
+<ul>
+<li>主机路由：对特定目的主机的IP地址专门指明一个路由，以便控制和测试网络。如a.b.c.d/32</li>
+<li>默认路由：用特殊前缀0.0.0.0/0表示默认路由，只要目的网络是不在转发表中的其他网络，一律选择默认路由</li>
+</ul>
+<h4 id="_22">分组转发算法</h4>
+<ol>
+<li>从收到的IP数据报的首部提取目的主机的IP地址D</li>
+<li>若查找到特定主机路由，则按照这条路由的下一跳转发，否则按前缀长度从长到短的顺序开始检查</li>
+<li>对于检查到的每一条路由信息，将路由信息的子网掩码与D进行与运算，若所得结果与路由信息的前缀匹配，则查找结束，按照下一跳转发；否则继续检查下一条路由信息</li>
+<li>全部检查完毕仍未转发，此时若还存在默认路由，则按默认路由转发；如果没有默认路由，报告转发分组出错</li>
+</ol>
+<p>在IP数据报的转发过程中，会修改其MAC帧首部的MAC地址信息。在不同网络中传送时，MAC帧中的源地址和目的地址会变化；而网桥转发帧时，不改变帧的源地址</p>
+<h3 id="56-arpdhcpicmp">5.6 ARP、DHCP、ICMP</h3>
+<h4 id="ip">IP地址与硬件地址</h4>
+<p>为什么不直接使用硬件地址进行分组转发：</p>
+<ul>
+<li>由于路由器的隔离，IP网络中无法通过广播MAC地址来完成跨网络的寻址</li>
+<li>通过路由器转发分组时，IP分组在每个网络中都由路由器拆封和重新封装，其MAC帧首部的源地址和目的地址会不断改变，这决定了无法使用MAC地址跨网络通信</li>
+<li>互联在一起的网络的硬件地址体系各不相同，而在IP层抽象的互联网中能够使用统一的、抽象的IP地址研究通信</li>
+</ul>
+<h4 id="arp">地址解析协议 ARP</h4>
+<ul>
+<li>
+<p>负责IP地址到MAC地址的映射。<u>工作在网络层</u>.</p>
+</li>
+<li>
+<p>ARP表：存放本局域网上各主机和路由器的IP地址到MAC地址的映射表</p>
+</li>
+<li>
+<p>每台主机都设有一个ARP高速缓存，用于存储ARP表</p>
+</li>
+<li>
+<p>ARP的工作原理</p>
+</li>
+<li>
+<p>主机A准备向本局域网内的主机B发送IP数据报。A首先查找自己的ARP高速缓存，看有无主机B的IP地址。</p>
+</li>
+<li>若有，则查出主机B对应硬件地址，写入MAC帧的目的地址并发送；若没有，则将FF-FF-FF-FF-FF-FF写入MAC帧的目的地址，并广播ARP请求分组，使局域网内所有主机都收到此ARP请求</li>
+<li>主机B收到ARP请求后，向主机A（而不是广播）发送ARP响应分组，分组中包含主机B的IP与MAC地址的映射关系</li>
+<li>主机A收到ARP响应分组后，将映射写入自己的ARP缓存，然后按照查询到的硬件地址发送MAC帧</li>
+</ul>
+<p>若需要向其他局域网的主机发送IP数据报，则要查找的硬件地址为本局域网路由器的硬件地址。</p>
+<h4 id="dhcp">动态主机配置协议（DHCP）</h4>
+<ul>
+<li>给主机动态分配IP地址。允许一台计算机加入新的网络和获取IP地址而不用手工参与</li>
+<li>应用层协议，基于UDP，以客户端/服务器模式工作</li>
+<li>服务器端口67，客户端端口68</li>
+<li>工作原理：</li>
+<li>客户机广播”DHCP DISCOVER“消息，寻找网络中的DHCP服务器。该消息源地址为0.0.0.0，目的地址为255.255.255.255</li>
+<li>服务器收到消息，广播”DHCP提供“消息，其中包含提供给客户机的IP地址。该消息源地址为服务器地址，目的地址为255.255.255.255</li>
+<li>客户机收到消息，若接受该IP地址，则广播”DHCP请求“消息。该消息源地址为0.0.0.0，目的地址为255.255.255.255</li>
+<li>服务器广播”DHCP确认“消息，将该IP地址分配给客户机。该消息源地址为服务器地址，目的地址为255.255.255.255</li>
+<li>DHCP分配的IP地址是临时的，存在时间限制，即租用期。租用期由服务器决定，客户机也可在报文中提出要求</li>
+<li>客户机与服务器之间需要通过广播方式进行交互，因为客户机尚未有IP地址</li>
+</ul>
+<h4 id="icmp">网际控制报文协议（ICMP）</h4>
+<ul>
+<li>IP层协议</li>
+<li>ICMP差错报文：目标主机或到目标主机路径上的路由器向源主机报告差错和异常情况</li>
+<li>终点不可达：路由器或主机不能交付数据报</li>
+<li>源点抑制：路由器或主机由于拥塞而丢弃数据报时，发送抑制报文使源点放慢发送速率</li>
+<li>超时：路由器收到TTL=0的数据报时向源点发送该报文，或终点没有在预先规定的时间内收到一个数据报的全部分片时发送该报文，并丢弃已收的分片</li>
+<li>参数问题：路由器或目的主机收到的数据报首部存在不正确的字段</li>
+<li>改变路由（重定向）：路由器发给源主机，让源主机知道下次应该将报文发给另外的路由器</li>
+<li>不应发送ICMP差错报文的情况：</li>
+<li>ICMP差错报文发送过程出错，不再发送差错报文</li>
+<li>对具有组播地址的数据报都不发送差错报文</li>
+<li>对具有特殊地址（如127.0.0.0或0.0.0.0）的数据报不发送差错报文</li>
+<li>ICMP询问报文</li>
+<li>回送（echo）请求和回答报文</li>
+<li>时间戳请求和回答报文</li>
+<li>地址掩码请求和回答报文</li>
+<li>路由器询问和通告报文</li>
+<li>ICMP两个最常见的应用</li>
+<li>Ping<ul>
+<li>使用ICMP回送请求和回答报文</li>
+<li>工作在应用层，但直接使用网络层的ICMP，不适用TCP或UDP</li>
+</ul>
+</li>
+<li>Traceroute/Tracert<ul>
+<li>使用ICMP超时报文</li>
+<li>工作在网络层</li>
+</ul>
+</li>
+</ul>
+<h2 id="ipv6">六、IPv6</h2>
+<h3 id="61-ipv6">6.1 IPv6特点</h3>
+<h4 id="_23">主要特点</h4>
+<ul>
+<li>更大的地址空间，128位地址</li>
+<li>扩展的地址层次结构</li>
+<li>灵活的首部格式</li>
+<li>改进的选项</li>
+<li>允许协议继续扩充</li>
+<li>支持即插即用（即自动配置）</li>
+<li>支持资源预分配</li>
+<li>IPv6只有在包的源结点才能分片，在传输路径的路由器上不能再分片。所以从一般意义上说，IPv6不允许分片</li>
+<li><strong>取消了校验和字段</strong></li>
+<li><strong>IPv6首部长度必须是8B的整数倍，而IPv4首部是4B的整数倍</strong></li>
+<li>增大了安全性。<u>身份验证和保密功能是IPv6的关键特征</u></li>
+</ul>
+<h4 id="ipv4_2">相对于IPv4的改进</h4>
+<ul>
+<li>大大扩充了地址空间</li>
+<li>简化了IP数据报首部，包含8个域。使路由器能够更快地处理分组，从而可以改善吞吐率</li>
+<li>更好地支持选项。一些之前必要的字段现在变成了可选字段，此外，表示选项的方式的改变还能加快分组的处理速度。</li>
+</ul>
+<h3 id="62-ipv6">6.2 IPv6数据报</h3>
+<h4 id="_24">目的地址类型</h4>
+<ul>
+<li>单播：即传统的点对点通信</li>
+<li>多播：一点对多点的通信</li>
+<li>任播：IPv6新增的类型，目的站是一组计算机，但数据报在交付时只交付其中的一台计算机，通常是距离最近的计算机</li>
+</ul>
+<h4 id="_25">地址表示法</h4>
+<p>地址中的每4位用一个十六进制数表示，并用冒号分隔每16位。</p>
+<p>紧凑处理：</p>
+<ul>
+<li>
+<p>当一个16位域中的开头存在一些连续的0时，直接省略不写；若整个16位域都是0，则用一个0来表示</p>
+</li>
+<li>
+<p>有相邻的0值域时，还可以用双冒号缩写，如4BF5:0000:0000:0000:BA5F:xxxxxx可缩写为4BF5::BA5F:xxxxxx</p>
+</li>
+</ul>
+<p>由于双冒号代替的是不定个数的0值域，为了能够从总值域数推算被省略的0值域的个数，双冒号在IP地址中只能出现一次</p>
+<h4 id="_26">分级概念扩展</h4>
+<p>使用三个等级，以便路由器能够更快地查找路由</p>
+<ul>
+<li>第一级（顶级）：指明全球都知道的公共拓扑</li>
+<li>第二级（场点级）：指明单个场点</li>
+<li>第三级：指明单个网络接口</li>
+</ul>
+<h4 id="_27">兼容与过渡</h4>
+<ul>
+<li>IPv6系统必须能够接受和转发IPv4数据报，并且能够为IPv4数据报选择路由</li>
+<li>双协议栈：在一台设备上同时装有IPv4和IPv6协议栈。若这台设备是计算机，则该计算机既有IPv4地址，又有IPv6地址，并具备同时处理这两个协议地址的功能。若该台设备是路由器，则可能分别连接了IPv4网络和IPv6网络</li>
+<li>隧道技术：将整个IPv6数据报封装到IPv4数据报的数据部分，从而使得IPv6数据报可以在IPv4网络的隧道中传输</li>
+</ul>
+<h2 id="ip_1">七、IP组播</h2>
+<h3 id="71">7.1 组播的概念</h3>
+<ul>
+<li>组播：发送方把单个分组发送给一个组播地址，该组播地址标识一组地址。而后由网络负责把这个分组的副本（仅在传送路径出现分岔时复制）投递给该组中的每一台主机。一台主机可以同时属于多个组。</li>
+<li>主机如何加入组播组：使用IGMP协议，通知本地网络上的路由器。</li>
+<li>硬件支持：能够运行组播协议的路由器。</li>
+<li>组播一定仅应用于UDP，不可能用TCP。</li>
+<li>组播的应用：视频点播、视频会议等，发送方需要将一个分组发送给多个目的主机的场合</li>
+<li>以多个单播仿真组播的缺陷：引起主机上大量的处理开销和增大网络负载</li>
+</ul>
+<h3 id="72-ip">7.2 IP组播地址</h3>
+<ul>
+<li>
+<p>D类地址格式。前四位为1110，范围224.0.0.0~239.255.255.255，每个D类地址标识一个组播组。</p>
+</li>
+<li>
+<p>组播数据报</p>
+</li>
+<li>
+<p>使用D类地址作为目的地址，且协议字段为2，表示使用IGMP</p>
+</li>
+<li>尽最大努力交付，不提供可靠交付</li>
+<li>组播地址只用于目的地址，不能用于源地址</li>
+<li>不产生ICMP报文。Ping一个组播地址不会有响应。</li>
+<li>
+<p>不是所有的D类地址都是组播地址</p>
+</li>
+<li>
+<p>硬件组播</p>
+</li>
+<li>
+<p>在因特网上进行组播的最后阶段，还是要把组播数据包在局域网上通过硬件组播交付给组播组的所有成员</p>
+</li>
+<li>以太网组播地址的范围：01-00-5E-00-00-00 到 01-00-5E-7F-FF-FF，即前9位固定，只有后23位用于组播。而D类IP地址中前4位固定，有28位可用于组播。由于以太网组播地址中的后23位与D类IP地址的后23位有对应关系，D类IP地址中有5位不参与映射。不参与映射的位，无论值如何，在映射时都视为0处理。</li>
+<li>例如，IP地址224.215.145.230，其中215=1101 0111，最高位即从右往左第24位，是不参与映射的位，视为0处理，故这一个字节对应的MAC地址字段应为57H，完整MAC地址位01-00-5E-57-91-E6</li>
+</ul>
+<p><img alt="image-20221124102328634" src="image-20221124102328634.png" /></p>
+<ul>
+<li>两个不同的IP组播地址可能会转换成同一个以太网硬件组播地址。收到组播数据报的主机，还要在IP层利用软件进行过滤</li>
+</ul>
+<h3 id="73-igmp">7.3 IGMP与组播路由算法</h3>
+<ul>
+<li>IGMP是网际协议IP的一个组成部分</li>
+<li>IGMP不是在因特网范围内对所有组播组成员进行管理的协议。IGMP不知道组播组包含成员数，也不知道成员分布在哪些网络上，IGMP仅让本地局域网的组播路由器知道本局域网上是否有主机参加或退出了某个组播组</li>
+<li>工作流程</li>
+<li>第一阶段：某台主机要加入新的组播组，该主机向组播组的地址发送一个IGMP报文，声明自己要成为该组成员。本地局域网的组播路由器首先收到该报文，再将组成员关系转发给因特网上其他组播路由器</li>
+<li>第二阶段：本地组播路由器需要周期性询问局域网内主机，以确定这些主机是否仍是某个组的成员。如果对于某个组，在经过几次探询后仍未有主机响应，则不再将该组的成员关系转发给其他组播路由器</li>
+<li>组播路由算法</li>
+<li>实际上是要找出<strong>以源主机为根结点的组播转发树</strong>，从而每个分组在每条链路上只传送一次。</li>
+<li>不同的多播组对应不同的多播转发树</li>
+<li>同一个多播组，对不同的源点也会有不同的多播转发树</li>
+<li>主要实现：基于链路状态的路由选择、基于距离-向量的路由选择、可以建立在任何路由器协议之上的协议无关的组播（PIM）</li>
+</ul>
+<h3 id="74">7.4 广播帧与组播帧的过滤区别</h3>
+<p>主机可能会收到目的地不是自己的广播帧或组播帧，需要对这些帧进行识别并丢弃。但处理部件是不同的。</p>
+<p>广播帧：通过网卡NIC接收广播帧，然后网卡将帧传递给操作系统。CPU执行协议软件，来界定是否接收或处理该广播帧</p>
+<p>组播帧：由网卡直接界定是否接收或处理该组播帧，不由CPU处理。CPU仅对网卡进行相关配置。</p>
+<h2 id="ip_2">八、移动IP</h2>
+<h3 id="81-ip">8.1 移动IP基本概念</h3>
+<ul>
+<li>移动结点：把其连接点从一个网络或子网改变到另一个网络或子网的主机</li>
+<li>移动IP：移动结点以固定的网络IP地址实现跨越不同网段的漫游功能，并保证基于网络IP的网络权限在漫游过程中不发生任何改变</li>
+<li>本地代理：在一个网络环境中，一个移动结点的永久居所称为<u>归属网络</u>，归属网络中代表移动结点执行移动管理功能的实体称为<u>归属代理/本地代理</u>。本地代理根据移动用户的转交地址，采用隧道技术转交移动结点的数据报</li>
+<li>外部代理：在外部网络中帮助移动结点完成移动管理功能的实体称为<u>外部代理</u></li>
+<li>移动IP与移动自组网络的区别</li>
+<li>移动IP使漫游主机以多种方式连接到因特网，网络功能仍基于固定互联网中使用的各种路由选择协议</li>
+<li>移动自组网络是将移动性扩展到无线领域中的自治系统，有自己独特的路由选择协议，可以不和因特网连接</li>
+<li>移动IP和动态IP是完全不同的两个概念</li>
+</ul>
+<h3 id="82-ip">8.2 移动IP通信过程</h3>
+<ul>
+<li>每个移动结点具有唯一的本地地址，在移动过程中本地地址不变。本地网络上有一个本地代理维护移动结点当前的位置信息</li>
+<li>当移动结点连接到外地网络上时，以转交地址标识移动结点当前所处位置，以便进行路由选择。</li>
+<li>移动绑定/绑定：移动结点的本地地址与当前转交地址的联合</li>
+<li>移动结点得到一个新的转交地址后，通过绑定向本地代理进行注册。</li>
+<li>基本通信流程：</li>
+<li>移动结点在本地网络时，按传统方式进行通信</li>
+<li>移动结点漫游到外地网络时，仍用本地地址进行通信，但需要向本地代理注册当前的转交地址，以便收到转发给它的IP分组</li>
+<li>本地代理收到注册后，会构建一条通向转交地址的隧道，将截获的发给移动结点的IP分组通过隧道送至转交地址（外部代理）</li>
+<li>在转交地址处解封，最后送到移动结点</li>
+<li>位于外地网络的移动结点发送数据报，需要通过外网的路由器或外部代理</li>
+<li>移动结点更换外地网络时，只需要向本地代理更新转交地址</li>
+<li>移动结点回到本地网络时，向本地代理注销转交地址</li>
+<li>在移动IP中，一个移动结点具有两个IP地址，即本地地址和转交地址。本地地址是始终不变的，而转交地址根据移动结点所在的外网改变</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

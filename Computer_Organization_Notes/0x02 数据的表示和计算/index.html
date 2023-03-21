@@ -1,0 +1,1685 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/">
+      
+      
+        <link rel="next" href="../0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>考研笔记-计算机组成原理：0x02 数据的表示和计算 - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              考研笔记-计算机组成原理：0x02 数据的表示和计算
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x02 数据的表示和计算
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x02 数据的表示和计算
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 定点数的表示
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 定点数的表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    无符号数的表示
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    有符号数的定点表示
+  </a>
+  
+    <nav class="md-nav" aria-label="有符号数的定点表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    原码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    反码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    补码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    移码
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 定点数的运算
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 定点数的运算">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    符号扩展
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    数据的存储和排列
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    边界对齐
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    移位运算
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    加减运算和溢出判断
+  </a>
+  
+    <nav class="md-nav" aria-label="加减运算和溢出判断">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    加减运算
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    加减运算器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    溢出判断
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    乘法运算和溢出判断
+  </a>
+  
+    <nav class="md-nav" aria-label="乘法运算和溢出判断">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    乘法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 定点数的表示
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 定点数的表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    无符号数的表示
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    有符号数的定点表示
+  </a>
+  
+    <nav class="md-nav" aria-label="有符号数的定点表示">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    原码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    反码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    补码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    移码
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 定点数的运算
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 定点数的运算">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    符号扩展
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    数据的存储和排列
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    边界对齐
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    移位运算
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    加减运算和溢出判断
+  </a>
+  
+    <nav class="md-nav" aria-label="加减运算和溢出判断">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    加减运算
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    加减运算器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    溢出判断
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    乘法运算和溢出判断
+  </a>
+  
+    <nav class="md-nav" aria-label="乘法运算和溢出判断">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    乘法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="_1">第二章 数据的表示和计算</h1>
+<h2 id="21">2.1 定点数的表示</h2>
+<p>定点数即小数点位置固定。如一个8位的存储单元，规定右边数起第2位为小数点所在位，则存储的二进制数必然是<code>xxxxxx.x</code>的形式。若直接转换成十进制，则可表示的最大值为63.5（<code>111111.1</code>），最小值为0.0。</p>
+<h3 id="_2">无符号数的表示</h3>
+<p>无符号数即整个机器字长的全部二进制位均为数值位，没有符号位，相当于数的绝对值。</p>
+<p>对于8位二进制，视为无符号数，则对应的十进制数有$2^8=256$种，最小值为0（<code>0000 0000</code>），最大值为$2^8-1=255$（<code>1111 1111</code>）。</p>
+<p>无符号数必然是非负整数，没有无符号小数的说法。</p>
+<h3 id="_3">有符号数的定点表示</h3>
+<p>有符号数即专门指定了一个位（最高位）来存储并表示正负号，从而可以表示负数。</p>
+<p>有符号数的定点表示方式有原码、反码、补码、移码等方式。</p>
+<p>注意，虽然以上表示方式都可以表示负数，但采用的方法是不同的：如原码用最高位的0/1直接表示数的正/负，而补码是将最高位的权值视为负数</p>
+<h4 id="_4">原码</h4>
+<ul>
+<li>定点整数的原码</li>
+</ul>
+<p>以8位二进制为例，最高位为符号位（0为正，1为负），所定的小数点视为隐含在最低位的右侧（也就是不占位置）。如<code>1000 0001</code>即-1，<code>0000 0005</code>即+5.</p>
+<p>在这种规则下，0有两种表示方式，即<code>1000 0000</code>和<code>0000 0000</code></p>
+<p>范围：对于8位二进制，最大值127（<code>0111 1111</code>），最小值-127（<code>1111 1111</code>）</p>
+<ul>
+<li>定点小数的原码</li>
+</ul>
+<p>最高位为符号位（0为正，1为负），所定的小数点视为隐含在符号位的右侧（但不占位置）。也就是说，二进制定点小数转换为十进制后都是<code>0.xxxxx...</code></p>
+<p>如<code>1100 0000</code>即-0.5，<code>0110 0000</code>即+0.75</p>
+<p>范围：对于8位二进制，最大值+0.9921875（<code>0111 1111</code>），最小值-0.9921875（<code>1111 1111</code>）</p>
+<p>简单推导：可表示的最大值加上最低位所代表的权值后一定等于1，因此最大值=1-最低位所代表的权值；可表示的最小值即最大值的相反数</p>
+<h4 id="_5">反码</h4>
+<p>反码根据原码得到。</p>
+<ul>
+<li>若原码的符号位为0，则反码与原码相同</li>
+<li>若原码的符号位为1，则将原码的数值位全部取反即得到反码。</li>
+</ul>
+<p>eg：</p>
+<ul>
+<li>x=+19，$[x]_原=0001 0011$，$[x]_反=0001 0011$</li>
+<li>x=-19，$[x]_原=1001 0011$，$[x]_反=1110 1100$</li>
+</ul>
+<p>反码只是原码转换到补码的一个中间状态，实际中很少应用。</p>
+<h4 id="_6">补码</h4>
+<p>原码表示正负数虽然直观，但用原码进行加法运算无法直接得到正确结果；而补码得益于其特殊的表示方法，解决了这一问题。</p>
+<p>补码不再直接将最高位用于正负号表示，而是给予一个负的权值。</p>
+<p>与无符号数相比较，在8位无符号数中，最高位的权值为$2^7$；而在8位补码（定点整数）中，最高位的权值为$-2^7$。同理，若用于表示定点小数，则最高位的权值为$-2^0$。</p>
+<p>举个例子，-1的8位补码表示为<code>1111 1111</code>，即$-2^7+2^6+2^5+2^4+2^3+2^2+2^1+2^0$。</p>
+<p>这种规则下，0只有一种表示方式，即<code>0000 0000</code></p>
+<ul>
+<li>原码转换为补码</li>
+<li>若原码为正数（这里我们把+0排除在外），则补码与原码相同</li>
+<li>若原码为负数（这里我们把-0排除在外），则将原码转换为反码后末位+1即得到补码。</li>
+<li>补码转换为原码：方法与上述一致。</li>
+<li>定点整数的补码</li>
+<li>最大值：$2^8-1=255$（<code>0111 1111​</code>）</li>
+<li>最小值：$-2^8=-256$（<code>1000 0000</code>）</li>
+<li>定点小数的补码</li>
+<li>最大值：$1-2^{-7}$（<code>0111 1111</code>）</li>
+<li>最小值：$-1$（1000 0000）</li>
+</ul>
+<h4 id="_7">移码</h4>
+<p>移码根据补码得到。直接对（整数）补码的符号位取反就得到移码。</p>
+<p>移码的符号位含义与补码相反，1表示正数，0表示负数。且移码只能用于表示整数。</p>
+<p>移码的特点是，随着移码所表示的实际数值的增大，其二进制表示直观上（也就是当作无符号数来看）也是增大的。这使得移码之间可以直接按位比较大小，不需要额外进行运算。</p>
+<h2 id="22">2.2 定点数的运算</h2>
+<h3 id="_8">符号扩展</h3>
+<p>如8位二进制数扩展为16位二进制数。</p>
+<ul>
+<li>对于正整数，其原码、反码、补码表示都是一样的，扩展只需在高位补0</li>
+<li>对于负整数</li>
+<li>原码：符号位保持在最高位，在数值位的高位补0</li>
+<li>反码：符号位保持在最高位，在数值位的高位补1</li>
+<li>补码：与反码相同（因为补码中右起第一个1往左的部分总是与反码一致）</li>
+<li>对于正小数，为使权值不变，应在低位补0</li>
+<li>对于负小数</li>
+<li>原码：低位补0</li>
+<li>反码：低位补1</li>
+<li>补码：与原码相同，低位补0（因为补码中右起第一个1往右的部分总是与原码一致）</li>
+</ul>
+<h3 id="_9">数据的存储和排列</h3>
+<ul>
+<li>大端模式：内存的低地址存储数据的高字节，符合阅读习惯</li>
+<li>小端模式：内存的低地址存储数据的低字节，便于机器处理（因为机器读取是从内存低地址开始往高地址读的）</li>
+</ul>
+<h3 id="_10">边界对齐</h3>
+<p>计算机按字节编址，一个字节对应一个地址</p>
+<p>通常支持按字、按半字、按字节寻址</p>
+<p>假设访存每次读/写1个字，若数据按边界不对齐方式进行存储，则数据可能跨越边界，导致机器需要访存两次才能拼接出完整的数据。</p>
+<p>边界对齐方式可能会浪费一些空间，但能保证每次读数据都只需要1次访存。</p>
+<h3 id="_11">移位运算</h3>
+<ul>
+<li>算数移位</li>
+</ul>
+<p>符号位保持不变，仅对数值位进行移位。</p>
+<ul>
+<li>对于原码：右移时高位补0，左移时低位补0.</li>
+<li>对于反码：右移时高位补符号位的值，左移时低位补符号位的值。</li>
+<li>对于补码：<strong>对于正数，补位方式与原码相同</strong>；<strong>对于负数</strong>，由于负数的补码来源是反码取反+1，+1操作导致从最低位开始连续的1会全部翻转成0，最后将碰到的第一个0翻转为1，因此负数的补码在形式上，以碰到的第一个0为界，左侧部分实质与反码一致，右侧（包括它自己）与原码一致。所以<strong>在右移补位时，遵循反码的规则高位补1；在左移补位时，遵循原码的规则低位补0</strong>.</li>
+</ul>
+<p>在比较简单的情况下可以用左移右移代替乘2和除以2的操作。但右移必定导致精度丢失。</p>
+<p>如7（0111），除以2应得3.5，用右移一位来代替只能得到3（0011），与真实值3.5相比不够精确。</p>
+<ul>
+<li>逻辑移位</li>
+</ul>
+<p>把整一个二进制数看作无符号数，整体移位。无论左移右移都补0。</p>
+<ul>
+<li>循环移位</li>
+</ul>
+<p>用于大端存储、小端存储之间的转换。</p>
+<h3 id="_12">加减运算和溢出判断</h3>
+<h4 id="_13">加减运算</h4>
+<p>补码的特性就是在进行加减运算时不必单独考虑符号位如何处理，可以带着符号位一起整体进行运算。</p>
+<blockquote>
+<p>设机器字长为8位（含1位符号位），$A=15，B=-24，$求$[A+B]_补$和$[A-B]_补$</p>
+</blockquote>
+<p>解：</p>
+<p>$A_补 = 00001111， B_补 = 11101000$，直接按位相加得$[A+B]_补=11110111$</p>
+<p>$[-B]_补=00011000$，直接按位相加得$[A-B]_补=00100111$</p>
+<h4 id="_14">加减运算器</h4>
+<p><u>无符号整数</u>的加减法和<u>补码</u>加减法可以用同一个电路实现，但溢出判断不一样</p>
+<p>OF：用于判断有符号数运算是否发生溢出，<strong>只对有符号数加减法有意义</strong>，与无符号数无关。</p>
+<ul>
+<li>计算方法：<u>OF=最高位产生的<strong>进位</strong> 异或 次高位产生的<strong>进位</strong></u></li>
+<li>进行无符号数加减法时，OF=1，加减法是否溢出？（否，OF位只对有符号数加减法有意义）</li>
+</ul>
+<p>CF：用于判断无符号数的加减法是否发生了进位或借位（即溢出）</p>
+<ul>
+<li>计算方法：<u>最高位产生的进位 异或 sub</u>（若是减法则sub=1，若是加法则sub=0）</li>
+<li><strong>只对无符号数加减法有意义</strong></li>
+</ul>
+<h4 id="_15">溢出判断</h4>
+<ul>
+<li>
+<p>上溢和下溢</p>
+</li>
+<li>
+<p>只有”正数+正数“的时候才会上溢，上溢的表现为”正+正=负“（因为进位进到符号位里去了）</p>
+</li>
+<li>
+<p>只有”负数+负数“的时候才会下溢，下溢的表现为”负+负=正“</p>
+</li>
+<li>
+<p>判断方法</p>
+</li>
+<li>
+<p>方法一：采用一位符号位，对运算前和运算后的符号位进行逻辑判断.设$A$的符号位为$A_S$，$B$的符号位为$B_S$，运算结果的符号为$S_S$，溢出判断符号为$V$，无溢出时$V=0$，有溢出时$V=1$，则真值表如下：</p>
+<table>
+<thead>
+<tr>
+<th>$A_S$</th>
+<th>$B_S$</th>
+<th>$S_S$</th>
+<th>$V$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>逻辑表达式即$V=A_SB_S\overline{S_S}+\overline{A_S}\overline{B_S}S_S$</p>
+</li>
+<li>
+<p>方法二：采用双符号位。正常情况下正数符号位为$00$，负数符号位为$11$。发生上溢时运算结果符号位为$01$，发生下溢时运算结果符号位为$10$，即符号位两位数值相异则一定有溢出。做异或运算即可判断。</p>
+</li>
+</ul>
+<h3 id="_16">乘法运算和溢出判断</h3>
+<h4 id="_17">乘法</h4>
+<p>回忆一下十进制的竖式乘法，其实质是把乘数按位权拆开后再逐位与被乘数相乘，最后相加。二进制的竖式乘法同理，且比十进制更简单。将乘数按位权拆开后，若某位为0，则与被乘数相乘后所得的必为全0；若某位为1，则与被乘数相乘后得到被乘数本身。</p>
+<ul>
+<li>
+<p>机器实现二进制乘法需要解决的问题</p>
+</li>
+<li>
+<p>如何处理符号位</p>
+</li>
+<li>最终结果的位数是两个乘数位数之和，如果超出了寄存器一次能保存下来的位数，如何处理？</li>
+<li>
+<p>如何把所有乘积保存下来再统一相加</p>
+</li>
+<li>
+<p>原码一位乘法</p>
+</li>
+<li>
+<p>如何处理符号位：符号位异或运算得到运算结果的符号位</p>
+</li>
+<li>如何处理位数翻倍：两个寄存器，ACC存放乘积高位，MQ存放乘积低位</li>
+<li>如何相加:一边乘一边加</li>
+</ul>
+<blockquote>
+<p>设机器字长为5位（含1位符号位），$[x]_原=1.1101，[y]_原=0.1011$，采用原码一位乘法求$x\times y$</p>
+</blockquote>
+<ul>
+<li>
+<p>初始：ACC清零，(ACC)=<u>00000</u>，(X)=01101，(MQ)=01011。MQ中参与乘法运算的位始终是MQ的最低位。</p>
+</li>
+<li>
+<h1 id="1mq1accxacc01101">1：MQ最低位为1，所以让ACC加上(X)，(ACC)=<u>01101</u></h1>
+</li>
+<li>
+<h1 id="2accmqacc00110">2：ACC和MQ同时逻辑右移一位，(ACC)=<u>00110</u>，</h1>
+<p>​   原最低位上的1移到MQ的最高位，(MQ)=<u>1</u>0101；</p>
+<p>​   MQ最低位为1，所以让ACC加上（X），(ACC)=<u>10011</u></p>
+</li>
+<li>
+<h1 id="3accmqacc01001">3：ACC和MQ同时逻辑右移一位，(ACC)=<u>01001</u>，</h1>
+<p>​   原最低位上的1移到MQ的最高位，(MQ)=<u>11</u>010；</p>
+<p>​   MQ最低位为0，所以让ACC加上0，(ACC)=<u>01001</u></p>
+</li>
+<li>
+<h1 id="4accmqacc00100">4：ACC和MQ同时逻辑右移一位，(ACC)=<u>00100</u>，</h1>
+<p>​   原最低位上的1移到MQ的最高位，(MQ)=<u>111</u>01；</p>
+<p>​   MQ最低位为1，所以让ACC加上(X)，(ACC)=<u>10001</u></p>
+</li>
+<li>
+<h1 id="5accmqacc01000">5：ACC和MQ同时逻辑右移一位，(ACC)=<u>01000</u>，</h1>
+<p>​   原最低位上的1移到MQ的最高位，(MQ)=<u>1111</u>0；</p>
+<p>​   MQ最低位为0，所以让ACC加上0，(ACC)=<u>01000</u></p>
+</li>
+<li>
+<h1 id="6mq1acc11000">6：至此MQ上原二进制数的各位都已计算完毕，又乘积的符号位应为1，故（ACC）=<u>11000</u>。</h1>
+</li>
+<li>
+<p>(ACC)=<u>11000</u>是<strong>乘积的高位部分</strong>，(MQ)=<u>1111</u>0中的<strong>下划线部分是乘积的低位部分</strong>，因此得到最终乘积为<u>1.10001111</u></p>
+</li>
+</ul>
+<h4 id="_18">无符号数乘法运算电路结构</h4>
+<p><img alt="IMG_0750(20221205-212706)" src="IMG_0750%2820221205-212706%29-1670246905054.PNG" /></p>
+<p>控制逻辑&amp;计数器：</p>
+<ul>
+<li>用于发出“加法、右移、写使能”的控制信号，检查当前<strong>乘积寄存器</strong>（即高四位）中末位是0还是1，若为1则执行加法（高四位与被乘数相加）然后右移，否则直接右移；</li>
+<li>计数器用于记录加法、右移次数</li>
+<li>写使能信号用于控制乘积寄存器P，使ALU将结果写入P</li>
+</ul>
+<p>加法是无符号数加法，右移是<strong>逻辑右移</strong>。</p>
+<p>溢出判断：</p>
+<ul>
+<li>若乘积寄存器（即高四位）为全0，则未溢出</li>
+<li>否则溢出</li>
+</ul>
+<h4 id="_19">有符号数乘法运算电路结构</h4>
+<p><img alt="IMG_0749(20221205-212647)" src="IMG_0749%2820221205-212647%29.PNG" /></p>
+<p>与无符号数乘法运算电路结构的区别：</p>
+<ol>
+<li>没有进位位</li>
+<li>增加了一个辅助位，逻辑上位于乘数寄存器的后面</li>
+</ol>
+<p>有加减法，均为有符号数加法，右移是<strong>算术右移</strong></p>
+<p>溢出判断：</p>
+<ul>
+<li>若乘积寄存器位全0或全1，则未溢出</li>
+<li>否则溢出</li>
+</ul>
+<h3 id="_20">除法运算</h3>
+<p>注意以下都是定点数除法，因此要求被除数＜除数，否则无法用定点数表示商</p>
+<h4 id="_21">原码除法：恢复余数法</h4>
+<p>符号位单独处理，无视小数点（即数值位取绝对值进行运算）</p>
+<p>初始状态：被除数存储在ACC中，除数存储在通用寄存器中，商在MQ寄存器中，初始化全0</p>
+<ol>
+<li>设置MQ寄存器的最低位，默认先商1</li>
+<li>将ACC中的数与除数相减，若符号位为0，则说明商正确，继续下一步；否则，改为商0，同时将ACC中的数与除数相加，恢复回原先的ACC值</li>
+<li>若商未满n位，则将ACC与MQ视为一个整体（ACC在高位，MQ在低位）共同逻辑左移（因此左移n次，上商n+1次）</li>
+<li>重复1-3步，直到求出n位商（设机器字长为n+1位）</li>
+</ol>
+<p>余数：最后存储在ACC中，符号位应为0。注意ACC中不是真实余数，<strong>若ACC值为00111，则真实余数为0.0111×2^{-n}</strong></p>
+<h4 id="_22">原码除法：加减交替法/不恢复余数法</h4>
+<p>实际是恢复余数法的优化。当恢复余数法商1出现负的余数时，在改为商0的同时可以不恢复余数而直接将余数左移并加除数</p>
+<p>初始状态：被除数存储在ACC中，除数存储在通用寄存器中，商在MQ寄存器中，初始化全0</p>
+<ol>
+<li>设置MQ寄存器的最低位，默认先商1</li>
+<li>将ACC中的数与除数相减，若符号位为0，则说明商正确，继续下一步；否则，改为商0，同时将ACC与MQ视为一个整体共同逻辑左移，其中ACC部分与除数相加</li>
+<li>若商未满n位，则将ACC与MQ视为一个整体（ACC在高位，MQ在低位）共同逻辑左移（因此左移n次，上商n+1次）</li>
+<li>重复1-3步，直到求出n位商（设机器字长为n+1位）</li>
+</ol>
+<p>余数：最后存储在ACC中，符号位应与商相同。若余数为负，还需要额外 对余数再加一次除数来得到正确余数。注意这也不是真实余数，<strong>若ACC值为00111，则真实余数为0.0111×2^{-n}</strong></p>
+<p>加/减n+1次，左移n次，最终可能会多出一次加</p>
+<h4 id="_23">补码除法：加减交替法/不恢复余数法</h4>
+<ul>
+<li>符号位参与运算</li>
+<li>被除数/余数、除数采用双符号位表示</li>
+<li>步骤：</li>
+<li>被除数与除数同号，则被除数-除数；异号则被除数+除数</li>
+<li>余数和除数同号，商1，余数左移一位然后-除数</li>
+<li>余数和除数异号，商0，余数左移一位然后+除数</li>
+<li>当余数左移的次数等于补码数值位的位数后结束</li>
+<li>商的末位<strong>恒置为1</strong>，即使余数是负的也不需要再处理</li>
+</ul>
+<p><img alt="521FA659F1BC8A6772BE8B2419126155" src="521FA659F1BC8A6772BE8B2419126155.png" /></p>
+<p><img alt="image-20221205212217767" src="image-20221205212217767.png" /></p>
+<h4 id="_24">除法电路的基本结构</h4>
+<p><img alt="IMG_0748(20221205-212635)" src="IMG_0748%2820221205-212635%29.PNG" /></p>
+<h3 id="_25">乘法除法电路的基本结构总结</h3>
+<p>必须具备的部件：</p>
+<ul>
+<li>ALU：用于实现加、减法</li>
+<li>具有移位功能的寄存器，乘法运算要求右移，除法运算要求左移</li>
+<li>控制逻辑：发出加/减控制信号、左移/右移控制信号、写使能信号</li>
+<li>计数器：用于记录还剩几轮处理</li>
+</ul>
+<h2 id="23">2.3 浮点数的表示</h2>
+<h3 id="_26">浮点数的表示</h3>
+<p>对于固定的8位二进制数据，若采用定点表示，则数据可表示的范围始终是有限且比较小的；浮点数则解决了这个问题。</p>
+<p>回忆科学计数法，它由三部分组成：</p>
+<p><img alt="image-20220711180251276" src="image-20220711180251276.png" /></p>
+<p>即尾数（绿色）、阶数（青色）和底数（黑色）</p>
+<h4 id="_27">浮点数表示法</h4>
+<p>浮点数也是用同样的方法表示，阶数部分称为阶码，作为浮点数据的前半段；尾数部分就是尾数，作为浮点数据的后半段；底数默认为2，省略。</p>
+<ul>
+<li>阶码</li>
+</ul>
+<p>阶符+阶码的数值部分。是常用补码或移码表示的定点整数。</p>
+<p>反映了数据中的小数点要往前/往后浮动多少位</p>
+<ul>
+<li>尾数（未规格化）</li>
+</ul>
+<p>数符+尾数的数值部分。是常用原码或补码表示的定点小数。</p>
+<p>注意是定点小数，即整数部分总为0，这一点与十进制的科学计数法不同。</p>
+<p>尾数的数值部分的位数n反映浮点数的精度。</p>
+<h4 id="_28">浮点数的表示范围</h4>
+<p>浮点数表示范围关于原点对称。</p>
+<p>正上溢：运算结果大于最大整数</p>
+<p>负上溢：运算结果小于最小负数</p>
+<p>正上溢和负上溢统称为上溢。</p>
+<p>正下溢：运算结果在0和最小正数之间</p>
+<p>负下溢：运算结果在0和最大负数之间</p>
+<p>正下溢和负下溢统称为下溢。</p>
+<p>发生下溢时，浮点数值趋近于0，计算机直接当作机器零处理</p>
+<h3 id="_29">浮点数尾数的规格化</h3>
+<h4 id="_30">概念</h4>
+<p>规格化是对尾数存储方式的一种优化，使浮点数能表示尽可能高的精度。</p>
+<ul>
+<li>
+<p>左规：尾数算术左移，从而舍弃尾数部分高位连续的0（注意，如果是补码表示的尾数则是连续的1），同时阶数也相应调整。如$2^2\times(+0.01001)$对尾数规格化后得到$2^1\times(+0.10010)$。</p>
+</li>
+<li>
+<p>右规：尾数算术右移，处理浮点数运算结果尾数出现溢出时的情况。</p>
+</li>
+</ul>
+<p><img alt="image-20220711182930743" src="image-20220711182930743.png" /></p>
+<h4 id="_31">细节</h4>
+<ol>
+<li>对于原码表示的尾数（基数为2），①0.011（0.25+0.125=0.375），规格化后为0.110（这里省略阶码部分的调整）；②1.011（-0.25-0.125=-0.375），规格化后为1.11</li>
+</ol>
+<p>形式上的规律就是，<strong>原码表示的小数规格化后，其小数点后第一位一定为1，而整数部分可以为1也可以为0，是符号位</strong>（注意这一点与IEEE754不同，IEEE754格式要求小数表示为$(-1)^S\times1.M\times2^{E-bias}$的形式，即整数部分一定为1，且是一个有效位而不是数值位，并且默认不存储，只存储$M$）</p>
+<ol>
+<li>对于补码表示的尾数（基数为2），如1.101（-1+0.5+0.125=-0.375），规格化后为1.010（这里省略阶码部分的调整）</li>
+</ol>
+<p>形式上的规律就是，<strong>补码表示的小数规格化后，小数点前后两位一定不相同。</strong></p>
+<ol>
+<li>
+<p>如果基数改变，如基数为4，则<strong>原码表示的小数规格化后，小数点后两位一定不全为0</strong></p>
+</li>
+<li>
+<p>总结：原码表示的规格化小数中的尾数M（即小数点后面的部分，小数点后位的权值为$R^{-1}$、$R^{-2}$...以此类推）的绝对值满足 $1/R≤|M|≤1$，其中$R$为基数。</p>
+</li>
+</ol>
+<p>如，当基数为2时，原码小数1.101中的尾数101的绝对值为$2^{-1}+2^{-3}=0.375＜1/2$，因此1.101不是规格化小数；而原码小数0.11中的尾数11的绝对值为$2^{-1}+2^{-2}=0.75$，$1/2≤0.75≤1$，因此0.11是规格化小数。</p>
+<h3 id="ieee754">IEEE754</h3>
+<p>移码，形式上看是直接将补码的符号位取反，从数值上看则是补码（真值）加上一个<strong>固定的偏置值</strong>得到。</p>
+<p>如8位移码，就是将8位补码加上128D（$2^{8-1}$）的偏置值得到。</p>
+<p>IEEE754对浮点数阶码部分的规定为，对于8位阶码，为补码（真值）加上偏置值（$2^{8-1}-1$）所得。这样规定使得阶码最小值和阶码次小值都对应特殊的二进制数：全1和全0.</p>
+<p><img alt="image-20220713155927866" src="image-20220713155927866.png" /></p>
+<h4 id="_32">对数符的规定</h4>
+<p>数符位于浮点数的最高位。0/1表示数的正负。</p>
+<h4 id="_33">对阶码的规定</h4>
+<ul>
+<li>用移码表示，但使用的偏置值为$2^{n-1}-1$而非$2^{n-1}$，其中$n$为阶码部分的位数。</li>
+<li>采用上述偏置值使得阶码部分可表示的最小值和次小值分别为全0和全1，这两个数用作特殊用途（见下文”表示范围“一节），而不用于表示浮点数的阶数。</li>
+<li>因此，对于8位阶码，能表示的阶数范围为$-126 到 +127$</li>
+</ul>
+<h4 id="_34">对尾数的规定</h4>
+<ul>
+<li>用原码表示</li>
+<li>完整的小数是$1.M$，但1省略不存储，只存储M。</li>
+</ul>
+<h4 id="_35">浮点数的真值计算</h4>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>数符S</th>
+<th>阶码E</th>
+<th>尾数数值M</th>
+<th>总位数</th>
+<th>偏置值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td>1</td>
+<td>8</td>
+<td>23</td>
+<td>32</td>
+<td>127</td>
+</tr>
+<tr>
+<td>double</td>
+<td>1</td>
+<td>11</td>
+<td>52</td>
+<td>64</td>
+<td>1023</td>
+</tr>
+<tr>
+<td>long double</td>
+<td>1</td>
+<td>15</td>
+<td>64</td>
+<td>80</td>
+<td>16383</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>float浮点数的真值</li>
+</ul>
+<p>$(-1)^S\times1.M\times2^{E-127}$</p>
+<ul>
+<li>double浮点数的真值</li>
+</ul>
+<p>$(-1)^S\times1.M\times2^{E-1023}$</p>
+<h4 id="_36">表示范围</h4>
+<ul>
+<li>float浮点数的最小绝对值</li>
+</ul>
+<p>尾数全为0，阶码真值最小-126，整体真值$1.0B\times2^{-126}$</p>
+<ul>
+<li>float浮点数的最大绝对值</li>
+</ul>
+<p>尾数全为1，阶码真值最大127，整体真值$1.1111..11B\times2^{127}$</p>
+<ul>
+<li>若要表示的数的绝对值比最小的绝对值还要小（如$0.001B\times2^{-126}$），令阶码全为0，要表示的数的小数部分直接作为尾数（此时整数部分一定为0，因为再规格化的话阶码无法表示）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>阶码</th>
+<th>尾数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全0</td>
+<td>不全为0</td>
+<td>非规格化小数<br />（比规格化小数的最小绝对值还要小的数）</td>
+</tr>
+<tr>
+<td>全0</td>
+<td>全0</td>
+<td>±0</td>
+</tr>
+<tr>
+<td>全1</td>
+<td>全0</td>
+<td>±$\infin $</td>
+</tr>
+<tr>
+<td>全1</td>
+<td>不全为0</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+<h2 id="24">2.4 浮点数的运算</h2>
+<h4 id="_37">浮点数的加减运算</h4>
+<ol>
+<li>对阶：小阶向大阶看齐。尾数每右移一位，阶数+1，直到阶码相等</li>
+<li>尾数求和：将对阶后的尾数按定点数加减运算规则运算</li>
+<li>规格化</li>
+<li>左规：造成下溢，直接当作0处理，不算真正的溢出</li>
+<li>右规：造成上溢</li>
+<li>舍入</li>
+<li>恒置1：多出的直接砍掉，余下的尾数的最后一位恒置为1</li>
+<li>规则2：若砍掉的最高数值位为1，则向高位进1</li>
+<li>规则3：四舍五入</li>
+<li>考试：超出的位数直接丢掉，不舍入</li>
+<li>溢出判断</li>
+<li>阶码的溢出才是真正的溢出</li>
+<li>尾数的溢出可以进行规格化和舍入处理</li>
+</ol>
+<p><img alt="81B052432B52CAD91F5638861339CDCC" src="81B052432B52CAD91F5638861339CDCC.png" /></p>
+<h4 id="_38">强制类型转换</h4>
+<ul>
+<li>无损转换</li>
+<li>char→int→long→double</li>
+<li>float→double</li>
+<li>有损转换</li>
+<li>
+<p>int→float：可能损失精度（int32位，float的尾数24位）但不会溢出</p>
+<blockquote>
+<p>注：如，这个int类型的数是01FF FFFF（25个1，即2^25-1=33554431），转为float类型后值为3.35544×10^7，即33554400，最末尾的31被抹零了，丢失了精度</p>
+</blockquote>
+</li>
+<li>
+<p>float→int：可能溢出也可能损失精度</p>
+</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1715 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x01%20%E7%BB%AA%E8%AE%BA/">
+      
+      
+        <link rel="next" href="../0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>0x02 物理层.md - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0x02" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0x02 物理层.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x02 物理层.md
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x02 物理层.md
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、通信基础
+  </a>
+  
+    <nav class="md-nav" aria-label="一、通信基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    数据、信号、码元
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    信源、信道、信宿
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    速率、带宽
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 奈奎斯特定理与香农定理
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 奈奎斯特定理与香农定理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    奈奎斯特定理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    香农定理
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    1.3 计算相关
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    1.4 编码与调制
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 编码与调制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    数字数据编码为数字信号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    数字数据调制为模拟信号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    模拟数据编码为数字信号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    模拟数据调制为模拟信号
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    1.5 电路交换、报文交换、分组交换
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 电路交换、报文交换、分组交换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    电路交换
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    报文交换
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    分组交换
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    1.6 数据报和虚电路
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 数据报和虚电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    数据报
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    虚电路
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    二、传输介质
+  </a>
+  
+    <nav class="md-nav" aria-label="二、传输介质">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 导向与非导向传输介质
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 导向与非导向传输介质">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    双绞线
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    同轴电缆
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    光纤
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    无线传输介质
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 物理层接口的特性
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    三、物理层设备
+  </a>
+  
+    <nav class="md-nav" aria-label="三、物理层设备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    中继器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hub" class="md-nav__link">
+    集线器/Hub
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、通信基础
+  </a>
+  
+    <nav class="md-nav" aria-label="一、通信基础">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    数据、信号、码元
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    信源、信道、信宿
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    速率、带宽
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    1.2 奈奎斯特定理与香农定理
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 奈奎斯特定理与香农定理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    奈奎斯特定理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    香农定理
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    1.3 计算相关
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    1.4 编码与调制
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 编码与调制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    数字数据编码为数字信号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    数字数据调制为模拟信号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    模拟数据编码为数字信号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    模拟数据调制为模拟信号
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    1.5 电路交换、报文交换、分组交换
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 电路交换、报文交换、分组交换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    电路交换
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    报文交换
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    分组交换
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    1.6 数据报和虚电路
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 数据报和虚电路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    数据报
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    虚电路
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    二、传输介质
+  </a>
+  
+    <nav class="md-nav" aria-label="二、传输介质">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 导向与非导向传输介质
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 导向与非导向传输介质">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    双绞线
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    同轴电缆
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    光纤
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    无线传输介质
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 物理层接口的特性
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    三、物理层设备
+  </a>
+  
+    <nav class="md-nav" aria-label="三、物理层设备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    中继器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hub" class="md-nav__link">
+    集线器/Hub
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0x02">0x02 物理层</h1>
+<h2 id="_1">一、通信基础</h2>
+<h3 id="11">1.1 基本概念</h3>
+<h4 id="_2">数据、信号、码元</h4>
+<p>通信的目的是<u>传送信息</u>，信息的实体是<u>数据</u>，数据在传输过程中的存在形式是<u>信号</u>。</p>
+<p>信号可分为模拟信号和数据信号</p>
+<ul>
+<li>模拟信号：连续变化的</li>
+<li>数字信号：取值仅允许为有限的几个离散数值的</li>
+</ul>
+<p>数据传输方式可分为串行传输和并行传输</p>
+<ul>
+<li>串行传输：1比特1比特地按照时间顺序传输</li>
+<li>并行传输：若干比特通过多条通信信道同时传输</li>
+</ul>
+<p>码元是数字信号的计量单位，代表不同离散数值的基本波形，它用一个固定时长的数字脉冲表示一位k进制数字，这个时长内的信号称为<u>k进制码元</u>，而该时长称为<u>码元宽度</u></p>
+<p><strong>1码元可以携带若干比特的信息</strong></p>
+<h4 id="_3">信源、信道、信宿</h4>
+<p>一个数据通信系统主要划分为信源、信道、信宿三部分</p>
+<ul>
+<li>信源：产生和发送数据的源头</li>
+<li>信宿：接收数据的终点，通常是计算机或其他数字终端装置</li>
+<li>信道：不等同于电路，是信号的传输媒介，一般用来表示向某个方向传送信息的介值，因此一条通信线路往往包含一条发送信道和一条接收信道</li>
+<li>模拟信道：传输模拟信号</li>
+<li>数字信道：传输数字信号</li>
+<li>无线信道、有线信道</li>
+</ul>
+<p>信道上传输的信号分为基带信号和宽带信号</p>
+<ul>
+<li>基带信号：将数字信号1和0用两种不同电压表示，然后送到数字信道上传输（基带传输），不经过调制。基带传输一般用于计算机内部和局域网。</li>
+<li>频带传输：将基带信号进行调制后送到模拟信道上传输。在进行远距离传输或无线传输时，数字信号必须用频带传输进行传输</li>
+<li>宽带信号：基于频带传输，但将基带信号进行调制后形成频分复用模拟信号，然后送到模拟信道上传输（宽带传输）</li>
+</ul>
+<p>通信双方信息的交互方式可分为单向通信、半双工通信、全双工通信</p>
+<ul>
+<li>单向通信：只有一个方向的通信，仅需要一条信道。如无线电广播、电视广播</li>
+<li>半双工通信：双向通信，但同一时刻只能有一个方向传输信息。需要两条信道</li>
+<li>全双工通信：通信双方可以同时发送和接收信息。需要两条信道</li>
+</ul>
+<p>信道的极限容量：信道的最高码元传输速率/信道的极限信息传输速率</p>
+<h4 id="_4">速率、带宽</h4>
+<ul>
+<li>速率：也称为数据率，表示单位时间内传输的数据量</li>
+<li>码元传输速率/波特率：表示单位时间内数字通信系统所传输的码元个数/脉冲个数/信号变化的次数，单位是波特（Baud）</li>
+<li>信息传输速率/比特率：表示单位时间内数字通信系统传输的二进制码元个数（即比特数），单位是bit/s</li>
+<li>比特率=波特率×$log_2{n}$</li>
+<li>带宽：单位时间内从网络中某一点到另一点所能通过的“最高数据率”</li>
+</ul>
+<h3 id="12">1.2 奈奎斯特定理与香农定理</h3>
+<h4 id="_5">奈奎斯特定理</h4>
+<p>码间串扰：高频分量在通过信道时受到衰减，导致接收端收到的信号波形失去码元之间的清晰界限</p>
+<p>奈奎斯特定理：</p>
+<ul>
+<li>给出了<u>不受到码间串扰时码元传输速率的上限值</u></li>
+<li>理想低通信道下极限数据传输速率=$2W\log_2{V}$，其中W为理想低通信道的带宽，V为每个码元离散电平的数量</li>
+<li>任何信道中，码元传输速率有上限。超过此上限会出现严重的码间串扰问题</li>
+<li>信道的频带更宽（即通过的信号高频分量越多），就能用更高的速率进行传输</li>
+<li>只给出了码元传输速率的限制，未限制信息传输速率</li>
+</ul>
+<h4 id="_6">香农定理</h4>
+<ul>
+<li>信道的极限数据传输速率=$W\log_2{(1+S/N)}$，其中W为信道的带宽，S为信道所传输信号的平均功率，N为信道内部的高斯噪声功率。S/N为信噪比。</li>
+<li>信噪比越大，极限数据传输速率越高</li>
+<li>若传输带宽和信噪比确定，则其传输速率上限也确定</li>
+<li>只要信息传输速率低于此极限值，就一定能找到某种方法来实现无差错的传输</li>
+<li>实际信道能达到的传输速率要比这个极限值低不少</li>
+</ul>
+<h3 id="13">1.3 计算相关</h3>
+<ul>
+<li>
+<p>比特率=波特率×$log_2{n}$，n为一个码元的有效离散值个数。</p>
+</li>
+<li>
+<p>若有效离散值个数为2^k个，则一个码元包含k个比特</p>
+</li>
+<li>
+<p><strong>无噪声</strong>信号满足奈奎斯特定理，最大传输速率为$2W\log_2{V}$，W为信道带宽。V为一个码元的有效离散值个数。“每个信号包含8级”的意思是一个码元有8个离散值</p>
+</li>
+<li>
+<p>若题目给出信噪比，需要综合考虑香农定理和奈奎斯特定理，取两者结果的较小值。<img alt="image-20221104221447749" src="image-20221104221447749.png" /></p>
+</li>
+</ul>
+<p>根据香农定理，最大数据传输速率=4k×log_2(127+1)=28k；根据奈奎斯特定理，<strong>“二进制信号”表明一个码元有2个离散值</strong>，即V=2，最大传输速率=2×4k×log_2(2)=8k；综上，最大数据传输速率为8k，选B。</p>
+<ul>
+<li>
+<p>信噪比的db/分贝单位换算：10lg{S/N}dB。如，当信噪比为30db时，实际上S/N=10^(30/10)=10^3=1000</p>
+</li>
+<li>
+<p>若只给采样频率不给带宽，则将采样频率视为带宽。如一个信道每1/8s采样一次，带宽为8Hz.</p>
+</li>
+<li>
+<p><strong>若题目指明使用曼彻斯特编码，则1个比特用2个码元表示，波特率是数据率的2倍</strong></p>
+</li>
+</ul>
+<h3 id="14">1.4 编码与调制</h3>
+<p>编码：将数据变换为数字信号</p>
+<p>调制：将数据变换为模拟信号</p>
+<h4 id="_7">数字数据编码为数字信号</h4>
+<p>用于基带传输，即在<u>基本不改变数字数据信号频率的</u>情况下，直接传输数字信号。</p>
+<p>编码规则：规定用什么样的数字信号表示1，什么样的数字信号表示0。</p>
+<p><img alt="image-20221104173349175" src="image-20221104173349175.png" /></p>
+<p>常用的编码规则：</p>
+<ul>
+<li>归零编码/RZ</li>
+<li>高电平表示1，低电平表示0（或相反）</li>
+<li>在<u>每个时钟周期的中间</u>跳变到低电平。</li>
+<li>自同步机制：接收方可以通过归零调整时钟基准</li>
+<li>归零占用一部分带宽，对传输效率有一定影响</li>
+<li>非归零编码/NRZ</li>
+<li>高电平表示1，低电平表示0（或相反），每个时钟周期中间不归零。</li>
+<li>无法传递时钟信号，双方难以同步。如果想同步，需要都带有时钟线</li>
+<li>反向非归零编码/NRZI</li>
+<li>用信号的翻转代表0（发生跳变后的那个时钟周期是0），信号保持不变代表1</li>
+<li>翻转的信号本身可以作为通知机制，因此集成了RZ和NRZ的优点，既能传输时钟信号又能尽量不损失系统带宽</li>
+<li>USB2.0通信采用NRZI编码</li>
+<li>曼彻斯特编码</li>
+<li>将一个码元分为两个相等的间隔，若前高后低则代表码元1，若前低后高则代表码元0（或相反）</li>
+<li>每个码元的中间出现电平跳变，既作为时钟信号，又作为数据信号。</li>
+<li>所占频带宽度是原始基带宽度的两倍</li>
+<li>以太网通信使用曼彻斯特编码</li>
+<li>差分曼彻斯特编码</li>
+<li>若当前码元为1，则当前码元的前半个码元的电平与上一个码元的后半个码元的电平相同；若码元为0，则相反。</li>
+<li>每个码元的中间出现电平跳变，可以实现自同步，抗干扰性较好</li>
+<li>局域网传输常用差分曼彻斯特编码</li>
+<li>4B/5B编码</li>
+<li>每4位数据作为一组，然后按照编码规则转换为相应的5位码。5位码中只采用其中16种对应16种不同的4位码，其他16种作为控制码或保留</li>
+</ul>
+<h4 id="_8">数字数据调制为模拟信号</h4>
+<p><img alt="image-20221104181756126" src="image-20221104181756126.png" /></p>
+<h4 id="_9">模拟数据编码为数字信号</h4>
+<ul>
+<li><strong>采样定理/奈奎斯特定理：要保证采样后的数字信号完整保留原始模拟信号的信息，采样频率必须≥2倍的原始信号最大频率</strong></li>
+<li>编码步骤：</li>
+<li>采样：对模拟信号进行周期性扫描，把时间上连续的信号变成时间上离散的信号</li>
+<li>量化：将采样取得的电平幅值按一定的分级标度转化为对应的数字值并取整数</li>
+<li>编码：把量化的结果转换为与之对应的二进制编码</li>
+<li>典型例子：对音频信号进行编码的脉码调制</li>
+</ul>
+<h4 id="_10">模拟数据调制为模拟信号</h4>
+<ul>
+<li>可能需要较高的频率来保证传输有效性</li>
+<li>可以使用频分复用技术</li>
+<li>电话机和本地局交换机采用</li>
+</ul>
+<h3 id="15">1.5 电路交换、报文交换、分组交换</h3>
+<h4 id="_11">电路交换</h4>
+<p>双方预先建立一条专用的物理通信路径（由通信双方之间的交换设备和链路逐段连接而成），并在数据传输期间一直被独占</p>
+<p>数据传输期间，电路上的任何结点（除源节点和目的结点）都采用直通方式接收和发送数据，不存在存储转发</p>
+<p>分为三个阶段：连接建立、数据传输、连接释放</p>
+<p>优点：</p>
+<ul>
+<li>通信时延小：数据都是直达的</li>
+<li>有序传输</li>
+<li>没有冲突</li>
+<li>适用范围广：既适用于传输模拟信号，又适用于传输数字信号</li>
+<li>实时性强</li>
+<li>控制简单</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>建立连接时间长</li>
+<li>不具有差错控制能力</li>
+<li>线路独占，使用效率低</li>
+<li>灵活性差。只要出了任何一点故障，就必须重新拨号建立新的连接，不利于紧急和重要的通信</li>
+<li>难以规格化。不同类型、不同规格、不同速率的终端很难相互进行通信，也很难进行差错控制</li>
+</ul>
+<h4 id="_12">报文交换</h4>
+<p>以报文为单位进行数据交换，报文携带目的地址、源地址等信息。</p>
+<p>在交换结点采用存储转发</p>
+<p>优点：</p>
+<ul>
+<li>无须建立连接</li>
+<li>动态分配线路</li>
+<li>提高线路可靠性</li>
+<li>提高线路利用率</li>
+<li>提供多目标服务</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>要进行存储转发，引起转发时延</li>
+<li>对报文大小没有限制，要求网络结点有较大的缓存空间</li>
+</ul>
+<h4 id="_13">分组交换</h4>
+<p>以分组为单位进行数据交换，要发送的数据划分为等大的数据块，加上必要的控制信息后构成分组。</p>
+<p>在交换结点采用存储转发</p>
+<p>优点：</p>
+<ul>
+<li>无建立时延</li>
+<li>线路利用率高</li>
+<li>简化了存储管理：分组长度固定，相应的缓冲区大小也固定</li>
+<li>加速传输：分组是逐个传输的，分组存储和分组转发可以并行，构成流水线，从而减少报文传输时间。此外一个分组占用缓冲区比一个报文占用缓冲区小得多，从而减少了因缓冲区不足而等待的时间</li>
+<li>减少了出错概率和重发数据量</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>存在传输时延</li>
+<li>需要传输额外的信息，一定程度上降低了通信效率，增加了处理时间，使控制复杂，时延增加</li>
+<li>当采用数据报服务时，可能会出现失序、丢失或重复问题；采用虚电路服务也只能避免失序问题</li>
+</ul>
+<p><img alt="image-20221104201008093" src="image-20221104201008093.png" /></p>
+<h3 id="16">1.6 数据报和虚电路</h3>
+<h4 id="_14">数据报</h4>
+<ul>
+<li>不需要建立连接</li>
+<li>尽最大努力交付，不保证可靠性，分组到达可能不是有序的</li>
+<li><strong>分组要包含发送端和接收端的完整地址</strong></li>
+<li>分组在交换结点存储转发时，需要排队等候处理</li>
+<li>网络具有冗余路径</li>
+<li>存储转发延时小，提高网络吞吐量</li>
+<li>收发双方不独占某条链路，资源利用率高</li>
+</ul>
+<h4 id="_15">虚电路</h4>
+<ul>
+<li>在虚电路上的每个结点都维护一张虚电路表，记录所有已打开的虚电路的信息</li>
+<li>虚电路号</li>
+<li>前一结点和下一结点的标识</li>
+<li>虚电路的建立和拆除需要时间开销，不适用于交互式应用和小量短分组，但对于长时间、频发的数据交换而言效率较高</li>
+<li>虚电路在<u>连接建立时确定路由选择</u>，从而确定传输路径</li>
+<li>提供可靠通信功能，保证每个分组正确且有序到达，且可以进行流量控制</li>
+<li>由于传输路径是事先确定的，一旦路径中的某个结点或某个链路失效，所有经过该结点或该链路的虚电路都将被破坏</li>
+<li><strong>分组首部不包含目的地址，而是虚电路标识符，相对于数据报方式开销小。</strong></li>
+</ul>
+<p><img alt="image-20221104201822911" src="image-20221104201822911.png" /></p>
+<h2 id="_16">二、传输介质</h2>
+<h3 id="21">2.1 导向与非导向传输介质</h3>
+<ul>
+<li>导向传输介质：电磁波被导向沿着固体媒介（铜线或光纤）传播</li>
+<li>非导向传输介质：空气、真空或海水等</li>
+</ul>
+<h4 id="_17">双绞线</h4>
+<ul>
+<li>由两根采用一定规则并排绞合的、相互绝缘的铜导线组成。</li>
+<li>抗电磁干扰：绞合减少对相邻导线的电磁干扰。在双绞线的外层再加一层用金属丝编织成的屏蔽层，构成屏蔽双绞线。没有屏蔽层的双绞线为非屏蔽双绞线</li>
+<li>价格便宜，是最常用的传输介质之一</li>
+<li>在局域网和传统电话网中普遍使用</li>
+<li>带宽取决于铜线粗细和传输距离</li>
+<li>支持模拟传输和数字传输，通信距离达几千米到数十千米</li>
+<li>模拟传输可用放大器放大信号；数字传输可用中继器整形失真的信号</li>
+</ul>
+<p><img alt="image-20221104210331393" src="image-20221104210331393.png" /></p>
+<h4 id="_18">同轴电缆</h4>
+<ul>
+<li>内导体、绝缘层、外导体屏蔽层、绝缘保护套层</li>
+<li>按特性阻抗数值分为两类：50Ω同轴电缆和75Ω同轴电缆</li>
+<li>50Ω同轴电缆/基带同轴电缆：传送基带数字信号；<strong>广泛应用于局域网</strong></li>
+<li>75Ω同轴电缆/宽带同轴电缆：传送宽带信号；<strong>主要用于有线电视系统</strong></li>
+<li>良好的抗干扰特性，广泛用于传输较高速率的数据，传输距离更远，价格较双绞线贵</li>
+<li>其高带宽得益于它的高屏蔽性</li>
+</ul>
+<p><img alt="image-20221104210338333" src="image-20221104210338333.png" /></p>
+<h4 id="_19">光纤</h4>
+<ul>
+<li>纤芯、包层</li>
+<li>利用光导纤维传递光脉冲进行通信。有光脉冲为1，无光脉冲为0。带宽范围极大</li>
+</ul>
+<p><img alt="image-20221104210632961" src="image-20221104210632961.png" /></p>
+<ul>
+<li>多模光纤与单模光纤</li>
+<li>多模光纤：利用光的全反射特性，将不同角度入射的多条光纤在一根光纤中传输。光源为发光二极管。长距离传输容易失真，只适合近距离传输</li>
+<li>单模光纤：光线的直径减小到只有一个光的波长时，光线可以一直向前传播。制造成本高。光源为半导体激光器。可进行数公里甚至数十千米的传输而不必采用中继器，适合远距离传输</li>
+<li>特点：</li>
+<li>通信容量非常大</li>
+<li>传输损耗小、中继距离长、对远距离传输特别经济</li>
+<li>抗雷电和电磁干扰性能好</li>
+<li>无串音干扰，保密性好，也不易被窃听或截取数据</li>
+<li>体积小、重量轻</li>
+</ul>
+<h4 id="_20">无线传输介质</h4>
+<ul>
+<li>无线电波</li>
+<li>有较强穿透能力，可以传输很长距离</li>
+<li>应用于无线手机通信、WLAN等</li>
+<li>向所有方向散播（注意与微波、红外线和激光对比），无须接收设备对准某个方向。大大简化通信连接。</li>
+<li>微波、红外线、激光</li>
+<li>都是高带宽无限通信。都需要通信双方之间存在一条视线通路，有很强方向性，都沿直线传播</li>
+<li>红外通信：将信号转换为红外信号，直接在空间中传播</li>
+<li>激光通信：将信号转换为激光信号，直接在空间中传播</li>
+<li>微波通信：<ul>
+<li>频率高、频段宽、容量大。由于沿直线传播，在地面的传播距离有限，超过一定距离后需要用到中继站。</li>
+<li>卫星通信可以克服地面微波通信距离的限制，基本能实现全球通信。优点是容量大、距离远、覆盖广；缺点是成本高、误码率较高、受气候影响大、保密性差、端到端传播时延长</li>
+</ul>
+</li>
+</ul>
+<h3 id="22">2.2 物理层接口的特性</h3>
+<ul>
+<li>机械特性：接口所用接线器的形状和尺寸、引线数目和排列、固定和锁定装置等。</li>
+<li>电气特性：在接口电缆的各条线上出现的电压的范围。</li>
+<li>功能特性：某条线上出现的某一电平的电压的意义。</li>
+<li>过程特性：对于不同功能的各种可能事件的出现顺序。</li>
+<li>常用接口标准：EIA RS-232-C、ADSL、SONET/SDH</li>
+</ul>
+<h2 id="_21">三、物理层设备</h2>
+<h4 id="_22">中继器</h4>
+<ul>
+<li>将信号整形放大并转发，扩大网络传输的距离。原理是信号再生。</li>
+<li>是用来扩大网络规模的最简单廉价的互联设备。</li>
+<li>有两个端口，一个输入另一个输出。端口连接的网络是网段。</li>
+<li>要求连接的两个网段必须使用同一个协议，<u>不能连接两个具有不同速率的局域网</u></li>
+<li>不可能通过无限使用中继器来无限延长网络，因为网络标准规定了信号的延迟范围。</li>
+<li>5-4-3规则：互相串联的中继器个数不能超过4个，且4个中继器串联的5段通信介质中只有3段可以挂接计算机。</li>
+</ul>
+<h4 id="hub">集线器/Hub</h4>
+<ul>
+<li>即多端口中继器，也有整形放大功能</li>
+<li>目的是扩大网络的传输范围，不具备信号的定向传送能力</li>
+<li>主要使用双绞线组建共享网络，是最经济方案</li>
+<li>由集线器组成的网络是共享式网络，但逻辑上仍是一个总线网</li>
+<li>每个端口连接的网络是同一个网络的不同网段</li>
+<li><strong>只能在半双工状态下工作</strong></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2592 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x04%20%E4%B8%B2/">
+      
+      
+        <link rel="next" href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>考研笔记-数据结构：0x05 树与二叉树 - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0x05" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              考研笔记-数据结构：0x05 树与二叉树
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x05 树与二叉树
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x05 树与二叉树
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、基本术语
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    二、树的性质
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    三、二叉树
+  </a>
+  
+    <nav class="md-nav" aria-label="三、二叉树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 二叉树的基本特点
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 二叉树的基本特点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    二叉树的特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    二叉树与度为2的有序树的区别
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 二叉树的性质
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 特殊的二叉树
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 特殊的二叉树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    做题常用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    满二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    完全二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    二叉排序树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    平衡二叉树
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    3.4 二叉树的存储结构
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 二叉树的存储结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    二叉树的顺序存储
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    二叉树的链式存储
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    3.5 二叉树的遍历
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 二叉树的遍历">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    先序遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    中序遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    后序遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    层序遍历
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    3.6 二叉树的构造
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    四、线索二叉树
+  </a>
+  
+    <nav class="md-nav" aria-label="四、线索二叉树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 基本概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    4.2 二叉树的线索化
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 二叉树的线索化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    中序线索化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    先序线索化（！）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    后序线索化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    易错点总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    4.3 线索二叉树找前驱/后继
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 线索二叉树找前驱/后继">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    中序线索二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    先序线索二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    后序线索二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    五、二叉排序树
+  </a>
+  
+    <nav class="md-nav" aria-label="五、二叉排序树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    5.1 二叉排序树的查找
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    5.2 二叉排序树的插入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    5.3 二叉排序树的构造
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    5.4 二叉排序树的删除
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    5.5 查找效率分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    六、平衡二叉树
+  </a>
+  
+    <nav class="md-nav" aria-label="六、平衡二叉树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    6.1 定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    6.2 平衡调整
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 平衡调整">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ll" class="md-nav__link">
+    LL（插入到左孩子的左子树）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rr" class="md-nav__link">
+    RR（插入到右孩子的右子树）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lr" class="md-nav__link">
+    LR（插入到左孩子的右子树）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl" class="md-nav__link">
+    RL（插入到右孩子的左子树）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    6.3 查找效率分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    七、树与森林
+  </a>
+  
+    <nav class="md-nav" aria-label="七、树与森林">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 树与森林的存储结构
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 树与森林的存储结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    双亲表示法（顺序存储）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    孩子表示法（顺序+链式存储）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    孩子兄弟表示法（链式存储）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    森林的存储
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    7.2 树与森林的遍历
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 树与森林的遍历">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    树的先根遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    树的后根遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    树的层次遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    森林的先序遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    森林的中序遍历
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    八、哈夫曼树
+  </a>
+  
+    <nav class="md-nav" aria-label="八、哈夫曼树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    8.1 哈夫曼树的定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    8.2 哈夫曼树的构造
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    8.3 哈夫曼编码
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、基本术语
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    二、树的性质
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    三、二叉树
+  </a>
+  
+    <nav class="md-nav" aria-label="三、二叉树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 二叉树的基本特点
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 二叉树的基本特点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    二叉树的特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    二叉树与度为2的有序树的区别
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 二叉树的性质
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    3.3 特殊的二叉树
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 特殊的二叉树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    做题常用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    满二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    完全二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    二叉排序树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    平衡二叉树
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    3.4 二叉树的存储结构
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 二叉树的存储结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    二叉树的顺序存储
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    二叉树的链式存储
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    3.5 二叉树的遍历
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 二叉树的遍历">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    先序遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    中序遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    后序遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    层序遍历
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    3.6 二叉树的构造
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    四、线索二叉树
+  </a>
+  
+    <nav class="md-nav" aria-label="四、线索二叉树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1 基本概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    4.2 二叉树的线索化
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 二叉树的线索化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    中序线索化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    先序线索化（！）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    后序线索化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    易错点总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    4.3 线索二叉树找前驱/后继
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 线索二叉树找前驱/后继">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    中序线索二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    先序线索二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    后序线索二叉树
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    五、二叉排序树
+  </a>
+  
+    <nav class="md-nav" aria-label="五、二叉排序树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    5.1 二叉排序树的查找
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    5.2 二叉排序树的插入
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    5.3 二叉排序树的构造
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    5.4 二叉排序树的删除
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    5.5 查找效率分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    六、平衡二叉树
+  </a>
+  
+    <nav class="md-nav" aria-label="六、平衡二叉树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    6.1 定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    6.2 平衡调整
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 平衡调整">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ll" class="md-nav__link">
+    LL（插入到左孩子的左子树）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rr" class="md-nav__link">
+    RR（插入到右孩子的右子树）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lr" class="md-nav__link">
+    LR（插入到左孩子的右子树）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl" class="md-nav__link">
+    RL（插入到右孩子的左子树）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    6.3 查找效率分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    七、树与森林
+  </a>
+  
+    <nav class="md-nav" aria-label="七、树与森林">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 树与森林的存储结构
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 树与森林的存储结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    双亲表示法（顺序存储）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    孩子表示法（顺序+链式存储）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    孩子兄弟表示法（链式存储）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    森林的存储
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    7.2 树与森林的遍历
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 树与森林的遍历">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    树的先根遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    树的后根遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    树的层次遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    森林的先序遍历
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    森林的中序遍历
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    八、哈夫曼树
+  </a>
+  
+    <nav class="md-nav" aria-label="八、哈夫曼树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    8.1 哈夫曼树的定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    8.2 哈夫曼树的构造
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    8.3 哈夫曼编码
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0x05">0x05 树与二叉树</h1>
+<h2 id="_1">一、基本术语</h2>
+<ul>
+<li>空树：结点数为0的树</li>
+<li>非空树</li>
+<li>有且仅有一个根结点</li>
+<li>没有后继的结点称为叶子结点</li>
+<li>有后继的结点称为分支结点</li>
+<li>除根结点外，每个结点有且仅有一个前驱</li>
+<li>两个结点之间的路径：从上往下</li>
+<li>路径长度：路径经过了几条边</li>
+<li>
+<p>树的路径长度：从根结点出发到各个结点的路径长度之<strong>和</strong></p>
+</li>
+<li>
+<p>结点的层次（深度）——从上往下数（从1开始，根结点的深度是1）</p>
+</li>
+<li>结点的高度——从下往上数（从1开始，叶子结点的高度是1）</li>
+<li>树的高度/深度——总共多少层</li>
+<li>结点的度——有几个孩子</li>
+<li>有序树——各子树从左到右是有顺序的，互换会影响含义</li>
+<li>无序树——各子树无顺序，可以互换</li>
+</ul>
+<h2 id="_2">二、树的性质</h2>
+<ul>
+<li>结点数=度数+1</li>
+<li>树的度——各结点的度的最大值</li>
+<li>m叉树——每个结点<strong>最多</strong>只能有m个孩子的树</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>度为m的树</th>
+<th>m叉树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任意结点的度≤m（最多m个孩子）</td>
+<td>任意结点的度≤m（最多m个孩子）</td>
+</tr>
+<tr>
+<td>至少有一个结点度=m（有m个孩子）</td>
+<td>允许所有结点的度都＜m</td>
+</tr>
+<tr>
+<td>一定是非空树，至少有m+1个结点</td>
+<td>可以是空树</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>高度为h、度为m的树</th>
+<th>高度为h的m叉树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>至少</strong>有h+m-1个结点</td>
+<td><strong>至多</strong>有$\frac{m^h-1}{m-1}$个结点（$=m^0+m^1+m^2+...$）<br><strong>至少</strong>有h个结点</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>具有n个结点的m叉树的最小高度为$\lceil \log_m{(n(m-1)+1)}\rceil$</p>
+</li>
+<li>
+<p>推导：</p>
+</li>
+</ul>
+<p>$$
+  \begin{align}
+  &amp;\frac{m^{h-1}-1}{m-1}&lt;n≤\frac{m^h-1}{m-1}\
+  &amp;\Rightarrow m^{h-1}&lt;n(m-1)+1≤mh\
+  &amp;\Rightarrow h-1&lt;\log_m{(n(m-1)+1)}≤h\
+  &amp;\Rightarrow h_{min}=\lceil\log_m({n(m-1)+1)}\rceil&amp;
+  \end{align}
+  $$</p>
+<h2 id="_3">三、二叉树</h2>
+<h3 id="31">3.1 二叉树的基本特点</h3>
+<h4 id="_4">二叉树</h4>
+<ul>
+<li>空二叉树，n=0</li>
+<li>由一个根结点、左子树、右子树构成，左子树、右子树又分别是二叉树</li>
+</ul>
+<h4 id="_5">二叉树的特点</h4>
+<ul>
+<li>每个结点至多有两棵子树</li>
+<li>左右子树不能颠倒（有序树）</li>
+</ul>
+<h4 id="2">二叉树与度为2的有序树的区别</h4>
+<ul>
+<li>度为2的有序树至少有3个结点，而二叉树可以有2个、1个甚至0个结点</li>
+</ul>
+<h3 id="32">3.2 二叉树的性质</h3>
+<ol>
+<li>树结点的度：结点的子树个数（注意与图的结点的度的区别）</li>
+<li>
+<p>设非空二叉树中共有$n$个结点，度为0、1、2的结点个数分别为$n_0$、$n_1$、$n_2$，则</p>
+</li>
+<li>
+<p>$n_0=n_2+1$（1个二分支结点能长出2个叶子，3个二分支结点能长出4个叶子……）</p>
+</li>
+<li>$n=n_0+n_1+n_2$</li>
+<li>
+<p>$n=n_1+2n_2+1$（$总度数=n_1+2n_2$）</p>
+</li>
+<li>
+<p>二叉树的第$i$层至多有$2^{i-1}$个结点</p>
+</li>
+<li>高度为$h$的二叉树至多有$2^h-1$个结点（满二叉树的情况）</li>
+<li>具有$n$个结点的完全二叉树的高度$h$为$\lceil\log_2{n+1}\rceil$或$\lfloor \log_2{n}\rfloor$</li>
+</ol>
+<h3 id="33">3.3 特殊的二叉树</h3>
+<h4 id="_6">做题常用</h4>
+<ul>
+<li>完全二叉树第 i 层有 m 个叶子结点——当第 i 层是最后一层时结点总数最少，当第 i 层是倒数第二层时结点总数最多</li>
+<li>完全二叉树共有 m 个叶子结点——当倒数第二层的最左侧的叶子结点有一个左孩子时（这不会改变叶子结点总数），结点总数最多；反之最少。（或通过度数与结点数的关系分析）</li>
+<li>已知一棵有2011个结点的树，其叶结点个数是116，该树对应的二叉树中无右孩子的结点个数是——这题考点是树转二叉树，左孩子右兄弟。树要构造最特殊的，即一条链的末尾接116个孩子结点。按左孩子右兄弟转为二叉树后变成一条中间有转折的链，前1895个结点无右孩子，链的最末尾结点也无右孩子。故答案为1895+1=1896</li>
+</ul>
+<h4 id="_7">满二叉树</h4>
+<ul>
+<li>一棵高为$h$，且含有$2^h-1$个（$2^0+2^1+...+2^h=\frac{1-2^h}{1-2}$）结点的二叉树</li>
+<li>每个结点都必有2个子树，且只有<strong>最后一层</strong>有叶子结点</li>
+<li>按层序从1开始编号，则结点 $i$ 的左孩子为$2i$，右孩子为$2i+1$；结点 $j$ 的父结点为$\lfloor \frac{j}{2}\rfloor$</li>
+</ul>
+<h4 id="_8">完全二叉树</h4>
+<ul>
+<li>可以比满二叉树少一些结点，但所有结点按层序编号后要能与满二叉树一一对应</li>
+<li>只有最后两层可能有叶子结点（如果倒数第二层有叶子结点，一定是最右的结点）</li>
+<li>最多只有一个度为1的结点</li>
+</ul>
+<p><img alt="image-20220923095920868" src="0x05 树与二叉树\image-20220923095920868.png" /></p>
+<h4 id="_9">二叉排序树</h4>
+<ul>
+<li>首先是棵二叉树</li>
+<li>结点的<strong>左子树</strong>上所有结点的val都<strong>小于</strong>结点的val</li>
+<li>结点的<strong>右子树</strong>上所有结点的val都<strong>大于</strong>结点的val</li>
+<li>左右子树又各是一棵二叉排序树</li>
+</ul>
+<h4 id="_10">平衡二叉树</h4>
+<ul>
+<li>
+<p>首先是棵二叉树</p>
+</li>
+<li>
+<p>任一结点的左子树和右子树的深度之差不超过1</p>
+</li>
+<li>如果一棵二叉排序树是平衡的，则搜索效率更高</li>
+</ul>
+<h3 id="34">3.4 二叉树的存储结构</h3>
+<h4 id="_11">二叉树的顺序存储</h4>
+<div class="highlight"><pre><span></span><code><span class="cp">#define MaxSize 100</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">TreeNode</span><span class="p">{</span>
+<span class="w">    </span><span class="n">ElemType</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">isEmpty</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="n">TreeNode</span><span class="w"> </span><span class="n">t</span><span class="p">[</span><span class="n">MaxSize</span><span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>只有完全二叉树能将结点编号和数组下标对应起来，即根据结点编号找到左孩子和右孩子</li>
+<li>非完全二叉树也想应用同样的存储方式，就不能层序遍历依次编号，只能与完全二叉树的编号一一对应；相应的，数组中会因此出现一些空位。浪费最严重的情况是非完全二叉树退化为最右侧的一条链，此时虽然只有$i$个结点，仍需要长度为$2^i-1$的数组</li>
+</ul>
+<h4 id="_12">二叉树的链式存储</h4>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">BiTNode</span><span class="p">{</span>
+<span class="w">    </span><span class="n">ElemType</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">BiTNode</span><span class="w"> </span><span class="o">*</span><span class="n">lchild</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">rchild</span><span class="p">;</span>
+<span class="p">}</span><span class="n">BiTNode</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">BiTree</span><span class="p">;</span>
+</code></pre></div>
+<p>n个结点的二叉链表共有$n+1$个空链域</p>
+<h3 id="35">3.5 二叉树的遍历</h3>
+<h4 id="_13">先序遍历</h4>
+<p>根-左-右</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">PreOrder</span><span class="p">(</span><span class="n">BiTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="w">        </span><span class="n">PreOrder</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">);</span>
+<span class="w">        </span><span class="n">PreOrder</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="_14">中序遍历</h4>
+<p>左-根-右</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">InOrder</span><span class="p">(</span><span class="n">BiTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">PreOrder</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">);</span>
+<span class="w">        </span><span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="w">        </span><span class="n">PreOrder</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="_15">后序遍历</h4>
+<p>左-右-根</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">PostOrder</span><span class="p">(</span><span class="n">BiTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">PostOrder</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">);</span>
+<span class="w">        </span><span class="n">PreOrder</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">);</span>
+<span class="w">        </span><span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="_16">层序遍历</h4>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">LevelOrder</span><span class="p">(</span><span class="n">BiTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="n">LinkQueue</span><span class="p">(</span><span class="n">Q</span><span class="p">);</span>
+<span class="w">    </span><span class="n">InitQueue</span><span class="p">(</span><span class="n">Q</span><span class="p">);</span>
+<span class="w">    </span><span class="n">BiTree</span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="p">;</span>
+<span class="w">    </span><span class="n">EnQueue</span><span class="p">(</span><span class="n">T</span><span class="p">);</span><span class="w"> </span><span class="c1">//根结点入队</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">Q</span><span class="p">.</span><span class="n">isempty</span><span class="p">()){</span>
+<span class="w">        </span><span class="n">DeQueue</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">);</span><span class="w"> </span><span class="c1">//队首结点出队</span>
+<span class="w">        </span><span class="n">visit</span><span class="p">(</span><span class="n">p</span><span class="p">);</span><span class="w"> </span><span class="c1">//访问结点</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">            </span><span class="n">EnQueue</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">            </span><span class="n">EnQueue</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="36">3.6 二叉树的构造</h3>
+<ul>
+<li>若只给出一棵二叉树的前序/中序/后序/层序中的其中一种序列，那么无法唯一确定一棵二叉树。</li>
+<li>必须是中序遍历序列+其他三种中的任意一种，才能唯一确定一棵二叉树</li>
+</ul>
+<h2 id="_17">四、线索二叉树</h2>
+<h3 id="41">4.1 基本概念</h3>
+<p>线索二叉树的“前驱”和“后继”是针对二叉树的中序遍历序列而言的，不是逻辑结构上的“前驱”和“后继”。</p>
+<p>用<strong>二叉链表</strong>构造二叉树时，n个结点会产生n+1个空链域。线索二叉树利用这些空链域来保存“前驱”和“后继”的信息。</p>
+<ul>
+<li>当左孩子指针为空时，使它指向前驱结点（前驱线索）</li>
+<li>当右孩子指针为空时，使它指向后继结点（后继线索）</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">ThreadNode</span><span class="p">{</span>
+<span class="w">    </span><span class="n">ElemType</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">ThreadNode</span><span class="w"> </span><span class="o">*</span><span class="n">lchild</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">rchild</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">ltag</span><span class="p">,</span><span class="w"> </span><span class="n">rtag</span><span class="p">;</span><span class="w"> </span><span class="c1">// 用于标记指针域指向的到底是孩子还是线索，0-孩子，1-线索</span>
+<span class="p">}</span><span class="n">ThreadNode</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">ThreadTree</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="42">4.2 二叉树的线索化</h3>
+<h4 id="_18">中序线索化</h4>
+<div class="highlight"><pre><span></span><code><span class="n">ThreadNode</span><span class="w"> </span><span class="o">*</span><span class="n">pre</span><span class="o">=</span><span class="nb">NULL</span><span class="p">;</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">CreateInThread</span><span class="p">(</span><span class="n">ThreadTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">InThread</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="c1">//处理最后一个结点也就是中序遍历序列中最后一个元素的后继线索</span>
+<span class="w">        </span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rtag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">InThread</span><span class="p">(</span><span class="n">ThreadTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">InThread</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">);</span>
+<span class="w">        </span><span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="w">        </span><span class="n">InThread</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">visit</span><span class="p">(</span><span class="n">ThreadNode</span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">q</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">q</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pre</span><span class="p">;</span>
+<span class="w">        </span><span class="n">q</span><span class="o">-&gt;</span><span class="n">ltag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">pre</span><span class="o">!=</span><span class="nb">NULL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="o">==</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
+<span class="w">        </span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rtag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">pre</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="_19">先序线索化（！）</h4>
+<p>Q：若将中序线索化的代码照抄，只改变遍历顺序。先序遍历的顺序是根-左-右，假设pre指向根结点，q为正在访问的pre的左孩子。执行<code>visit(q)</code>，则q线索化后其前驱线索指向根结点，并令pre=q。然后会发生什么情况？</p>
+<p>A：此时q已访问完毕，接下来访问的结点是q的左孩子，原本左孩子应为NULL，然而此时q的左指针已经被线索化，指向了q的根结点，然后将陷入死循环。</p>
+<p>所以，应该相应修改代码，如下：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">PreThread</span><span class="p">(</span><span class="n">ThreadTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">visit</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">ltag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="c1">//当左指针未被线索化时，才尝试访问左孩子（实际上此时一定是NULL？）</span>
+<span class="w">            </span><span class="n">PreThread</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">);</span>
+<span class="w">        </span><span class="n">PreThread</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>此外，先序线索化中访问的最后一个结点也是中序线索化中访问的最后一个结点（都是整棵树里最右边的那个结点），所以对它的处理方式相同：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">CreatePreThread</span><span class="p">(</span><span class="n">ThreadTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">PreThread</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span>
+<span class="w">        </span><span class="c1">//处理最后一个结点也就是先序遍历序列中最后一个元素的后继线索</span>
+<span class="w">        </span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rtag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="_20">后序线索化</h4>
+<p>直接照抄中序线索化的代码，只改变遍历顺序即可。</p>
+<p>后序线索化不存在先序线索化的小坑，因为后序遍历是左-右-根，访问结点的左孩子发生在结点的左指针线索化之前。</p>
+<p>然而，后序线索化中访问的最后一个结点是整棵树的根结点，处理方式不能和先序中序一样（因为确实有存在右孩子的可能），应当先做个判断：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">CreatePostThread</span><span class="p">(</span><span class="n">ThreadTree</span><span class="w"> </span><span class="n">T</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">){</span>
+<span class="w">        </span><span class="n">PostThread</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="c1">//如果确实没有右孩子，就线索化，虽然一样是NULL</span>
+<span class="w">            </span><span class="n">pre</span><span class="o">-&gt;</span><span class="n">rtag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="_21">易错点总结</h4>
+<ul>
+<li>先序线索化中访问左指针的小坑</li>
+<li>三种线索化中对最后一个访问结点的rchild和rtag的处理</li>
+</ul>
+<h3 id="43">4.3 线索二叉树找前驱/后继</h3>
+<h4 id="_22">中序线索二叉树</h4>
+<ul>
+<li>中序后继：如果没有右子树，则<code>p-&gt;rchild</code>就是它的后继；如果有右子树，则右子树的最左边结点就是它的后继。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">//找以P为根结点的子树中最左边的结点，也就是这棵子树中第一个开始中序遍历的</span>
+<span class="n">ThreadNode</span><span class="o">*</span><span class="w"> </span><span class="nf">FirstNode</span><span class="p">(</span><span class="n">ThreadNode</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">){</span><span class="w"> </span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">ltag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//找p的中序后继</span>
+<span class="n">ThreadNode</span><span class="o">*</span><span class="w"> </span><span class="nf">InOrder</span><span class="p">(</span><span class="n">ThreadNode</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">){</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rtag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="c1">//如果有右子树，后继是右子树的最左边结点</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">FirstNode</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">);</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>中序前驱：如果没有左子树，则<code>p-&gt;lchild</code>就是它的前驱；如果有左子树，则左子树的最右边结点就是它的前驱。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1">//找以P为根结点的子树中最右边的结点，也就是这棵子树中最后一个中序遍历的</span>
+<span class="n">ThreadNode</span><span class="o">*</span><span class="w"> </span><span class="nf">LastNode</span><span class="p">(</span><span class="n">ThreadNode</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">){</span><span class="w"> </span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rtag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//找p的中序前驱</span>
+<span class="n">ThreadNode</span><span class="o">*</span><span class="w"> </span><span class="nf">InOrder</span><span class="p">(</span><span class="n">ThreadNode</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">){</span>
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rtag</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="c1">//如果有左子树，前驱是左子树的最右边结点</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">Node</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">);</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">p</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="_23">先序线索二叉树</h4>
+<ul>
+<li>
+<p>先序后继：</p>
+</li>
+<li>
+<p>如果有左孩子→后继为左孩子；</p>
+</li>
+<li>
+<p>如果没有左孩子→后继为右孩子；</p>
+</li>
+<li>
+<p>先序前驱：对于先序遍历，当前结点的前驱不可能在它的子树中。</p>
+</li>
+<li>
+<p>如果没有左孩子，则前驱线索<code>p-&gt;lchird</code>就是它的前驱；</p>
+</li>
+<li><strong>如果有左孩子，则不可能找到前驱</strong>，除非从根结点开始重新遍历</li>
+</ul>
+<p><strong>改进：三叉链表，多一个指向父结点的指针</strong></p>
+<ul>
+<li>若p的父结点存在，且p是左孩子——前驱就是p的父结点。</li>
+<li>若p的父结点存在，且p是右孩子，p的左兄弟为空——前驱就是p的父结点。</li>
+<li>若p的父结点存在，且p是右孩子，p的左兄弟非空——以p的左兄弟为根结点的子树中，遵循以下原则找到最后一个结点：能向右走向右走，右边没路才向左走。最后的结点就是p的前驱。</li>
+<li>若p的父结点不存在——p是整棵树的根结点，在先序遍历中是第一个被访问的，没有前驱。</li>
+</ul>
+<h4 id="_24">后序线索二叉树</h4>
+<ul>
+<li>
+<p>后序前驱：</p>
+</li>
+<li>
+<p>如果没有左孩子→前驱线索<code>p-&gt;lchild</code>；</p>
+</li>
+<li>如果有左孩子（即存储不了前驱线索）且有右孩子→前驱是右孩子；</li>
+<li>
+<p>如果有左孩子但没有右孩子→前驱是左孩子。</p>
+</li>
+<li>
+<p>后序后继：对于后序遍历，当前结点的后继不可能在它的子树中。</p>
+</li>
+<li>
+<p>如果没有右孩子→后继线索<code>p-&gt;rchild</code>；</p>
+</li>
+<li><strong>如果有右孩子，则不可能找到后继</strong>，除非从根结点开始重新遍历</li>
+</ul>
+<p><strong>改进：三叉链表，多一个指向父结点的指针</strong></p>
+<ul>
+<li>若p的父结点存在，且p是右孩子——后继就是p的父结点。</li>
+<li>若p的父结点存在，且p是左孩子，p的右兄弟为空——后继就是p的父结点。</li>
+<li>若p的父结点存在，且p是左孩子，p的右兄弟非空——后继就是以p的右兄弟为根的子树中，第一个被后序遍历的结点。具体为：以p的右兄弟为根结点的子树中，能向左走向左走，左边没路才向右走。最后的结点就是p的后继。</li>
+<li>若p的父结点不存在——p是整棵树的根结点，在后序遍历中是最后一个被访问的，没有后继。</li>
+</ul>
+<h4 id="_25">总结</h4>
+<p>中序线索二叉树，从任意一个结点出发，既能逆向地中序遍历，也能正向地中序遍历。</p>
+<p>先序线索二叉树，从任意一个结点出发，只能正向地先序遍历；除非所有结点都没有左孩子（变成一条链了），或用三叉链表存储，才能逆向地先序遍历。</p>
+<p>后序线索二叉树，从任意一个结点出发，只能逆向地后序遍历；除非所有结点都没有右孩子，或用三叉链表存储，才能正向地后序遍历。</p>
+<h2 id="_26">五、二叉排序树</h2>
+<p>二叉排序树=二叉查找树=BST</p>
+<p>二叉排序树中的每一个结点都满足：</p>
+<ul>
+<li>左孩子的值小于它</li>
+<li>右孩子的值大于它</li>
+</ul>
+<p>对二叉排序树进行中序遍历，可以得到一个<strong>升序序列</strong></p>
+<h3 id="51">5.1 二叉排序树的查找</h3>
+<div class="highlight"><pre><span></span><code><span class="n">BSTNode</span><span class="o">*</span><span class="w"> </span><span class="nf">BST_Search</span><span class="p">(</span><span class="n">BSTree</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">){</span><span class="w"> </span><span class="c1">//查找值为key的结点</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">T</span><span class="o">!=</span><span class="nb">NULL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">key</span><span class="o">!=</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">key</span><span class="o">&gt;</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">;</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">T</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="52">5.2 二叉排序树的插入</h3>
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">BST_Insert</span><span class="p">(</span><span class="n">BSTree</span><span class="w"> </span><span class="o">&amp;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">){</span><span class="w"> </span><span class="c1">//原树为空，插入的结点为根结点</span>
+<span class="w">        </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">BSTree</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">BSTNode</span><span class="p">));</span>
+<span class="w">        </span><span class="n">T</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="p">;</span>
+<span class="w">        </span><span class="n">T</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">T</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">){</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="c1">//结点已存在，插入失败</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">k</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">T</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">){</span>
+<span class="w">            </span><span class="n">BST_Insert</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="p">{</span>
+<span class="w">            </span><span class="n">BST_Insert</span><span class="p">(</span><span class="n">T</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>注意：非递归的插入操作不能直接按查找操作那样来，实现过程中有很多问题需要处理：比如最后原本应该指向根结点的指针T指向了最后一个插入的结点；或者丢失父结点信息导致malloc出来的新结点挂不到树上去（但是递归过程中malloc出来的结点就能自动挂到树上去，想不明白……）</p>
+<h3 id="53">5.3 二叉排序树的构造</h3>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Creat_BST</span><span class="p">(</span><span class="n">BSTree</span><span class="w"> </span><span class="o">&amp;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">str</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">){</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="c1">//注意初始化T</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">){</span>
+<span class="w">        </span><span class="n">BST_Insert</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">        </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="54">5.4 二叉排序树的删除</h3>
+<p>情况1：删除的结点是叶子结点，对排序树的结构无影响，直接删除即可</p>
+<p>情况2：删除的结点z只有一棵子树，则让z的子树顶替z原本的位置</p>
+<p>情况3：删除的结点z既有左子树又有右子树</p>
+<ul>
+<li>从中序遍历的角度考虑（中序遍历排序树应得到升序序列），可以由z的中序后继顶替z的位置。在二叉排序树中，z的中序后继就是z的右子树的最左下方结点p（即一直向左走走到无路可走的结点，注意绝对不向右）。将p的值复制给z，问题就变成了如何删除p，即情况2.</li>
+<li>同理，也可以由z的中序前驱顶替z的位置。在二叉排序树中，z的中序前驱就是z的左子树的最右下方结点t（即一直向右走走到无路可走的结点，注意绝对不向左）。将t的值复制给z，问题就变成了如何删除t，即情况2.</li>
+</ul>
+<h3 id="55">5.5 查找效率分析</h3>
+<p>查找长度：比对关键字的次数。</p>
+<p>查找失败的平均查找长度：直接看排序树还能再新增多少个叶子结点，计算这些叶子结点的深度-1，再算平均值。</p>
+<h2 id="_27">六、平衡二叉树</h2>
+<h3 id="61">6.1 定义</h3>
+<p>平衡二叉树=平衡树=AVL树</p>
+<p>树上任一结点的左子树和右子树的高度之差不超过1.</p>
+<p><strong>结点的平衡因子</strong>=左子树高度-右子树高度</p>
+<p><img alt="image-20220924164929087" src="image-20220924164929087.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">AVLNode</span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">    </span><span class="n">AVLNode</span><span class="o">*</span><span class="w"> </span><span class="n">lchild</span><span class="p">,</span><span class="w"> </span><span class="n">rchild</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">balance</span><span class="p">;</span>
+<span class="p">}</span><span class="n">AVLNode</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">AVLTree</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="62">6.2 平衡调整</h3>
+<p><strong>从插入点往回</strong>找到第一个不平衡结点，调整以该结点为根的子树（最小不平衡子树）。</p>
+<p>以下平衡调整，<strong>既能保持AVL树的平衡特性，也能保持二叉排序树的特性</strong>。</p>
+<h4 id="ll">LL（插入到左孩子的左子树）</h4>
+<p>设当前这棵最小不平衡子树的根结点是A，<strong>A的左孩子为B</strong>。</p>
+<p>LL平衡旋转（右单旋转），即，把B拎起来作为根结点，A就自然成了B的右孩子。而B原来的右孩子就作为现在A的左孩子（就像是，B以过继自己的右孩子给A为代价，成为了树的老大）。</p>
+<p><img alt="image-20220924170313784" src="image-20220924170313784.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">LL</span><span class="p">(</span><span class="n">AVLNode</span><span class="o">*</span><span class="w"> </span><span class="n">A</span><span class="p">){</span>
+<span class="w">    </span><span class="n">AVLNode</span><span class="o">*</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="p">;</span>
+<span class="w">    </span><span class="n">A</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="o">-&gt;</span><span class="n">rchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">    </span><span class="n">preA</span><span class="o">-&gt;</span><span class="n">lchild</span><span class="o">/</span><span class="n">rchild</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span><span class="w"> </span><span class="c1">// preA是A原本的父结点</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="rr">RR（插入到右孩子的右子树）</h4>
+<p>设当前这棵最小不平衡子树的根结点是A，<strong>A的右孩子为B</strong>。</p>
+<p>RR平衡旋转（左单旋转），类比LL，把B拎起来作为根结点，A就自然成了B的左孩子。而B原来的左孩子就作为现在A的右孩子。</p>
+<p><img alt="image-20220924170231278" src="image-20220924170231278.png" /></p>
+<h4 id="lr">LR（插入到左孩子的右子树）</h4>
+<p>设当前这棵最小不平衡子树的根结点是A，<strong>A的左孩子为B，B的右孩子为C</strong></p>
+<p><img alt="image-20220924171029053" src="image-20220924171029053.png" /></p>
+<p>LR平衡旋转，即，先把C拎起来让它代替B，C的左孩子作为B的右孩子。然后，再把C拎起来让它代替A，C的右孩子作为A的左孩子。</p>
+<p><img alt="image-20220924171239277" src="image-20220924171239277.png" /></p>
+<h4 id="rl">RL（插入到右孩子的左子树）</h4>
+<p>设当前这棵最小不平衡子树的根结点是A，<strong>A的右孩子为B，B的左孩子为C</strong></p>
+<p><img alt="image-20220924171352592" src="image-20220924171352592.png" /></p>
+<p>RL平衡旋转，类比LR，先把C拎起来代替B，C的右孩子作为B的左孩子；然后，再把C拎起来代替A，C的左孩子作为A的右孩子。</p>
+<p><img alt="image-20220924171510379" src="image-20220924171510379.png" /></p>
+<h3 id="63">6.3 查找效率分析</h3>
+<ul>
+<li>设$n_h$表示深度为$h$的平衡树中含有的最少结点数（这种情况下，根结点的两个子树是不平的，其中一个子树会多一个结点，这个结点的深度为$h$）</li>
+</ul>
+<p>则$n_0=0$（空树）、$n_1=1$（只有根结点）、$n_2=2$（根结点只有一个孩子）……并且有$n_h=n_{h-1}+n_{n-2}+1$</p>
+<ul>
+<li>平衡二叉树最大深度为$O(\log{n})$，平均查找长度/查找的时间复杂度为$O(\log{n})$</li>
+</ul>
+<h2 id="_28">七、树与森林</h2>
+<p>本节的树是指一般的树，每个结点后面接几个结点都是任意的，不要老想成二叉树。</p>
+<h3 id="71">7.1 树与森林的存储结构</h3>
+<h4 id="_29">双亲表示法（顺序存储）</h4>
+<p>将一棵树用一个结构体数组表示，每个结点都是一个结构体，包含数据及一个指向其父结点的指针。</p>
+<p>显然这种结构没办法按二叉树中常用的遍历手段来遍历，只能通过数组遍历来遍历所有结点。若要查指定结点的父结点则马上能查到，但查指定结点的孩子结点只能遍历数组逐个判断</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#define MaxSize 100</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">PTNode</span><span class="p">{</span>
+<span class="w">    </span><span class="n">ElemType</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PTNode</span><span class="o">*</span><span class="w"> </span><span class="n">parent</span><span class="p">;</span><span class="w"> </span><span class="c1">//每个结点都保存一个指向父结点的指针</span>
+<span class="w">    </span><span class="c1">// 或者 int parent; 保存父结点在数组中的下标</span>
+<span class="p">};</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="p">{</span>
+<span class="w">    </span><span class="n">PTNode</span><span class="w"> </span><span class="n">t</span><span class="p">[</span><span class="n">MaxSize</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="c1">//保存整棵树的结点个数</span>
+<span class="p">}</span><span class="n">Tree</span><span class="p">;</span>
+</code></pre></div>
+<p>优点：查指定结点的双亲很方便</p>
+<p>缺点：</p>
+<ul>
+<li>如果删除结点后不补位，会导致数组中有空位，影响遍历效率</li>
+<li>查指定结点的孩子只能从头开始遍历</li>
+</ul>
+<h4 id="_30">孩子表示法（顺序+链式存储）</h4>
+<p>顺序+链式存储，就是有很多条链表，然后将每个链表的首结点用数组组织起来。</p>
+<p><img alt="image-20221218111135781" src="image-20221218111135781.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">CTNode</span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">child</span><span class="p">;</span><span class="w"> </span><span class="c1">//孩子结点在数组中的位置</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CTNode</span><span class="w"> </span><span class="o">*</span><span class="n">next</span><span class="p">;</span><span class="w"> </span><span class="c1">//下一个孩子</span>
+<span class="p">};</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="p">{</span>
+<span class="w">    </span><span class="n">ElemType</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w"> </span><span class="c1">//实际数据都存储在数组中，CTNode链表仅指示孩子位置。</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CTNode</span><span class="w"> </span><span class="o">*</span><span class="n">firstChild</span><span class="p">;</span><span class="w"> </span><span class="c1">//第一个孩子</span>
+<span class="p">}</span><span class="w"> </span><span class="n">CTBox</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="p">{</span>
+<span class="w">    </span><span class="n">CTBox</span><span class="w"> </span><span class="n">nodes</span><span class="p">[</span><span class="n">MAX_TREE_SIZE</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">;</span><span class="w"> </span><span class="c1">//结点数和根的下标；</span>
+<span class="p">}</span><span class="w"> </span><span class="n">CTree</span>
+</code></pre></div>
+<h4 id="_31">孩子兄弟表示法（链式存储）</h4>
+<p>用二叉链表存储，每个结点两个指针，左指针保存该结点的第一个孩子结点，右指针保存该结点的后面一个兄弟</p>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">CSNode</span><span class="p">{</span>
+<span class="w">    </span><span class="n">ElemType</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CSNode</span><span class="w"> </span><span class="o">*</span><span class="n">firstchild</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">nextsibling</span><span class="p">;</span>
+<span class="p">}</span><span class="n">CSNode</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">CSTree</span><span class="p">;</span>
+</code></pre></div>
+<p><img alt="image-20220924145725535" src="image-20220924145725535.png" /></p>
+<h4 id="_32">森林的存储</h4>
+<p>森林是m棵互不相交的树的集合。</p>
+<p>存储：</p>
+<ol>
+<li>将各棵树按左孩子右兄弟的方式转换为二叉树</li>
+<li>各棵树的根结点视为兄弟关系连接起来</li>
+<li>森林转化为了一棵二叉树，这棵二叉树的根结点是原森林中某棵树的根结点。</li>
+</ol>
+<h3 id="72">7.2 树与森林的遍历</h3>
+<h4 id="_33">树的先根遍历</h4>
+<p>树的先根遍历序列=这棵树对应二叉树的先序遍历序列</p>
+<h4 id="_34">树的后根遍历</h4>
+<p>树的后根遍历序列=这棵树对应二叉树的中序遍历序列</p>
+<h4 id="_35">树的层次遍历</h4>
+<h4 id="_36">森林的先序遍历</h4>
+<p>森林中的每棵树去掉根结点后，其各个子树又构成森林。</p>
+<p>先序遍历顺序：</p>
+<ol>
+<li>访问森林中第一棵树的根结点</li>
+<li>先序遍历这个根结点的子树森林</li>
+<li>先序遍历除去第一棵树后剩余的树构成的森林</li>
+</ol>
+<p>做题写顺序：</p>
+<ul>
+<li>直接从左到右对每棵树都做一遍先序遍历</li>
+<li>或者先将森林转成二叉树，再做先序遍历</li>
+</ul>
+<h4 id="_37">森林的中序遍历</h4>
+<ol>
+<li>中序遍历第一棵树的根结点的子树；</li>
+<li>访问森林中第一棵树的根结点；</li>
+<li>中序遍历去掉第一棵树后的子森林。</li>
+</ol>
+<p>做题写顺序：</p>
+<ul>
+<li>先将森林转成<strong>二叉树</strong>，再做<strong>中序遍历</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>树</th>
+<th>森林</th>
+<th>二叉树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>先根遍历</td>
+<td>先序遍历</td>
+<td>先序遍历</td>
+</tr>
+<tr>
+<td>后根遍历</td>
+<td>中序遍历</td>
+<td>中序遍历</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_38">八、哈夫曼树</h2>
+<h3 id="81">8.1 哈夫曼树的定义</h3>
+<ul>
+<li>结点的带权路径长度（WPL）：从根结点到该结点的路径长度（经过的边数）与该结点上权值的乘积</li>
+<li>树的带权路径长度：树中所有<strong>叶子结点</strong>的带权路径长度之和</li>
+<li>在含有$n$个带权叶结点的二叉树中，带权路径长度最小的二叉树为哈夫曼树，也称为最优二叉树 </li>
+<li><strong>哈夫曼树共有n-1个双分支结点，结点总数为2n-1，不存在度为1的结点。</strong></li>
+</ul>
+<h3 id="82">8.2 哈夫曼树的构造</h3>
+<ol>
+<li>构造一个新结点，从$n$个结点构成的森林F中选取两棵权值最小的树作为新结点的左右子树，并将新结点的权值设为左右子树根结点权值之和。</li>
+<li>将原来的两棵树从F中删除，并将得到的新树加入F</li>
+<li>重复上述步骤，直到F中只剩下一棵树为止（此时，原有的$n$个结点都成为了这棵树的叶子结点）</li>
+</ol>
+<h3 id="83">8.3 哈夫曼编码</h3>
+<ul>
+<li>固定长度编码：每个字符都用固定长度的二进制位表示</li>
+<li>可变长度编码：允许对不同字符用不等长的二进制位表示</li>
+<li>前缀编码：若没有一个编码是另一个编码的前缀，则称为前缀编码</li>
+<li>哈夫曼编码：每个字符作为叶子结点，各字符出现的频度作为结点的权值。</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

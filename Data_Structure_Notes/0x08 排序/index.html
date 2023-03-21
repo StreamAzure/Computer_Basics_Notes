@@ -1,0 +1,1500 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>考研笔记-数据结构：0x08 排序 - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0x08" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              考研笔记-数据结构：0x08 排序
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、排序的基本概念
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    二、插入排序
+  </a>
+  
+    <nav class="md-nav" aria-label="二、插入排序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 直接插入排序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 折半插入排序
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    三、希尔排序
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    四、冒泡排序
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    五、快速排序
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    六、简单选择排序
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    七、堆排序
+  </a>
+  
+    <nav class="md-nav" aria-label="七、堆排序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 堆的定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    7.2 堆的构建
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    7.3 基于堆的排序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    7.4 算法效率分析
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    八、归并排序
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    九、基数排序
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    十、外部排序
+  </a>
+  
+    <nav class="md-nav" aria-label="十、外部排序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101" class="md-nav__link">
+    10.1 排序过程
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    10.2 时间开销分析
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-k" class="md-nav__link">
+    10.3 k路平衡归并
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104" class="md-nav__link">
+    10.4 败者树
+  </a>
+  
+    <nav class="md-nav" aria-label="10.4 败者树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    败者树的构造
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k" class="md-nav__link">
+    败者树在k路平衡归并中的应用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    比较次数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    败者树的存储
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-" class="md-nav__link">
+    10.5 置换-选择排序
+  </a>
+  
+    <nav class="md-nav" aria-label="10.5 置换-选择排序">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    原理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    算法流程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#106" class="md-nav__link">
+    10.6 最佳归并树
+  </a>
+  
+    <nav class="md-nav" aria-label="10.6 最佳归并树">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    二路归并的情况
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    多路归并的情况
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0x08">0x08 排序</h1>
+<h2 id="_1">一、排序的基本概念</h2>
+<ul>
+<li>排序算法的稳定性：指相同关键字的元素在经过排序算法多次处理后，其相对位置是否保持不变。若保持不变，则称排序算法是稳定的，否则是不稳定的</li>
+<li>不能说稳定的排序算法就一定比不稳定的好，应该看实际应用场景。</li>
+<li>内部排序/外部排序：</li>
+<li>内部排序：数据全在内存中。关注点为算法的时间复杂度、空间复杂度</li>
+<li>外部排序：数据太多，无法全部放入内存，有些在磁盘上。关注点除了算法的时空复杂度外，还要关注如何使读/写磁盘次数更少。</li>
+</ul>
+<h2 id="_2">二、插入排序</h2>
+<h3 id="21">2.1 直接插入排序</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">//下标从0开始，升序排列</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">InsertSort</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">A</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">){</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="w"> </span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="mi">-1</span><span class="p">]){</span><span class="c1">//找到第一个乱序的元素</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">;</span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">&gt;=</span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"> </span><span class="n">j</span><span class="o">--</span><span class="p">){</span>
+<span class="w">                </span><span class="c1">//向前面已有序的部分逐个查找该插入的位置，一边找一边将元素后移</span>
+<span class="w">                </span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="c1">//跳出循环时有temp&gt;=A[j]</span>
+<span class="w">            </span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">temp</span><span class="p">;</span><span class="w"> </span><span class="c1">//将元素插入到有序部分</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>空间复杂度：$O(1)$</li>
+<li>时间复杂度：</li>
+<li>最好情况：要求升序排列，且原本就是升序排列。只需要n-1次关键字比对，不需要移动元素，$O(n)$</li>
+<li>最坏情况：要求升序排列，而原本是降序排列。$O(n^2)$</li>
+<li>稳定性：稳定，因为找插入位置的时候是依次处理的，在前面的相同元素一定排在前面，后续的相同元素一定排在后面。</li>
+</ul>
+<h3 id="22">2.2 折半插入排序</h3>
+<p>先用折半查找在已经有序的部分找到应该插入的位置，再移动元素。</p>
+<p>为了保证算法稳定性，当<code>A[mid]==A[0]</code>时（即数组中存在相同元素），固定在<code>mid</code>所指位置的后面/右边寻找插入位置（从而保证后面处理的相同元素一定会放在早前处理的相同元素后面）。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">//数组下标从1开始，A[0]用于临时存放当前处理的元素</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">InsertSort</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">A</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">){</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">        </span><span class="k">while</span><span class="p">(</span><span class="n">low</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">high</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">low</span><span class="o">+</span><span class="n">high</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mid</span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">//A[mid] == A[0]时也是low=mid+1</span>
+<span class="w">        </span><span class="p">}</span><span class="c1">//结束循环时low在high的右边一位</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">low</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">--</span><span class="p">){</span>
+<span class="w">            </span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">];</span><span class="w"> </span><span class="c1">//在插入位置上及后面的元素全部后移一位</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>只能减少关键字比对次数，整体时间复杂度仍是$O(n^2)$</li>
+</ul>
+<h2 id="_3">三、希尔排序</h2>
+<p>设一个间隔序列（从大到小）$d_1$，$d_2$，$d_3...$，开始时取间隔$d_1$，让待排序表以该间隔划分为若干个子表，如子表1：$A[1],A[1+d_1],A[1+2d_1],...$、子表2：$A[2],A[2+d_2],A[2+d_2],...$。分别对这些子表进行直接插入排序。然后取下一个间隔$d_2$，重复以上操作，直到最后一个间隔$d_n=1$，即对整个表直接进行插入排序。</p>
+<h2 id="_4">四、冒泡排序</h2>
+<p>每趟中，遍历数组中的每一个元素，将它与前一个或后一个元素（如果存在）比较，若不符合排序要求则交换元素。每一趟结束后，都可让一个元素归位（且是当前这一趟遍历的元素中最小/最大的那一个）。</p>
+<p>保证算法稳定性：比较中若发现存在相同的元素，则不作交换。</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="mi">-1</span><span class="w"> </span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">//要比较n-1趟，而不是n趟，因为最后一趟会一次归位2个元素。</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">&gt;</span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">--</span><span class="p">){</span><span class="w"> </span><span class="c1">//从后往前比较</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="mi">-1</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]){</span>
+<span class="w">            </span><span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+<span class="w">            </span><span class="n">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">flag</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="c1">//本趟遍历后没有发生交换，说明数组已经有序</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>注意，每1次<strong>交换</strong>都会<strong>移动3次</strong>元素</li>
+</ul>
+<p>时间复杂度：</p>
+<ul>
+<li>最好：$O(n)$</li>
+<li>最坏：$O(n^2)$</li>
+</ul>
+<h2 id="_5">五、快速排序</h2>
+<p>每趟划分归位一个元素。基准一般选择数组第一个元素。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">QuickSort</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">A</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">low</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">high</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">low</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">high</span><span class="p">){</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">pivotpos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">low</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="p">);</span>
+<span class="w">        </span><span class="n">QuickSort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">low</span><span class="p">,</span><span class="w"> </span><span class="n">pivotpos</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="n">QuickSort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">pivotpos</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">//升序排列</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">Partition</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">A</span><span class="p">[]</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">low</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">high</span><span class="p">){</span><span class="w"> </span><span class="c1">//返回归位的下标</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">];</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">low</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">high</span><span class="p">){</span>
+<span class="w">        </span><span class="k">while</span><span class="p">(</span><span class="n">low</span><span class="o">&lt;</span><span class="n">high</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">high</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">pivot</span><span class="p">)</span><span class="w"> </span><span class="n">high</span><span class="o">--</span><span class="p">;</span>
+<span class="w">        </span><span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">high</span><span class="p">];</span><span class="w"> </span><span class="c1">//找到右边第一个不满足升序的元素A[high];</span>
+<span class="w">        </span><span class="k">while</span><span class="p">(</span><span class="n">low</span><span class="o">&lt;</span><span class="n">high</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">pivot</span><span class="p">)</span><span class="w"> </span><span class="n">low</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="n">A</span><span class="p">[</span><span class="n">high</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">];</span><span class="w"> </span><span class="c1">//找到左边第一个不满足升序的元素A[low];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pivot</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">low</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>递归层数：可以将处理过程看成一棵二叉树，则树高即递归层数。$n$个结点的二叉树，最小高度$\lfloor log_2n\rfloor+1$，最大高度$n$</p>
+<p>最好情况：每次选中的基准元素能把数组划分成均匀的左右两个部分；</p>
+<p>最坏情况：每次选中的基准元素的归位位置都是待排数组的最左边/最右边，导致递归层数加深。即数组全部顺序/逆序的情况。</p>
+<p>时间复杂度：$O(n*递归层数) = O(nlog_2n)$，最坏情况下$O(n)$</p>
+<p>空间复杂度：$O(递归层数)= O(log_2n)$，最坏情况下$O(n)$</p>
+<p>优化基准元素的选择：①随机选取；②每次取头、中、尾三个元素，取其中间值。</p>
+<p><strong>稳定性：不稳定。</strong></p>
+<table>
+<thead>
+<tr>
+<th>一趟排序</th>
+<th>一次划分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指递归树中的一层</td>
+<td>指一个元素的归位</td>
+</tr>
+<tr>
+<td>一趟排序完成后可归位多个元素</td>
+<td>一次划分完成后只归位一个元素</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_6">六、简单选择排序</h2>
+<p>每一趟在待排序元素中选取关键字最小（或最大）的元素加入有序子序列。</p>
+<p>与插入排序的不同：插入排序中每处理一个元素，都<strong>插入</strong>到有序子序列，即，此时有序子序列内部元素会发生后移/前移。而选择排序则总是将元素<strong>追加</strong>（通过交换）到有序子序列的末尾，原先的内部元素不需要发生移动。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">SelectSort</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">A</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">){</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">        </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">&lt;</span><span class="n">A</span><span class="p">[</span><span class="n">min</span><span class="p">])</span><span class="w"> </span><span class="n">min</span><span class="o">=</span><span class="n">j</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">min</span><span class="o">!=</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">min</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>时间复杂度：</p>
+<ul>
+<li>无论是顺序、逆序还是乱序，都是一样的处理过程，都是$O(n^2)$</li>
+</ul>
+<p>空间复杂度：$O(1)$</p>
+<p><strong>稳定性：不稳定</strong></p>
+<h2 id="_7">七、堆排序</h2>
+<h3 id="71">7.1 堆的定义</h3>
+<ul>
+<li>堆是一个顺序存储的完全二叉树。父结点大于孩子结点的堆为大根堆，根结点是堆中元素的最大值；父结点小于孩子结点的堆是小根堆，根结点是堆中元素的最小值。</li>
+<li>堆排序：先将待排序的数组整理成堆，再输出排好的数组</li>
+</ul>
+<h3 id="72">7.2 堆的构建</h3>
+<ol>
+<li>检查数组中的非终端结点（即$i≤\lfloor n/2\rfloor$的结点，数组的左半部分）是否满足堆的要求</li>
+<li>若不满足，将当前结点与它更大的一个孩子互换</li>
+<li>若元素互换破坏了下一级的堆，则采用相同的方法继续向下调整</li>
+<li>重复以上过程，直到所有非终端结点调整完成</li>
+</ol>
+<p>（一边输入一边调整的堆，非原地版本）</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">){</span>
+<span class="w">    </span><span class="c1">// 自动插入到堆尾，因此是向上调整</span>
+<span class="w">    </span><span class="n">heap</span><span class="p">[</span><span class="n">len</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">now</span><span class="p">){</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nxt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">//找父结点</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">heap</span><span class="p">[</span><span class="n">nxt</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">heap</span><span class="p">[</span><span class="n">now</span><span class="p">]){</span><span class="w"> </span><span class="c1">//父结点比它大，换下来</span>
+<span class="w">            </span><span class="n">swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">heap</span><span class="p">[</span><span class="n">nxt</span><span class="p">],</span><span class="w"> </span><span class="o">&amp;</span><span class="n">heap</span><span class="p">[</span><span class="n">now</span><span class="p">]);</span><span class="w"> </span><span class="c1">//换值</span>
+<span class="w">            </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nxt</span><span class="p">;</span><span class="w"> </span><span class="c1">// 更新指针</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">pop</span><span class="p">(){</span><span class="w"> </span><span class="c1">//弹出堆顶</span>
+<span class="w">    </span><span class="c1">// 将新的元素换上了堆顶，因此是从堆顶向下调整</span>
+<span class="w">    </span><span class="n">swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">heap</span><span class="p">[</span><span class="n">len</span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="o">&amp;</span><span class="n">heap</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">    </span><span class="n">len</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">((</span><span class="n">now</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">len</span><span class="p">){</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">nxt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">//左孩子</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">nxt</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">heap</span><span class="p">[</span><span class="n">nxt</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="w"> </span><span class="n">heap</span><span class="p">[</span><span class="n">nxt</span><span class="p">]){</span>
+<span class="w">            </span><span class="n">nxt</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="c1">//如果右孩子存在且更小，要右孩子</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">heap</span><span class="p">[</span><span class="n">nxt</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">heap</span><span class="p">[</span><span class="n">now</span><span class="p">]){</span>
+<span class="w">            </span><span class="n">swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">heap</span><span class="p">[</span><span class="n">nxt</span><span class="p">],</span><span class="w"> </span><span class="o">&amp;</span><span class="n">heap</span><span class="p">[</span><span class="n">now</span><span class="p">]);</span>
+<span class="w">            </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nxt</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="73">7.3 基于堆的排序</h3>
+<p>假设数组<code>A</code>下标从1开始，<code>A[i]</code>为当前大根堆最末尾的元素</p>
+<ol>
+<li>每次从堆顶（<code>A[1]</code>）获得当前大根堆中最大的元素，然后将<code>A[1]</code>与<code>A[i]</code>交换</li>
+<li>交换后将<code>A[i]</code>视为已删除，余下的元素构成新堆，<strong>该堆需要重新调整</strong>，恢复成大根堆</li>
+<li>重复上述步骤，直到所有元素均处理完毕</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">HeapSort</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">A</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">BuildMaxHeap</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">len</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="c1">//获得当前最大元素</span>
+<span class="w">        </span><span class="n">swap</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="c1">//废弃到待排部分的末尾</span>
+<span class="w">        </span><span class="n">HeapAdjust</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>注：</p>
+<p>对于大根堆，如果每次都输出最大元素作为结果序列，则输出的是原数组的降序序列</p>
+<p>但一般说堆排序是原地算法，是将数组在原地排序，由于每次都将最大元素沉底，原数组最终变成了升序数组。</p>
+<p><img alt="img" src="88b1e05d-7108-44fd-b026-bc0323ea3cc4.png" /></p>
+<h3 id="74">7.4 算法效率分析</h3>
+<ul>
+<li>建堆过程</li>
+</ul>
+<p>1个结点，每下坠1层，最多只需对比关键字2次（左右孩子比较一次，父节点与孩子比较一次）</p>
+<p>若树高为h，某结点在第i层，则这个结点最多下坠 h-i 层， 关键字对比次数最多 2(h-i)</p>
+<p>完全二叉树的树高 h 与结点数 n 的关系为$h = \lfloor \log_2{n}\rfloor+1$</p>
+<p>第 i 层最多有 $2^{i-1}$个结点，而只有第$1$到第$h-1$层的结点才需要下坠</p>
+<p>因此所有结点的关键字对比次数最多不超过——
+  $$
+  \sum^1_{i=h-1}{2^{i-1}2(h-i)}=1\times2(h-1) + 2\times2(h-2)+...+2^{h-2}\times2(h-2)
+  $$
+  整理可得建堆过程中关键字对比次数不超过$4n$，建堆时间复杂度$=O(n)$</p>
+<ul>
+<li>排序过程</li>
+</ul>
+<p>每一趟排序，根结点最多下坠$h-1$层，故每趟排序复杂度不超过$O(log_2n)$</p>
+<ul>
+<li>总的时间复杂度为 $O(n)+O(nlog_2n)=O(nlog_2n)$</li>
+</ul>
+<p>总的空间复杂度为 $O(1)$（全过程都是原地操作）</p>
+<ul>
+<li>稳定性</li>
+</ul>
+<p><strong>堆排序是不稳定的</strong></p>
+<h2 id="_8">八、归并排序</h2>
+<p>合并$m$个有序序列，产生新的一个有序序列$T$。</p>
+<p>显然$T$中每一个元素的确定都需要比较这$m$个序列的当前元素，需要$m-1$次比较才能从中选出最大/最小的那一个。</p>
+<p>原地的归并排序需要用交换做，非常麻烦，一般空间复杂度是$O(n)$的</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">[],</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">){</span><span class="w"> </span><span class="c1">//左闭右闭</span>
+<span class="w">    </span><span class="c1">// 归并排序</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">r</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="w">    </span><span class="n">merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="p">);</span>
+<span class="w">    </span><span class="n">merge</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">res</span><span class="p">[</span><span class="n">r</span><span class="o">-</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span><span class="w"> </span><span class="c1">//记录排序结果的临时数组</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">//index之前已经排序完毕</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">//两个子数组的起始位置</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;=</span><span class="n">r</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">y</span><span class="p">]){</span>
+<span class="w">            </span><span class="n">res</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+<span class="w">            </span><span class="n">x</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="p">{</span>
+<span class="w">            </span><span class="n">res</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">y</span><span class="p">];</span>
+<span class="w">            </span><span class="n">y</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">index</span><span class="w"> </span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">mid</span><span class="p">){</span>
+<span class="w">        </span><span class="n">res</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+<span class="w">        </span><span class="n">x</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="n">index</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">r</span><span class="p">){</span>
+<span class="w">        </span><span class="n">res</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">y</span><span class="p">];</span>
+<span class="w">        </span><span class="n">y</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="n">index</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// 将数据拷贝回数组a</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="w"> </span><span class="n">r</span><span class="o">-</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="w"> </span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="o">+</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="o">+</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="_9">九、基数排序</h2>
+<p>不直接比较元素大小，而是用元素的个位、十位、百位……作为排序依据。</p>
+<p><img alt="image-20221004094145750" src="image-20221004094145750.png" /></p>
+<p>算法流程：</p>
+<ol>
+<li>创建10个队列，分别代表0~9。将初始序列中各个元素按个位数加入到相应的队列。</li>
+<li>（要求降序排列）从队列9开始出队元素，直到10个队列全部清空，得到按“个位”递减的新序列$T_1$</li>
+<li>将$T_1$中各个元素按十位数加入到相应的队列。</li>
+<li>从队列9开始出队元素，直到10个队列全部清空，得到按“十位”递减的新序列$T_2$</li>
+<li>将$T_2$中各个元素按百位数加入到相应的队列。</li>
+<li>从队列9开始出队元素，直到10个队列全部清空，得到按“百位”递减的新序列$T_3$</li>
+<li>$T_3$已经是有序序列，结束。</li>
+</ol>
+<p>时间复杂度：</p>
+<ul>
+<li>$O(d(n+r))$</li>
+<li>其中$d$是关键字的位数（上述例子中是百、十、个，共3位），$n$是关键字的个数，$r$是各位可能的取值的个数（上述例子中是0~9共10个）</li>
+</ul>
+<p>空间复杂度：</p>
+<ul>
+<li>需要$r$个辅助队列</li>
+<li>$O(r)$</li>
+</ul>
+<p><strong>稳定性：稳定</strong></p>
+<p>应用场景：</p>
+<p><img alt="image-20221004095250706" src="image-20221004095250706.png" /></p>
+<p>在关键字内部有明显的各部分权重差异的情况下，基数排序比快排还要优秀。</p>
+<p>基数排序的适用场景特征：</p>
+<ul>
+<li>数据元素的关键字可以方便地拆分成$d$组，且$d$较小（上述例子中拆成了年、月、日，$d=3$）</li>
+<li>每组关键字的取值范围不大，即$r$较小（学生的出生年份通常相近，顶多有十余种可能；月份1~12；日期1~31）</li>
+<li>数据元素个数$n$较大</li>
+</ul>
+<h2 id="_10">十、外部排序</h2>
+<p>外部排序其实基于归并排序。采用归并排序，只需分配三个磁盘块大小的内存，即可对所有磁盘块的数据进行排序。</p>
+<p>内存分配：输入缓冲区1、输入缓冲区2、输出缓冲区。各缓冲区大小=一个磁盘块大小。</p>
+<h3 id="101">10.1 排序过程</h3>
+<ol>
+<li>构造初始归并段</li>
+</ol>
+<p>这是一个让各磁盘块中的数据有序的过程。假设初始有16个磁盘块。</p>
+<p>每次读入一个磁盘块的数据，分别到输入缓冲区1和输入缓冲区2。在程序看来这两个缓冲区中的数据可以视为在同一个待排序列当中。</p>
+<p>经过内部排序后，两个输入缓冲区的数据有序（不仅内部有序，两个缓冲区直接并起来也是有序的）。先将输入缓冲区1的数据经输出缓冲区写入磁盘，再将输入缓冲区2的数据写入磁盘。</p>
+<p>全部结束后，得到了16个有序磁盘块和8个有序的归并段。</p>
+<p><strong>需要16次“读”和16次“写”</strong></p>
+<ol>
+<li>第一趟归并</li>
+</ol>
+<p>将8个归并段两两归并。一个归并段由2个有序磁盘块构成。</p>
+<p>对归并段1和2进行归并。每个归并段都取前面一个磁盘块，读入到输入缓冲区1和输入缓冲区2。</p>
+<p>将两个输入缓冲区中的数据进行归并，每确认一个元素都写到输出缓冲区</p>
+<ul>
+<li>输出缓冲区写满后写回磁盘。</li>
+<li>输入缓冲区1一旦空了，就立即用归并段1的下一块补上；</li>
+<li>输入缓冲区2一旦空了，就立即用归并段2的下一块补上；</li>
+</ul>
+<p>归并段1和2归并完成，选择归并段3和4继续归并。</p>
+<p>重复上述步骤。全部结束后得到4个有序的归并段。</p>
+<p><strong>需要16次“读”和16次“写”</strong></p>
+<p><img alt="image-20221004101737638" src="image-20221004101737638.png" /></p>
+<ol>
+<li>第二趟归并</li>
+</ol>
+<p>将4个归并段两两归并。每个归并段都视为归并排序中的一个有序子序列。</p>
+<p>过程同第一趟归并。当输入缓冲区1为空时，依次选择当前归并段中的归并段1的第1、2、3、4个磁盘块；当输入缓冲区2为空时，依次选择当前归并段中的归并段2的第1、2、3、4个磁盘块；</p>
+<p>重复以上步骤，全部结束后得到2个有序的归并段。</p>
+<p><strong>需要16次“读”和16次“写”</strong></p>
+<ol>
+<li>第三趟归并</li>
+</ol>
+<p>将2个归并段归并。</p>
+<p><strong>需要16次“读”和16次“写”</strong></p>
+<h3 id="102">10.2 时间开销分析</h3>
+<p>外部排序时间开销 = 读写外存的时间 + 内部排序所需时间 + 内部归并所需时间</p>
+<p>对于2路归并，读、写磁盘总次数：16个磁盘块需要3趟归并，每趟归并都是32次读写；再加上构造初始归并段的32次读写，共128次读写。</p>
+<p>优化：</p>
+<ul>
+<li>增加归并路数 k ：</li>
+<li>将2路归并优化为k路归并。内存中分配的输入缓冲区个数也相应增加到k。</li>
+<li>多路归并可以减少归并趟数，从而减少磁盘读写次数。</li>
+<li>增加了内部排序的耗时，因为每次都需要 k-1 次关键字对比</li>
+<li>减少初始归并段数量 r ：</li>
+<li>只在构造初始归并段的时候用多个输入缓冲区，这样就能增加一次内部排序参与的元素数量，从而减少初始归并段的数量，最终减少归并趟数。</li>
+<li>假设磁盘中总共有$N$个元素待排序，内存工作区可容纳$L$个元素，则初始归并段数量 $r = N/L$</li>
+</ul>
+<h3 id="103-k">10.3 k路平衡归并</h3>
+<p>定义：</p>
+<ol>
+<li>最多只能有k个段归并为1个</li>
+<li>每一趟归并中，若有 m 个归并段参与归并，则经过这一趟处理得到$\lfloor m/k\rfloor$个新的归并段。</li>
+</ol>
+<h3 id="104">10.4 败者树</h3>
+<h4 id="_11">败者树的构造</h4>
+<p>败者树，可视为根结点头上还有一个结点的完全二叉树。</p>
+<p>k个叶子结点是所有参加比较的元素；非叶子结点用于记忆左右子树中的<strong>失败者</strong>。比较中的胜利者往上继续比较。</p>
+<h4 id="k">败者树在k路平衡归并中的应用</h4>
+<ol>
+<li>每个归并段各出一个元素作为败者树的叶子结点。</li>
+<li>叶子结点两两比较，并在其之上新增父结点，记录败者所属的归并段编号；胜者继续向上比较，比较中的败者留下记录结点，直到决出最终胜者，即所有叶子结点中最大/最小值所属的归并段</li>
+<li>胜者退场，从而空出一个叶子结点，用来自同一归并段的下一个元素顶替。只需要对比关键字$\lceil log_k\rceil$次即可再次选出最小/最大元素。</li>
+<li>重复上述过程，直到归并段全空。</li>
+</ol>
+<h4 id="_12">比较次数</h4>
+<p>第一次决出胜者需要对比关键字k-1次</p>
+<p>而后每一次决出胜者，都只需要对比$\log_2k$（向上取整）</p>
+<p>例，1024路归并，每次从1024个归并段中择出最值都需要1023次对比，而使用败者树则第一次需要1023次对比，后面每次都只需要10次对比</p>
+<h4 id="_13">败者树的存储</h4>
+<ul>
+<li>k路平衡归并对应败者树的$k$个叶子结点。先不计最终的胜者结点，则剩下部分是一个完全二叉树。$k$个叶子结点对应有$k-1$个非叶结点，也就是需要记忆的$k-1$个失败者。再加上需要记忆的最终胜者结点，则<strong>只需要长度为$k$的数组即可保存整个败者树</strong>（因为叶子结点直接来自于归并段，不需要保存一份到树上）。</li>
+</ul>
+<h3 id="105-">10.5 置换-选择排序</h3>
+<h4 id="_14">原理</h4>
+<p>归并段初始化只需保证有若干个内部有序的归并段即可，不需要归并段之间有序，也不需要归并段长度相等。</p>
+<h4 id="_15">算法流程</h4>
+<p>设内存工作区可容纳 $w$ 个记录。</p>
+<ol>
+<li>从输入缓冲区读入 $w$ 个记录到工作区</li>
+<li>选取最小的记录，输出到输出缓冲区，并记为$MINIMAX$</li>
+<li>读入新的记录到工作区补缺</li>
+<li>继续选取最小的但比$MINIMAX$要大的记录，输出并更新$MINIMAX$</li>
+<li>重复上述3~4，直到选不出新的记录。此时得到一个初始归并段</li>
+<li>选取最小的记录，输出到一个新的初始归并段，并更新$MINIMAX$</li>
+<li>重复上述过程，直到工作区为空。</li>
+</ol>
+<p><img alt="image-20221005090156269" src="image-20221005090156269.png" /></p>
+<h3 id="106">10.6 最佳归并树</h3>
+<h4 id="_16">二路归并的情况</h4>
+<p>采用置换-选择排序优化归并段初始化的过程，会导致产生磁盘块数量不等的若干个归并段。</p>
+<p>在10.1节的例子中，我们初始化了8个等长的归并段，每个归并段都包含2个磁盘块。它们的归并过程可以视为一棵归并树。采用二路归并时，这棵归并树是棵满二叉树，叶子结点有8个，每个叶子结点的权值都为2。则树的带权路径长度为$8\times2\times3=48=读磁盘的次数=写磁盘的次数$，即归并过程中的磁盘读写次数为$48\times2 =96$，再加上归并段初始化过程中的$32$次读写操作，总的磁盘读写次数为$96+32=128$。</p>
+<p>而当初始归并段不等长时，其归并过程同样可以用一棵树来描述，且<strong>归并过程中的磁盘读写次数恰是这棵树的带权路径长度的2倍</strong>。</p>
+<p><img alt="image-20221005091902833" src="image-20221005091902833.png" /></p>
+<p>于是，最小化归并过程中磁盘读写次数的问题，就转化为了使树的带权路径长度最小化的问题。而该问题有现成的解，即哈夫曼树。</p>
+<p><strong>2路归并的最佳归并树即哈夫曼树</strong>。</p>
+<p><img alt="image-20221005092119630" src="image-20221005092119630.png" /></p>
+<h4 id="_17">多路归并的情况</h4>
+<p>类似于构造哈夫曼树（注意，根据哈夫曼树的定义，它特指二叉树的情形）的方法，只不过对于 $k$ 路归并，每次都从森林中选取 $k$ 个权值最小的树/结点。</p>
+<p><img alt="image-20221005092458145" src="image-20221005092458145.png" /></p>
+<p><strong>问：如果结点数量不能保证最后得到的树一定是 $k$ 叉树，如何构造？</strong></p>
+<p>补充几个权值为0的叶子结点（虚段），凑够数量，保证最后得到的树是$k$叉树。</p>
+<p>下图为补充了一个“虚段”的情形。</p>
+<p><img alt="image-20221005092844261" src="image-20221005092844261.png" /></p>
+<p><strong>问：如何确定虚段的数量？</strong></p>
+<p>最后得到的树是严格的$k$叉树，即只有度为$k$和度为$0$的结点。</p>
+<p>则有$n = n_0+n_k$，又总度数 = 结点数 -1，$k\times n_k = n-1$</p>
+<p>联立两式解得$n_k=\frac{n_0-1}{k-1}$，$n_k$一定为整数</p>
+<ol>
+<li>当 $( 初始归并段数量 -1)\%(k-1)=0$ 时，不需要补充虚段</li>
+<li>当 $( 初始归并段数量 -1)\%(k-1)=u≠0$ 时，需要补充$(k-1)-u$个虚段</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3059 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x02%20%E7%89%A9%E7%90%86%E5%B1%82/">
+      
+      
+        <link rel="next" href="../0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>0x03 数据链路层.md - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0x03" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0x03 数据链路层.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x05 IO管理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x03 数据链路层.md
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x03 数据链路层.md
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、数据链路层的功能
+  </a>
+  
+    <nav class="md-nav" aria-label="一、数据链路层的功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    协议数据单元——帧
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    数据链路 链路
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-1" class="md-nav__link">
+    1.2 功能1：为网络层提供服务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-2" class="md-nav__link">
+    1.3 功能2：链路管理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-3" class="md-nav__link">
+    1.4 功能3：流量控制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-4" class="md-nav__link">
+    1.5 功能4：组帧
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-5" class="md-nav__link">
+    1.6 功能5：透明传输
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-6" class="md-nav__link">
+    1.7 功能6：差错控制
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    二、组帧
+  </a>
+  
+    <nav class="md-nav" aria-label="二、组帧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    字符计数法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    字符填充的首尾定界符法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    零比特填充的首尾标志法（常用）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    违规编码法（常用）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    三、差错控制
+  </a>
+  
+    <nav class="md-nav" aria-label="三、差错控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    奇偶校验码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crc" class="md-nav__link">
+    循环冗余码CRC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    海明码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    局限
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    四、流量控制与可靠传输机制
+  </a>
+  
+    <nav class="md-nav" aria-label="四、流量控制与可靠传输机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    流量控制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    可靠传输机制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    停止-等待协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ngbn" class="md-nav__link">
+    后退N帧协议GBN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sr" class="md-nav__link">
+    选择重传协议SR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    信道利用率与信道吞吐率
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    五、介质访问控制
+  </a>
+  
+    <nav class="md-nav" aria-label="五、介质访问控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    5.1 信道划分介质访问控制
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 信道划分介质访问控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fdm" class="md-nav__link">
+    频分多路复用（FDM）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tdm" class="md-nav__link">
+    时分多路复用（TDM）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wdm" class="md-nav__link">
+    波分多路复用（WDM）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cdm" class="md-nav__link">
+    码分多路复用（CDM）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    5.2 随机访问介质访问控制
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 随机访问介质访问控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aloha" class="md-nav__link">
+    ALOHA协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csma" class="md-nav__link">
+    CSMA协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csmacd" class="md-nav__link">
+    CSMA/CD协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csmaca" class="md-nav__link">
+    CSMA/CA协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csmacdcsmaca" class="md-nav__link">
+    CSMA/CD与CSMA/CA的区别
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    轮询访问：令牌传递协议
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    六、局域网
+  </a>
+  
+    <nav class="md-nav" aria-label="六、局域网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    6.1 局域网的基本概念和体系结构
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 局域网的基本概念和体系结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    局域网的定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    局域网的特性
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-ieee-8023" class="md-nav__link">
+    6.2 以太网与IEEE 802.3
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 以太网与IEEE 802.3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    以太网的网络拓扑
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    以太网的简化通信措施
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    以太网的传输介质与网卡
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    以太网的信道利用率
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mac" class="md-nav__link">
+    以太网的MAC帧格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    高速以太网
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-ieee-80211" class="md-nav__link">
+    6.3 IEEE 802.11 无线局域网
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 IEEE 802.11 无线局域网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    无线局域网的分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#80211mac" class="md-nav__link">
+    802.11局域网的MAC帧
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    6.4 虚拟局域网
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    七、广域网
+  </a>
+  
+    <nav class="md-nav" aria-label="七、广域网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 广域网基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 广域网基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    广域网的定义与任务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    广域网与互联网的区别
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    广域网与局域网的区别
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-ppp" class="md-nav__link">
+    7.2 点对点协议 PPP
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 点对点协议 PPP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ppp" class="md-nav__link">
+    PPP 协议特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ppp_1" class="md-nav__link">
+    PPP 协议格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ppp_2" class="md-nav__link">
+    PPP协议工作过程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    八、数据链路层设备
+  </a>
+  
+    <nav class="md-nav" aria-label="八、数据链路层设备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    8.1 网桥
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    8.2 局域网交换机
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 局域网交换机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    工作原理与特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    自学习功能
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    8.3 冲突域和广播域
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    一、数据链路层的功能
+  </a>
+  
+    <nav class="md-nav" aria-label="一、数据链路层的功能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    1.1 基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    协议数据单元——帧
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    数据链路 链路
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-1" class="md-nav__link">
+    1.2 功能1：为网络层提供服务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-2" class="md-nav__link">
+    1.3 功能2：链路管理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-3" class="md-nav__link">
+    1.4 功能3：流量控制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-4" class="md-nav__link">
+    1.5 功能4：组帧
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-5" class="md-nav__link">
+    1.6 功能5：透明传输
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-6" class="md-nav__link">
+    1.7 功能6：差错控制
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    二、组帧
+  </a>
+  
+    <nav class="md-nav" aria-label="二、组帧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    字符计数法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    字符填充的首尾定界符法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    零比特填充的首尾标志法（常用）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    违规编码法（常用）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    三、差错控制
+  </a>
+  
+    <nav class="md-nav" aria-label="三、差错控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    奇偶校验码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crc" class="md-nav__link">
+    循环冗余码CRC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    海明码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    局限
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    四、流量控制与可靠传输机制
+  </a>
+  
+    <nav class="md-nav" aria-label="四、流量控制与可靠传输机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    流量控制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    可靠传输机制
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    停止-等待协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ngbn" class="md-nav__link">
+    后退N帧协议GBN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sr" class="md-nav__link">
+    选择重传协议SR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    信道利用率与信道吞吐率
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    五、介质访问控制
+  </a>
+  
+    <nav class="md-nav" aria-label="五、介质访问控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    5.1 信道划分介质访问控制
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 信道划分介质访问控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fdm" class="md-nav__link">
+    频分多路复用（FDM）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tdm" class="md-nav__link">
+    时分多路复用（TDM）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wdm" class="md-nav__link">
+    波分多路复用（WDM）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cdm" class="md-nav__link">
+    码分多路复用（CDM）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    5.2 随机访问介质访问控制
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 随机访问介质访问控制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aloha" class="md-nav__link">
+    ALOHA协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csma" class="md-nav__link">
+    CSMA协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csmacd" class="md-nav__link">
+    CSMA/CD协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csmaca" class="md-nav__link">
+    CSMA/CA协议
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csmacdcsmaca" class="md-nav__link">
+    CSMA/CD与CSMA/CA的区别
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    轮询访问：令牌传递协议
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    六、局域网
+  </a>
+  
+    <nav class="md-nav" aria-label="六、局域网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    6.1 局域网的基本概念和体系结构
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 局域网的基本概念和体系结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    局域网的定义
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    局域网的特性
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-ieee-8023" class="md-nav__link">
+    6.2 以太网与IEEE 802.3
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 以太网与IEEE 802.3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    以太网的网络拓扑
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    以太网的简化通信措施
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    以太网的传输介质与网卡
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    以太网的信道利用率
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mac" class="md-nav__link">
+    以太网的MAC帧格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    高速以太网
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-ieee-80211" class="md-nav__link">
+    6.3 IEEE 802.11 无线局域网
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 IEEE 802.11 无线局域网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    无线局域网的分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#80211mac" class="md-nav__link">
+    802.11局域网的MAC帧
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    6.4 虚拟局域网
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    七、广域网
+  </a>
+  
+    <nav class="md-nav" aria-label="七、广域网">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    7.1 广域网基本概念
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 广域网基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    广域网的定义与任务
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    广域网与互联网的区别
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    广域网与局域网的区别
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-ppp" class="md-nav__link">
+    7.2 点对点协议 PPP
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 点对点协议 PPP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ppp" class="md-nav__link">
+    PPP 协议特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ppp_1" class="md-nav__link">
+    PPP 协议格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ppp_2" class="md-nav__link">
+    PPP协议工作过程
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    八、数据链路层设备
+  </a>
+  
+    <nav class="md-nav" aria-label="八、数据链路层设备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    8.1 网桥
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    8.2 局域网交换机
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 局域网交换机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    工作原理与特点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    自学习功能
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    8.3 冲突域和广播域
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0x03">0x03 数据链路层</h1>
+<h2 id="_1">一、数据链路层的功能</h2>
+<h3 id="11">1.1 基本概念</h3>
+<h4 id="_2">协议数据单元——帧</h4>
+<p>为网络层交付下来的网络层协议数据单元（在互联网中就是 IP 数据报）<strong>添加首部和尾部</strong>，就构成了<strong>帧</strong>。</p>
+<h4 id="_3">数据链路 链路</h4>
+<ul>
+<li>链路：一段点到点的物理线路，中间没有任何其他节点。主机与主机之间通信的路径通常由许多条这样链路构成。</li>
+<li>数据链路：具备实现通信协议的硬件和软件（如网络适配器）的链路。</li>
+</ul>
+<h3 id="12-1">1.2 功能1：为网络层提供服务</h3>
+<ul>
+<li>无确认的无连接服务</li>
+<li>发送时不需要建立链路连接</li>
+<li>接收时不需要发回确认</li>
+<li>丢失帧不负责重发</li>
+<li>适用：实时通信或误码率较低的信道，如以太网</li>
+<li>有确认的无连接服务</li>
+<li>发送时不需要建立链路连接</li>
+<li>接收时必须发回确认</li>
+<li>规定时间内未收到确认信号，自动重传，提高传输可靠性</li>
+<li>适用：误码率较高的信道，如无线通信</li>
+<li>有确认的面向连接服务</li>
+<li>建立数据链路、传输帧、释放数据链路</li>
+<li>收到的每一帧都要发回确认，发送方收到确认才发下一帧，可靠性最高</li>
+<li>适用：通信要求较高的场合</li>
+</ul>
+<h3 id="13-2">1.3 功能2：链路管理</h3>
+<p>数据链路层连接的建立、维持、释放的过程，主要用于面向连接的服务。</p>
+<p>确认就绪状态、交换必要信息、初始化帧序号、在物理信道共享的情况下对物理信道的分配与管理</p>
+<h3 id="14-3">1.4 功能3：流量控制</h3>
+<p>限制发送方的数据流量，使其发送速率不超过接收方的接受能力。</p>
+<p>（注：OSI中数据链路层有流量控制功能，而TCPI/IP中传输层才有）</p>
+<h3 id="15-4">1.5 功能4：组帧</h3>
+<p>将来自网络层的分组数据封装成帧，即加上首部和尾部的控制信息。</p>
+<p>作用：</p>
+<ul>
+<li>帧定界：首部和尾部可标识一个帧的起始和结束</li>
+<li>控制信息</li>
+</ul>
+<p>当数据为可打印的 ACSII 码构成的文本文件时，帧定界使用特殊的帧定界符：SOH 和 EOT。</p>
+<h3 id="16-5">1.6 功能5：透明传输</h3>
+<p>当数据为非 ACSII 码构成的文本文件时（如程序和图像），数据中可能包含与帧定界符相同的二进制代码，导致数据链路层错误识别。而数据链路层应实现<strong>透明传输</strong>，即需要保证无论什么样的数据都可以传输，所以对于上述情况，数据链路层必须采取措施使得数据同样可以传输（而不是直接拒绝这种数据）。</p>
+<h3 id="17-6">1.7 功能6：差错控制</h3>
+<p>传输中的错误分为位错和帧错。</p>
+<p><strong>位错：帧中某些位出现差错</strong></p>
+<ul>
+<li>检错编码</li>
+<li>奇偶校验码</li>
+<li>
+<p>循环冗余码CRC</p>
+</li>
+<li>
+<p>纠错编码</p>
+</li>
+<li>海明码</li>
+</ul>
+<p><strong>帧错：帧丢失、重复、失序</strong></p>
+<ul>
+<li>解决：引入定时器和编号机制</li>
+</ul>
+<h2 id="_4">二、组帧</h2>
+<p>组帧主要解决帧定界、帧同步、透明传输等问题</p>
+<p>帧是网络中信息传输的最小单位，因此组帧时既要加首部又要加尾部，以便确定该帧从哪里开始到哪里结束。</p>
+<h4 id="_5"><strong>字符计数法</strong></h4>
+<p>在帧头部适用一个计数字段来表明帧内字节数，从而可以确定帧结束的位置</p>
+<p>若计数字段出错，即失去了帧定界，收发双方失去同步</p>
+<h4 id="_6"><strong>字符填充的首尾定界符法</strong></h4>
+<p>适用特定字符来界定一帧的开始或结束：SOH（开始） 和 EOT（结束）。</p>
+<p>发送端在数据中的 SOH / EOT 字符前面插入一个转义字符“ESC”（注意是ASCⅡ里的ESC，不是“E”“S”“C”三个字符），使得数据不会被错误解释。</p>
+<p>接收端删除这些转义字符后再将数据上交给网络层。</p>
+<p>如果数据中也有 ESC 字符，则同样在前面再插入一个 ESC 字符。</p>
+<h4 id="_7"><strong>零比特填充的首尾标志法</strong>（常用）</h4>
+<p>以01111110来标志一帧的开始或结束</p>
+<p>为了避免误判，发送方在信息位上每遇到五个连续的1就自动在后面插入一个0；而接收方做逆操作，以恢复原信息</p>
+<p>很容易由硬件来实现，性能优于字符填充法</p>
+<h4 id="_8"><strong>违规编码法</strong>（常用）</h4>
+<p>即用编码方式中不允许的电平组合来界定帧的起始和终止。</p>
+<p>如曼彻斯特编码中，数据比特“1”编码为“高-低”电平对，数据比特“0”编码为“低-高”电平对，而不会出现“高-高”电平对和“低-低”电平对。因此可以用“高-高”电平对和“低-低”电平对来作为帧界定编码序列。</p>
+<p>只适用于采用冗余编码的特殊编码环境</p>
+<h2 id="_9">三、差错控制</h2>
+<h4 id="_10"><strong>奇偶校验码</strong></h4>
+<p>由n-1位信息元和1位校验元组成。</p>
+<p>若采用奇校验码，则添加校验元后的n位比特中应有奇数个1</p>
+<p>若采用偶校验码，则添加校验元后的n位比特中应有偶数个1</p>
+<p>奇偶校验码<u>只能检测奇数位的出错情况</u>，不能发现偶数位的出错情况，也不知道具体是哪个位出错</p>
+<h4 id="crc"><strong>循环冗余码CRC</strong></h4>
+<p>将数据划分成组，每组 k 个比特，用 M 表示其中一组</p>
+<ol>
+<li>
+<p>双方事先约定一个 n+1 位的除数 P （生成多项式），在 M 后面添加 n 个 0，扩充至 k+n 位</p>
+</li>
+<li>
+<p>计算 M 对 P 取模（过程如下图所示），所得余数 R （<strong>帧检测序列（FCS）</strong>） 一定为 n 位，将 R 与 M 做二进制加法，最终得到 k+n 位的 M'，发送。</p>
+</li>
+</ol>
+<p><img alt="image-20221106095907028" src="image-20221106095907028.png" /></p>
+<ol>
+<li>接收方以帧为单位进行 CRC 检验，将收到的每个帧除以 P 。若帧无差错，则所得余数必为 0，若不为 0 则表示帧存在差错。注意，当帧存在差错时，所得余数也有可能为 0 ，但只要 P 经过认真挑选，这种概率是非常非常小的。</li>
+</ol>
+<h4 id="_11"><strong>海明码</strong></h4>
+<ul>
+<li>什么是海明码</li>
+</ul>
+<p>给定一个二进制串，按海明码编码规则，向若干个特定位置插入校验位后所构成的新的二进制串即海明码。既包含了数据本身，又包含了校验位。</p>
+<p>海明码可以检测原二进制数据串中存在的最多2个出错位，并纠正1个出错位（如果出现3个位错则失效）</p>
+<ul>
+<li>海明码检错、纠错的基本思想</li>
+</ul>
+<p>将海明码按某种规律分为若干组，每组中的位由1个校验码负责偶校验（默认偶校验）（各校验码所负责的位可以部分重叠，并且包含自己所在的位），从而产生多组检测信息，相互之间交叉排查（计算机中是直接进行异或运算）可确定出错的具体位，从而进行纠错</p>
+<ul>
+<li>如何构造海明码</li>
+</ul>
+<p>以有效信息串<code>1100</code>为例。</p>
+<ol>
+<li>
+<p>根据公式确定该串对应的海明码的长度$h$</p>
+<p>$h=n+k≤2^k-1$，其中n为有效信息串的位数，k为校验位的位数。已知n=4，则k=3时满足上式（取能满足的最小的k），因此确定校验位个数为3个，海明码长度h=7</p>
+</li>
+<li>
+<p>确定各校验位需要插入的具体位置</p>
+<p>记最低位为H1，则7位海明码共有H7、H6、H5、H4、H3、H2、H1这7个位置。</p>
+<p>校验位必须位于$H2^k$的位置上，即3个校验位分布在H1、H2、H4这三个位置。</p>
+<p>将有效信息串<code>1100</code>按原顺序放入，如下表所示</p>
+<table>
+<thead>
+<tr>
+<th>H7</th>
+<th>H6</th>
+<th>H5</th>
+<th>H4</th>
+<th>H3</th>
+<th>H2</th>
+<th>H1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>校验位</td>
+<td>0</td>
+<td>校验位</td>
+<td>校验位</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>确定各校验位负责校验哪些位置</p>
+<p>简单地说，由校验位所在的位置可直接确定负责校验哪些位置。</p>
+<p>对于上述3个校验码，写出其位置所对应的k位二进制数，并将二进制数中的0用通配符"*"替换。</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>H1</th>
+<th>H2</th>
+<th>H4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对应k位二进制数</td>
+<td>001</td>
+<td>010</td>
+<td>100</td>
+</tr>
+<tr>
+<td>对应通配符</td>
+<td>**1</td>
+<td>*1*</td>
+<td>1**</td>
+</tr>
+</tbody>
+</table>
+<p>其中：</p>
+<p>**1 可匹配 001、011、101、111，即H1、H3、H5、H7</p>
+<p>*1* 可匹配 010、011、110、111，即H2、H3、H6、H7</p>
+<p>1** 可匹配 100、101、110、111，即H4、H5、H6、H7</p>
+<p>由此确定：</p>
+<p>H1校验位负责校验H1、H3、H5、H7</p>
+<p>H2校验位负责校验H2、H3、H6、H7</p>
+<p>H4校验位负责校验H4、H5、H6、H7</p>
+</li>
+<li>
+<p>根据偶校验确定各校验位的具体值</p>
+<p>偶校验：确定校验位的值，使它所负责的位（由上文可知这包括它自己）中包含偶数个1</p>
+<p>由上述规则可以确定最终的7位海明码：</p>
+<table>
+<thead>
+<tr>
+<th>H7</th>
+<th>H6</th>
+<th>H5</th>
+<th>H4</th>
+<th>H3</th>
+<th>H2</th>
+<th>H1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>海明码如何检错</p>
+</li>
+</ol>
+<p>检查海明码中各组是否都具有偶数个1</p>
+<p>由上文，H1、H3、H5、H7为1组，H2、H3、H6、H7为1组，H4、H5、H6、H7为1组</p>
+<p>以H5出错为例，出错意味着由原文的0变为1，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>H7</th>
+<th>H6</th>
+<th>H5</th>
+<th>H4</th>
+<th>H3</th>
+<th>H2</th>
+<th>H1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原文信息</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>接收到的信息</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>检查各组是否具有偶数个1</p>
+<ul>
+<li>第一组 H1、H3、H5、H7组：×，奇数个1</li>
+<li>第二组 H2、H3、H6、H7组：√，偶数个1</li>
+<li>第三组 H4、H5、H6、H7组：×，奇数个1</li>
+</ul>
+<p>说明接收到的信息有出错位。</p>
+<ul>
+<li>海明码如何确定出错位并纠错</li>
+</ul>
+<p>对检错结果做进一步计算，交叉排查，即可定位具体出错位</p>
+<p>由第二组结果可以确认H2、H3、H6、H7这四个位置正确，可疑出错位置是H1、H5、H4，</p>
+<ul>
+<li>假设H1出错，则H5、H4正确，那么第三组应该有偶数个1，与检错结果矛盾，因此H1一定是正确的</li>
+<li>假设H4出错，则H5正确，又因为H1一定正确，那么第一组应该有偶数个1，与检错结果矛盾，因此H4也一定是正确的</li>
+<li>排除了H1、H4出错的可能性，最终确定是H5出错。</li>
+</ul>
+<p>纠错：对出错位直接取反即可。</p>
+<ul>
+<li>计算机构造海明码并确定出错位</li>
+</ul>
+<p>以上都是手算，计算机里所有步骤都是用逻辑计算完成的。</p>
+<p>设原二进制串为$D_4D_3D_2D_1$，校验位为$P_3P_2P_1$，海明码为$H_7H_6H_5H_4H_3H_2H_1$</p>
+<ul>
+<li>
+<p>逻辑计算确定校验位取值</p>
+<p>对校验位所负责的位进行异或
+$$
+P_1=D_1\bigoplus D_2\bigoplus D_4\
+P_2=D_1\bigoplus D_3\bigoplus D_4\
+P_3=D_2\bigoplus D_3\bigoplus D_4\
+$$</p>
+</li>
+<li>
+<p>逻辑计算确定出错位</p>
+<p>将各校验位与它们所负责的位一起异或
+$$
+S_1=P_1\bigoplus D_1\bigoplus D_2\bigoplus D_4\
+S_2=P_2\bigoplus D_1\bigoplus D_3\bigoplus D_4\
+S_3=P_3\bigoplus D_2\bigoplus D_3\bigoplus D_4\
+$$
+$S_3S_2S_1$即出错位号，如$S_3S_2S_1=000$时表示无错，$S_3S_2S_1=101$时表示海明码中位置$H_5$出错</p>
+</li>
+<li>
+<p>海明距离</p>
+</li>
+<li>
+<p>两个等长字符串的海明距离，是字符串中字符不同的位置个数。如10011、10010，只有最后一位不同，海明距离为1</p>
+</li>
+<li>
+<p>海明码纠错d位，需要码距为 2d+1 的编码方案</p>
+<p>海明码检错d位，需要码距为 d+1 的编码方案</p>
+</li>
+</ul>
+<h4 id="_12">局限</h4>
+<p>​       若数据链路层仅采用 CRC ，那么只能保证对帧的<strong>无差错接受</strong>，即被接受的帧可以认为几乎没有差错，有差错的帧都已经被丢弃了，没有接受。注意，这没有实现可靠传输，因为它仅仅检测了比特差错这一种情况。传输过程还会出现其他差错，如帧失序、帧重复、帧丢失等，必须都具有应对手段才能说提供了可靠传输服务。</p>
+<p>​       对于通讯质量良好的有线传输链路，数据链路层<strong>不向上提供可靠传输服务</strong>；对于通讯质量较差的无线传输链路，数据链路层<strong>向上提供可靠传输服务</strong>。这样的区别对待可以提高通信效率。</p>
+<h2 id="_13">四、流量控制与可靠传输机制</h2>
+<h4 id="_14">流量控制</h4>
+<ul>
+<li>停止-等待流量控制</li>
+</ul>
+<p>发送方每发送一帧，需要等待接收方的应答信号才能发送下一帧</p>
+<p>传输效率很低。</p>
+<ul>
+<li>滑动窗口流量控制</li>
+</ul>
+<p>发送窗口：由发送方维持的一组连续的允许发送的帧的序号</p>
+<p>接收窗口：由接收方维持的一组连续的允许接收的帧的序号</p>
+<p>发送端每收到一个来自接收方的确认帧，发送窗口就向前滑动一个帧的位置。当发送窗口内的帧已经全部发送，但还未收到确认帧时，发送方停止发送，直到收到确认帧为止。</p>
+<p>接收端收到帧后，将接收窗口向前滑动一个帧的位置，并发回确认帧。如果收到的帧序号在接收窗口允许的序号之外，则一律丢弃。</p>
+<p>滑动窗口的特性：</p>
+<ul>
+<li>只有接收窗口发送了确认帧并向前滑动，发送窗口才有可能向前滑动</li>
+<li>从滑动窗口的角度来看：<ul>
+<li>停止-等待协议：发送窗口=1，接收窗口=1</li>
+<li>后退N帧协议：发送窗口＞1，接收窗口=1</li>
+<li>选择重传协议：发送窗口＞1（序号的一半），接收窗口＞1（序号的一半）</li>
+</ul>
+</li>
+<li>当接收窗口大小为1时，可保证帧的有序接收</li>
+<li>数据链路层的滑动窗口协议中，窗口大小在传输过程中固定。与传输层的滑动窗口协议有区别</li>
+</ul>
+<h4 id="_15">可靠传输机制</h4>
+<ul>
+<li>两种机制：<u>确认</u>和<u>超时重传</u></li>
+<li>确认：无数据的控制帧，可以捎带在回复帧中以提高传输效率，称为捎带确认</li>
+<li>超时重传：发送方在发送某个数据帧后就开启一个计时器，若在一定时间内未收到所发帧的确认帧，则重发该帧</li>
+<li>自动重传请求（ARQ）</li>
+<li>接收方请求发送方重传出错的数据帧</li>
+<li>分为三种：停止-等待ARQ、后退N帧ARQ、选择性重传ARQ。后两种又称为连续ARQ协议</li>
+</ul>
+<h4 id="-">停止-等待协议</h4>
+<ul>
+<li>情况一：发送帧丢失或错误</li>
+</ul>
+<p>发送方设置计时器，超时自动重传</p>
+<ul>
+<li>情况二：发送帧正确到达，但确认帧被破坏</li>
+</ul>
+<p>发送方一直收不到确认帧，自动重传，导致接收方会收到重复数据帧。</p>
+<p>接收方丢弃重复数据帧，并重发该帧的确认帧。</p>
+<ul>
+<li>若连续出现相同发送序号的数据帧：发送端进行了超时重传</li>
+</ul>
+<p>若连续出现相同序号的确认帧：接收端收到了重复帧</p>
+<ul>
+<li>发送方和接收方都须设置一个帧缓冲区</li>
+</ul>
+<p>发送端在发送完数据帧后，在缓冲区中保留该帧副本以备重传。收到该帧确认帧后才清除副本</p>
+<h4 id="ngbn">后退N帧协议GBN</h4>
+<p>发送方连续发送帧（在发送窗口允许的范围内），接收方可以连续接收多个正确的帧后，再对收到的最后一个正确数据帧发送确认信息，表示该帧及之前的帧都已经正确收到。</p>
+<p>若接收方收到乱序或出错的帧，则要求接收方重发最后一个被正确接收的数据帧后所有未被确认的帧，并且<u>重新发送最近发送的一个确认帧</u>。</p>
+<p>如接收方收到1号、2号帧后，对2号帧发回确认，表示这两个帧都已正确收到。随后接收方收到了3号、4号、6号数据帧，出现乱序，则丢弃这三个帧，并要求接收方重新从3号帧开始传输，且<u>还要再发送一次对2号帧的确认</u>。</p>
+<p><strong>编号与窗口大小问题：</strong></p>
+<ul>
+<li>接收窗口为1，以保证按序接收数据帧。</li>
+<li><u><strong>若采用n比特对帧编号，则发送窗口的大小最大可以为2^n-1</strong></u>。如果超过该值，则会造成接收方无法分辨新帧和旧帧。</li>
+<li>如，使用3bit对帧编号，则编号为0~7。假设发送窗口为8，发送方A一口气将发送窗口内的0~7帧全部发送给B。若B全部成功接收，则会发回对帧7的确认报文，并期待收到第二批帧（编号也是0~7）。然而确认报文丢失了，A自动重传了第一批的0~7帧，则B会错误认为是第二批帧而接收，数据传输出错。</li>
+<li>假设发送窗口为7，发送方A同样一口气将0~6帧全部发送给B，B发回对帧6的确认报文，并期待收到从帧7开始的第二批帧。确认报文丢失，A自动重传了0~6帧，而B期待的是帧7，从而重传的这些帧会被自动丢弃，不会导致数据传输出错。</li>
+</ul>
+<p>传送效率分析：</p>
+<ul>
+<li>能够连续发送数据帧，提高信道利用率</li>
+<li>即使仅有一个帧出错，也要将未确认帧全部重传，又降低了信道利用率</li>
+<li>综上，若信道传输质量很差导致误码率较大时，后退N帧协议不一定优于停止-等待协议。</li>
+</ul>
+<h4 id="sr">选择重传协议SR</h4>
+<p>设法只重传那些出错或者计数器超时的数据帧。</p>
+<p>这要求接收窗口必须足够大，以便能先暂存发送序号不连续但仍处于接收窗口中的帧。等到所缺帧全部收到后再一并送交主机。</p>
+<p>一旦接收方怀疑帧出错，就会发送一个否定帧NAK给发送方，要求发送方重传NAK中的指定帧。</p>
+<p><strong>编号与窗口大小问题：</strong></p>
+<ul>
+<li><strong>发送窗口和接收窗口大小相同</strong>，且为序号范围的一半。</li>
+<li>如采用2bit对帧编号，则序号范围为4，发送窗口和接收窗口的大小应为2.</li>
+</ul>
+<h4 id="_16">信道利用率与信道吞吐率</h4>
+<ul>
+<li>信道利用率：是对发送方而言的，指发送方在一个发送周期内，有效地发送数据所需要的时间占整个发送周期的比率。</li>
+</ul>
+<p>发送周期T：从开始发送数据到收到第一个确认帧，所经历的时间</p>
+<p>发送方在T时间内发送L比特数据，发送方数据传输速率为C，则发送方用于发送有效数据的时间为L/C，信道利用率为 (L/C)/T。</p>
+<ul>
+<li>信道吞吐率：信道利用率×发送方的发送速率</li>
+</ul>
+<h2 id="_17">五、介质访问控制</h2>
+<p>多个结点共用同一条信道时，介质访问控制为使用介质的每个结点隔离来自同一信道上其他结点所传送的信号，以协调活动节点的传输</p>
+<p>信道分配协议属于数据链路层的一个子层——介质访问控制（MAC）子层</p>
+<h3 id="51">5.1 信道划分介质访问控制</h3>
+<h4 id="fdm">频分多路复用（FDM）</h4>
+<p>将物理信道的总带宽分割成若干与传输单个信号带宽相同（或略宽）的子信道，每个子信道传输一种信号。</p>
+<p>子信道的带宽可以不同，但总和必须不超过信道的总带宽。实际应用中为了防止子信道之间的干扰，相邻信道之间需要加入”保护频带“</p>
+<p>优点：</p>
+<ul>
+<li>充分利用了带宽，系统效率较高</li>
+<li>技术比较成熟，实现也较容易</li>
+<li><u>更适合传输模拟信号</u></li>
+</ul>
+<h4 id="tdm">时分多路复用（TDM）</h4>
+<p><u>更适合传输数字信号</u></p>
+<p>所用传输介质的性质：介质的位速率大于单个信号的位速率</p>
+<p>将一条物理信道按时间划分为多个时间片，轮流分配给多个信号使用。</p>
+<p>在某个时刻，时分多路复用信道上传送的仅是某一对设备之间的信号。在某段时间内，传送的是按时间分割的多路复用信号。</p>
+<p>改进：统计时分多路复用，时间片按需动态分配，只有当终端有数据要传送时，才会分配到时间片，可以提高线路利用率</p>
+<h4 id="wdm">波分多路复用（WDM）</h4>
+<p>光的频分多路复用，在一根光纤中传输多种不同波长（频率）的光信号。</p>
+<h4 id="cdm">码分多路复用（CDM）</h4>
+<p>采用不同的编码来区分各路原始信号。既共享信道的频率，又共享时间。</p>
+<p>即数据混在一起传输，到达后再进行区分。</p>
+<ul>
+<li>
+<p>码分多址（CDMA）</p>
+</li>
+<li>
+<p>共用物理信道的每个站点被分配一个唯一的m位的码片序列。若站点需要发送1，则发送该码片序列；若站点需要发送0，则发送该码片序列的反码。</p>
+</li>
+<li>
+<p>当有两个或多个站点同时发送时，各路数据在信道中线性相加</p>
+</li>
+<li>
+<p>要求各站点的码片序列相互正交，以便分离信号</p>
+</li>
+<li>
+<p>规格化内积：两个向量的内积除以向量的分量个数</p>
+</li>
+<li>
+<p>码片向量与自身的规格化内积都是1，码片向量与自身反码的规格化内积是-1，不同站点的码片向量相互正交，规格化内积为0.</p>
+</li>
+<li>
+<p>eg：站点A的码片序列被指派为S：00011011（按惯例将0写为-1，将1写为+1，即-1 -1 -1 +1 +1 -1 +1 +1），站点B的码片序列被指派为T： -1 -1 +1 -1 +1 +1 +1 -1</p>
+<p>站点A向站点C发送1，同时站点B向站点C发送0，则信道上的向量为S-T：0 0 -2 2 0 -2 0 2</p>
+<p>C站要从中分离来自A站的向量，需要先知道A站的码片序列S，然后让S与S-T做规格化内积，得到（2+2+2+2）/8=1，因此知道A站发送的信号是1</p>
+<p>同理，分离来自B站的向量，让T与S-T做规格化内积，得到(-2-2-2-2)/8=-1，因此知道B站发送的信号是0</p>
+</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>频谱利用率高、抗干扰能力强、保密性强、语音质量好</li>
+<li>减少投资和降低运行成本，主要用于无线通信系统，特别是移动通信系统</li>
+</ul>
+<h3 id="52">5.2 随机访问介质访问控制</h3>
+<h4 id="aloha">ALOHA协议</h4>
+<ul>
+<li>纯ALOHA协议</li>
+<li>站点想发就发，不需要任何检测。过一段时间没收到确认就认为发生了冲突，等一段时间后再发，知道发送成功</li>
+<li>重传策略：各站等待一段随机的时间后再重传</li>
+<li>吞吐量很低</li>
+<li>时隙ALOHA协议</li>
+<li>将各站在时间上同步起来，并将时间划分为一段段等长的时隙，规定时隙开始时才能发送一个帧，且时隙的长度能保证一个帧恰好在一个时隙内发送完毕</li>
+<li>减少了冲突的可能性，提高信道利用率</li>
+<li>较纯ALOHA协议相比，吞吐量扩大了一倍</li>
+</ul>
+<h4 id="csma">CSMA协议</h4>
+<p>在ALOHA协议上改进，增加了载波侦听装置，以便在发送之前侦听信道是否空闲。</p>
+<ul>
+<li>1-坚持CSMA</li>
+<li>要发送数据时先侦听信道，若信道空闲则立即发送，否则等待并继续侦听直到信道空闲</li>
+<li>若发生冲突，则随机等待一段时间后再侦听信道</li>
+<li>”1-坚持“：即侦听到信道忙后仍坚持侦听，且侦听到信道空闲时发送数据的概率为1，即立即发送数据。</li>
+<li><u>传播延迟</u>对1-坚持CSMA的性能影响较大。</li>
+<li>即使不考虑传播延迟，也可能发生冲突。如有两个站点同时在等待信道空闲时</li>
+<li>非坚持CSMA</li>
+<li>要发送数据时先侦听信道，若信道空闲即立即发送，否则放弃侦听，等待一个随机的时间后再重复以上过程</li>
+<li>降低了冲突概率，但增加数据在网络中的平均延迟</li>
+<li>p-坚持CSMA</li>
+<li>要发送数据时先侦听信道，若信道忙则坚持侦听，若信道空闲，则以概率p发送数据，以概率1-p推迟到下一个时隙。该概率固定。</li>
+<li>是非坚持CSMA与1-坚持CSMA的折中方案</li>
+</ul>
+<h4 id="csmacd">CSMA/CD协议</h4>
+<ul>
+<li>前置概念</li>
+<li>多点接入：<u>总线型网络</u>，所有计算机连接在一根总线上</li>
+<li>
+<p>载波监听：实质上是媒介监听，即发送数据前和发送数据中都不停地检测信道是否有其他主机发送数据（注意，没有发送完毕之后的检测，这会造成问题，具体见下），如果有，立即中止本站的发送</p>
+</li>
+<li>
+<p>碰撞检测</p>
+</li>
+<li>
+<p>争用期</p>
+</li>
+</ul>
+<p><strong>至多</strong>经过多久后站点得知自己发送的数据是否发生碰撞。最坏情况下，两站点位于总线的两端（距离最远），站点发出的数据帧在将到达目的站点时（此时已经过了时间$\tau$，$\tau$为总线传播时延），目的站点恰好发出数据，发生碰撞，碰撞信息再经过时间$\tau$回传给站点。故从站点发送数据开始计时，最多经过时间$2\tau$，站点可得知自己发送的数据是否发生碰撞。</p>
+<p>这个时间$2\tau$即争用期/碰撞窗口。一个站点发出的数据要经过争用期的“考验”，才能确定是否到达目的站点，若过了争用期还没有发生碰撞，则本次传输的数据都不会发生碰撞。</p>
+<ul>
+<li>
+<p>如果碰撞，何时重传？</p>
+</li>
+<li>
+<p><u>截断二进制指数退避算法</u>，使得发生碰撞的站在等待一个随机的时间后再发送数据。</p>
+</li>
+<li>
+<p>算法规定，基本退避时间为争用期$2\tau$，具体的争用期时间为$51.2\mu s$，对于速率为10Mbit/s的以太网，在争用期内可发送512bit，即64字节（如果一切顺利没有发生碰撞）</p>
+</li>
+<li>定义重传次数k，<strong>但k=min[重传次数，10]，即当重传次数达到10次后，k一直为10，不再增大</strong></li>
+<li>从离散的整数集合[0,1,...,2^k-1]中随机取出一个数r，则重传所需要退避的时间为$2r\tau$</li>
+<li>
+<p>若重传16次仍未成功，说明网络太拥挤，<u>抛弃此帧并向高层报告出错</u>。</p>
+</li>
+<li>
+<p>无效帧</p>
+</li>
+<li>
+<p>问题：上述假设的情况有一个前提：在发生碰撞时，站点仍在发送数据。这种情况下，发送站能检测到碰撞。但如果数据量非常小，且发送完毕前没有检测到碰撞，在发送完毕之后，这个数据量很小的帧又在传播过程中发生了碰撞，则发送站无从知晓（因为已经发送完了，不检测）这个帧是否正确到达了目的站点。</p>
+</li>
+<li>解决：规定一个最短帧长64字节，若数据量小于64字节则进行填充以达到要求。根据前文，争用期内可发送64字节，若发生碰撞，一定会在前64字节内。将最短帧长规定为64字节，即可保证发生碰撞时站点仍在发送数据，从而站点可检测到碰撞。</li>
+<li>
+<p>站点一旦检测到碰撞立即终止发送，则已经发送的数据一定小于64字节，那么根据最短帧长限制，可以认为小于64字节的数据都是发生了碰撞的无效数据，即<strong>无效帧</strong>，直接丢弃即可</p>
+</li>
+<li>
+<p>以太网的实际端对端长度</p>
+</li>
+</ul>
+<p>争用期时间51.2$\mu s$是个规定值，这意味着投入使用的以太网总线的传播时延应该小于争用期的一半25.6$\mu s$。已知信号在以太网上传播1km需要5$\mu s$，要符合上述传播时延要求，以太网的最大端对端长度应不大于5km。而实际投入使用的以太网覆盖范围远远没有这么大，即使算上转发器等造成的时延，也是能符合争用期时间要求的。</p>
+<ul>
+<li>强化碰撞</li>
+<li>目的：当发送碰撞时，除了发送站能检测到发生碰撞，也要使总线上的其他站点也能检测到发生碰撞</li>
+<li>方法：发送站检测到发生碰撞，立即停止发送数据，转而发送人为干扰信号（32bit或48bit，对于速率为10Mbit/s的以太网，发送时间为3.2$\mu s$或4.8$ \mu s$）</li>
+<li>
+<p>信道占用时间：假设发送数据后经过时间$T_B$检测到发生碰撞并停止发送，再经过时间$T_J$将人为干扰信号发送完毕，人为干扰信号再经过传播时延$ \tau$传播到整个总线，因此总的占用时间为$T_B+T_J+\tau$</p>
+</li>
+<li>
+<p>帧间最小间隔</p>
+</li>
+<li>目的：留给接收站处理帧数据的时间</li>
+<li>
+<p>值：9.6$ \mu s$</p>
+</li>
+<li>
+<p>CSMA/CD 协议要点</p>
+</li>
+<li>
+<p>准备发送</p>
+<p>适配器按数据链路层要求将网络层数据封装成以太网帧（以太网帧格式见后文），放入适配器缓存，并检测信道。</p>
+</li>
+<li>
+<p>检测信道</p>
+<p>检测到信道忙，则一直检测直至信道空闲，由于帧间最小间隔的存在，在检测到信道空闲后还需要继续确认持续9.6$\mu s$的空闲状态，然后再发送数据。</p>
+</li>
+<li>
+<p>边发送边监听</p>
+<ul>
+<li>
+<p>情况1：争用期内未检测到碰撞，视为数据发送成功，什么都不做，回到1</p>
+</li>
+<li>
+<p>情况2：争用期内检测到碰撞，立即中止发送，并发送人为干扰信号。然后执行指数退避算法，回到2尝试重传。若重传达16次仍未成功，则停止重传，向上报错。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="csmaca">CSMA/CA协议</h4>
+<ul>
+<li>应用于无线局域网。与CSMA/CD相比，还需要解决两个问题：</li>
+<li>接收信号的强度往往远小于发送信号的强度，且信号强度动态变化范围很大，碰撞检测实现成本高，因此不进行碰撞检测</li>
+<li>并非所有的站点都能听见对方，即存在”隐蔽站“的问题</li>
+<li>CA意指”碰撞避免“，表明协议应尽量降低碰撞发生的概率。</li>
+<li>碰撞避免技术：</li>
+<li>802.11规定每个站发送后，必须等待一段很短的时间才能发送下一帧。这段时间称为帧间间隔IFS。IFS长短取决于该站要发送的帧的类型</li>
+<li>SIFS（短IFS）：最短的IFS，用于分隔属于同一次对话的各个帧。使用的有ACK帧、CTS帧、分片后的数据帧、所有回答AP探询的帧等</li>
+<li>PIFS（点协调IFS）：中等长度的IFS，在PCF操作中使用</li>
+<li>
+<p>DIFS（分布式协调IFS）：最长的IFS，用于异步帧竞争访问的时延</p>
+</li>
+<li>
+<p>CSMA/CA算法流程：</p>
+</li>
+<li>
+<p>若站点的数据是第一次发送（而不是重传的数据），且检测到信道空闲，则等待DIFS后，发送整个数据帧</p>
+</li>
+<li>否则，站点执行CSMA/CA退避算法，选取一个随机回退值。若信道忙，则退避计时器保持不变，若信道空闲，退避计时器进行倒计时</li>
+<li>当退避计时器减到0时（此时信道一定是空闲的），站点发送整个帧并等待确认</li>
+<li>若收到确认，说明已经被正确接收。若要发送第二帧，则需要从步骤2开始</li>
+<li>
+<p>若未收到确认，则必须重传该帧，再次使用CSMA/CA协议争用信道。若若干次重传仍失败，放弃发送</p>
+</li>
+<li>
+<p>隐蔽站问题：RTS帧和CTS帧</p>
+</li>
+<li>
+<p>隐蔽站：站A和站B都在同一个AP的覆盖范围内，但A和B相距较远，彼此都听不见对方，容易同时发送数据造成碰撞</p>
+<p><img alt="image-20221127151655952" src="image-20221127151655952.png" /></p>
+</li>
+<li>
+<p>RTS（请求发送）控制帧：用于发送站预约信道，包括源地址、目的地址和此次通信（含相应确认帧）所持续的时间，该帧能被其范围内包括AP的所有站点听到</p>
+</li>
+<li>
+<p>CTS（允许发送）控制帧：用于AP许可信道使用权并抑制其他站点发送，包括此次通信所持续的时间（复制自RTS），该帧能被其范围内包括A和B的所有站点听到。B和其他站点收到CTS后，在指明时间段内抑制发送，从而确保信道为受许可的站点专用。</p>
+</li>
+<li>
+<p>信道预约机制：</p>
+<ol>
+<li>发送站先广播一个RTS控制帧</li>
+<li>AP收到该RTS帧。若信道空闲，则广播一个CTS帧</li>
+<li>A使用信道发送数据；A以外的其他站点均抑制发送</li>
+</ol>
+</li>
+<li>
+<p>使用RTS和CTS会使网络通信效率有所下降，但RTS和CTS很短，开销相比碰撞重发而言可以接受。</p>
+</li>
+<li>
+<p>信道预约不是强制性规定，各站可以自行决定是否使用。</p>
+</li>
+<li>
+<p>当数据帧长超过某一数值时，使用RTS和CTS才比较有利。（否则很短的数据帧还不如直接重传更快）</p>
+</li>
+</ul>
+<h4 id="csmacdcsmaca">CSMA/CD与CSMA/CA的区别</h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CSMA/CD</th>
+<th>CSMA/CA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>基本思想</strong></td>
+<td>发送前侦听，边发送边侦听，一旦出现碰撞立即停止发送</td>
+<td>发送前预约信道，避免出现碰撞</td>
+</tr>
+<tr>
+<td><strong>冲突检测</strong></td>
+<td>可以检测冲突，但无法避免</td>
+<td>无法在发送数据的同时检测冲突，只能尽量避免</td>
+</tr>
+<tr>
+<td><strong>传输介质</strong></td>
+<td>用于总线形以太网</td>
+<td>用于无线局域网 802.11a/b/g/n</td>
+</tr>
+<tr>
+<td><strong>检测方式</strong></td>
+<td>通过电缆中的电压变化</td>
+<td>能量检测、载波检测、能量载波混合检测</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_18">轮询访问：令牌传递协议</h4>
+<ul>
+<li>设置一个集中控制的监控站，该站轮询每个结点，再决定信道的分配。</li>
+<li>在令牌传递协议中，一个令牌（Token）沿着环状总线在各结点计算机间依次传递。令牌是一个特殊的MAC控制帧，它本身不包含信息，仅控制信道的使用</li>
+<li>传输过程：</li>
+<li>收到令牌的站点才可以启动发送帧，即修改令牌的标志位，并在令牌中附加自己需要传输的数据及目的站点地址，使令牌变成一个数据帧再发送出去</li>
+<li>目的站点地址复制该数据帧以便进一步处理</li>
+<li>数据帧继续传输，直到到达源站点。源站点不再转发该数据帧，同时检查返回的帧以确定是否出错。</li>
+<li>源站点重新产生一个令牌，并传递给下一个站点。</li>
+<li>若站点都不需要发送数据，则令牌在环形网上游荡。</li>
+<li>要求多个站点之间的传递通路在逻辑上是一个环（物理上不必是）</li>
+<li>非常适合负载很高的广播信道（即多个结点在同一时刻发送数据概率很大的信道）</li>
+<li>既不共享时间、也不共享空间</li>
+</ul>
+<h2 id="_19">六、局域网</h2>
+<h3 id="61">6.1 局域网的基本概念和体系结构</h3>
+<h4 id="_20">局域网的定义</h4>
+<ul>
+<li>网络为一个单位所拥有，且地理范围和站点数目均有限</li>
+<li>具有<strong>广播功能</strong>，局域网上的主机可以共享连接在局域网上的各种硬件和软件资源</li>
+</ul>
+<h4 id="_21">局域网的特性</h4>
+<ul>
+<li>局域网的特性由三个要素决定：拓扑结构、传输介质、介质控制方式。其中最重要的是介质控制方式，决定着局域网的技术特性</li>
+<li>常见拓扑结构：星形网（使用集线器）、环形网、总线网、星形和总线形结合的复合型结构</li>
+<li>常用传输介质：双绞线（主流）、铜缆、光纤等</li>
+<li>介质访问控制方法：CSMA/CD、令牌总线、令牌环。其中前两种方法用于总线形局域网，令牌环用于环形局域网</li>
+</ul>
+<h3 id="62-ieee-8023">6.2 以太网与IEEE 802.3</h3>
+<h4 id="_22">以太网的网络拓扑</h4>
+<ul>
+<li>以太网使用集线器（hub）构成星形拓扑，<u>在物理上是个星形网</u>。集线器使用电子器件模拟实际电缆的工作，使得<u>在逻辑上是个总线网</u>，各站共享逻辑上的总线。</li>
+<li>各站中的适配器执行CSMA/CD协议。同一时刻至多允许一个站发送数据。</li>
+<li>集线器有许多端口，每个端口用 2 对双绞线与一台计算机的适配器相连</li>
+<li><strong>集线器工作在物理层</strong>，每个端口仅仅是简单地转发比特，不进行碰撞检测。</li>
+<li>光纤主要用于集线器之间的远程连接</li>
+</ul>
+<h4 id="_23">以太网的简化通信措施</h4>
+<ol>
+<li>采用无连接工作方式，不对数据帧编号、不要求确认，尽最大努力交付</li>
+<li>发送数据使用曼彻斯特编码，每个码元中间出现一次电压转换，接收端利用这种电压转换提取位同步信号</li>
+</ol>
+<h4 id="_24">以太网的传输介质与网卡</h4>
+<p>以太网的传输介质有4种：粗缆、细缆、双绞线和光纤</p>
+<p>（下表必背！！）</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>10BASE5</th>
+<th>10BASE2</th>
+<th>10BASE-T</th>
+<th>10BASE-FL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>传输媒体</td>
+<td>同轴电缆－粗缆</td>
+<td>同轴电缆－细缆</td>
+<td>非屏蔽双绞线</td>
+<td>光纤对</td>
+</tr>
+<tr>
+<td>编码</td>
+<td>曼彻斯特编码</td>
+<td>曼彻斯特编码</td>
+<td>曼彻斯特编码</td>
+<td>曼彻斯特编码</td>
+</tr>
+<tr>
+<td>拓扑结构</td>
+<td>总线形</td>
+<td>总线形</td>
+<td>星形</td>
+<td>点对点</td>
+</tr>
+<tr>
+<td>最大段长</td>
+<td>500m</td>
+<td>185m</td>
+<td>100m</td>
+<td>2000m</td>
+</tr>
+<tr>
+<td>最多结点数</td>
+<td>100</td>
+<td>30</td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>计算机与外界局域网的链接通过适配器，即网卡实现。网卡是工作在链路层的网络组件。另外，网卡控制着主机对介质的访问，因此网卡也工作在物理层。</li>
+<li>适配器的一个重要功能是进行数据串行传输和并行传输的转换（对内通过I/O总线并行传输，对外通过电缆、双绞线串行传输）</li>
+<li>计算机的<strong>硬件地址</strong>存储在适配器的ROM中，IP存储在计算机存储器中</li>
+</ul>
+<h4 id="_25">以太网的信道利用率</h4>
+<p>（1）提高信道利用率所要做到的</p>
+<p>假设发送一个帧所需的时间为$T_0$，则成功发送一个帧（即对方成功收到）需要占用信道的时间为$T_0+\tau$。
+$$
+a = \frac{\tau}{T_0}
+$$
+当$a\rightarrow0$时，只要一发生碰撞就会被立即检测到。$a$越大，则争用期占比越大，只要发生一次碰撞就会浪费不少的信道资源。因此$a$应该尽量小。</p>
+<p>为使得$a$尽量小，一方面要使得$\tau$尽量小，即数据率一定时，<strong>以太网的连线的长度有限</strong>（减小传播时延）；另一方面要使得$T_0$尽可能大，即<strong>以太网的帧长不能太短</strong>。</p>
+<p>（2）极限信道利用率</p>
+<p>最理想化情况下，以太网上的数据不会发生碰撞，且一有空闲立即发送数据，那么此时的信道利用率为
+$$
+S_{max} = \frac{T_0}{T_0+\tau} =\frac{1}{1+a}
+$$
+上式表明，只有当$a$远小于1时，极限信道利用率才会尽可能高。</p>
+<h4 id="mac">以太网的MAC帧格式</h4>
+<p>（1）MAC地址</p>
+<ul>
+<li>48位（6字节），固化在适配器的ROM中</li>
+<li>最低第1位为I/G位（Individual/Group），为0时，该地址表示单个站地址；为1时表示组地址</li>
+<li>最低第2位为G/L位（Global/Local），为0时，全球管理，保证全球唯一；为1时本地管理，用户可任意分配</li>
+<li>全1，广播地址</li>
+</ul>
+<p>（2）帧格式</p>
+<p><img alt="image-20221115205253726" src="image-20221115205253726.png" /></p>
+<ul>
+<li>不算MAC帧的部分：硬件生成的8个字节，前7个为前同步码，用于接收方适配器调整时钟频率；最后1个为帧开始定界符，值为10101011，前六位作用与前同步码一样，最后两个1通知适配器MAC帧即将到达。</li>
+<li>首部字段1：6字节，目的地址</li>
+<li>首部字段2：6字节，源地址</li>
+<li>首部字段3：2字节，类型，标志上一层使用的协议类型</li>
+<li>数据字段：<u>长度范围[46，1500]</u>；<u>最小值46字节=最小总帧长64字节-14字节的首部-4字节的尾部</u>；<u>最大值即MTU值</u>。当数据字段过短导致总帧长小于64字节时，在数据字段的末尾填充。</li>
+<li>尾部字段：4字节，CRC检验得出的帧检验序列FCS，其检验范围从目的地址字段开始，到FCS本身结束。</li>
+<li>注意，MAC帧不需要帧结束符，因为以太网在传输帧时，要求各帧之间必须有一定的间隙。</li>
+</ul>
+<p>（3）无效MAC帧</p>
+<ul>
+<li>数据字段的长度与长度字段的值不一致；</li>
+<li>帧的长度不是整数个字节；</li>
+<li>用收到的帧检验序列 FCS 查出有差错；</li>
+<li>数据字段的长度不在 46 ~ 1500 字节之间。</li>
+<li>有效的 MAC 帧长度为 64 ~ 1518 字节之间。</li>
+</ul>
+<p>（4）无效MAC帧的处理方式</p>
+<p><strong>直接丢弃。</strong></p>
+<h4 id="_26">高速以太网</h4>
+<p>速率≥100Mbit/s的以太网称为高速以太网</p>
+<ul>
+<li>100BASE-T以太网（快速以太网）：</li>
+<li>在双绞线上传送 100 Mbit/s 基带信号的星形拓扑以太网，仍使用 IEEE 802.3 的 CSMA/CD 协议。</li>
+<li>既支持全双工，又支持半双工，可以在全双工方式下工作而无冲突发生。</li>
+<li>吉比特以太网/千兆以太网： </li>
+<li>1Gbit/s </li>
+<li>全双工和半双工两种方式</li>
+<li>适用802.3协议规定的帧格式。在半双工下使用CSMA/CD协议，而全双工下不需要使用该协议</li>
+<li>10吉比特以太网：</li>
+<li>不再使用铜线而只使用光纤</li>
+<li>只工作在全双工方式，没有争用问题，也不使用CSMA/CD</li>
+</ul>
+<h3 id="63-ieee-80211">6.3 IEEE 802.11 无线局域网</h3>
+<h4 id="_27">无线局域网的分类</h4>
+<ul>
+<li>有固定基础设施的无线局域网</li>
+<li>星型拓扑，其中心称为接入点AP</li>
+<li>在MAC层使用CSMA/CA协议</li>
+<li>最小构件：基本服务集BSS<ul>
+<li>包含一个AP和若干移动站</li>
+<li>各站在BSS内之间的通信，或与外部站之间的通信，都必须通过本BSS的AP</li>
+<li>AP具有一个不超过32字节的服务集标识符和一个信道。</li>
+</ul>
+</li>
+<li>一个基本服务集覆盖的地理范围称为一个基本服务区BSA，一般直径不超过100m</li>
+<li>一个基本服务集可以是孤立的，也可通过AP连接到一个分配系统，再连接到另一个基本服务集从而构成扩展服务集ESS。</li>
+<li>ESS可以通过一种叫门户的设备接入到有线以太网</li>
+<li>无固定基础设施的移动自组织网络</li>
+<li>没有AP，各结点之间地位平等，中间结点都为转发结点，都具有路由器功能</li>
+<li><img alt="image-20221116104115326" src="image-20221116104115326.png" /></li>
+<li>可以具有自己特定的路由选择协议，可以不与因特网相连</li>
+</ul>
+<h4 id="80211mac">802.11局域网的MAC帧</h4>
+<p>分为数据帧、控制帧和管理帧。下面只介绍数据帧</p>
+<ul>
+<li>帧结构</li>
+</ul>
+<p><img alt="image-20221116105847224" src="image-20221116105847224.png" /></p>
+<ul>
+<li>MAC首部，30字节<ul>
+<li>2字节帧控制字段，包含“去往AP”位和“来自AP”位</li>
+<li>2字节持续期字段，2字节序号控制字段</li>
+</ul>
+</li>
+<li>4个6字节地址字段，均为MAC地址，其中地址4用于自组网络。地址1总是为帧的接收地址，地址2总是为帧的发送地址，而地址3根据帧的去向变化，若帧去往AP，则地址3为目的地址；若帧去往目的站，则地址3为源地址</li>
+<li>帧主体，不超过2312字节，比以太网的最大长度长很多</li>
+<li>
+<p>FCS尾部，4字节</p>
+</li>
+<li>
+<p>同一个BSS内的转发流程</p>
+</li>
+</ul>
+<p><img alt="image-20221116104636443" src="image-20221116104636443.png" /></p>
+<ol>
+<li>
+<p>假设站A和站B在同一个基本服务集中，则它们相互之间的通信都要经过该基本服务集的AP</p>
+</li>
+<li>
+<p>站A向站B发送数据帧。该帧首先会发往AP。此时帧的首部中，“去往AP”=1，“来自AP”=0，地址1是AP的MAC地址，地址2是A的MAC地址，地址3是B的MAC地址。</p>
+<p>此时该帧的【接收地址】为AP的MAC地址；而【目的地址】为B的MAC地址</p>
+</li>
+<li>
+<p>AP将该帧转发给站B。此时帧的首部中，“去往AP”=0，“来自AP”=1，地址1是B的MAC地址，地址2是AP的MAC地址，地址3是A的MAC地址。</p>
+<p>此时该帧的【接收地址】为B的MAC地址；而【目的地址】也为B的MAC地址</p>
+</li>
+<li>
+<p>不同BSS、经过路由器的转发流程</p>
+</li>
+<li>
+<p>假设站A在BSS1中，站B在BSS2中，两个BSS的AP通过有线连接到路由器。</p>
+</li>
+<li>路由器要向站A发送数据。它从IP数据报中获知A的IP地址，从而使用ARP获取站A的MAC地址。</li>
+<li>路由器接口R1（连接AP1）将该IP数据报封装成802.3帧（因为路由器与AP之间是有线以太网连接），其源地址为R1的MAC地址，目的地址为A的MAC地址.</li>
+<li>AP将该帧转换为802.11帧，并将帧首部设置如下：“去往AP”=0，“来自AP”=1；地址1为A的MAC地址（接收地址），地址2为AP的MAC地址（发送地址），地址3为R1的MAC地址（源地址）。</li>
+</ol>
+<h3 id="64">6.4 虚拟局域网</h3>
+<p>（1）VLAN 标签</p>
+<ul>
+<li>在以太网帧格式，源地址字段之后、类型字段之前插入一个4字节的字段，作为VLAN标识符。</li>
+<li>拥有VLAN标识符的以太网帧称为802.1Q帧</li>
+<li>VLAN标识符前2字节为固定的0x8100，后2个字节的前4位无用，后12位为VID</li>
+<li>插入VLAN标签后，需要重新计算FCS</li>
+<li>由于多加了VLAN标识符，802.1Q帧的最大帧长变为1522字节（18字节首部+4字节尾部+1500数据部分）</li>
+</ul>
+<p>（2）工作过程</p>
+<p><img alt="image-20221116094410056" src="image-20221116094410056.png" /></p>
+<ol>
+<li>假设主机A、主机E分别接入两个交换机#1和#2，同属一个虚拟局域网VLAN10.</li>
+<li>当主机A向主机E送以太网帧时，#1给来自主机A的以太网帧插入VLAN标签，通过汇聚链路发送到#2；#2收到带有VLAN标签的以太网帧，取走VLAN标签后再转发给主机E。</li>
+</ol>
+<p>（3）细节</p>
+<ol>
+<li><strong>既可以隔离冲突域，也可以隔离广播域</strong></li>
+<li>VLAN只是局域网给用户提供的一种服务，并不是一种新型局域网</li>
+<li>主机与交换机之间交互的都是标准以太网帧，VLAN标签由交换机插入，也由交换机取走。</li>
+<li>各主机并不知道自己的VID值，交换机必须知道。</li>
+</ol>
+<h2 id="_28">七、广域网</h2>
+<h3 id="71">7.1 广域网基本概念</h3>
+<h4 id="_29">广域网的定义与任务</h4>
+<ul>
+<li>广域网是覆盖范围很广（远超一个城市）的长距离网络。</li>
+<li>是因特网的核心部分</li>
+<li>任务是长距离运送主机所发送的数据</li>
+<li>首要考虑问题：足够大的通信容量</li>
+</ul>
+<h4 id="_30">广域网与互联网的区别</h4>
+<ul>
+<li>互联网可以连接不同类型的网络，包括局域网和广域网，通过路由器连接</li>
+<li>路由器在多个网络构成的互联网中转发分组</li>
+<li>广域网由一些结点交换机及连接这些交换机的链路组成</li>
+<li>结点交换机在单个网络中转发分组</li>
+<li>结点之间是点到点连接，但为了提高网络可靠性，一个结点交换机往往与多个结点交换机连接</li>
+</ul>
+<h4 id="_31">广域网与局域网的区别</h4>
+<p><img alt="image-20221115232906360" src="image-20221115232906360.png" /></p>
+<h3 id="72-ppp">7.2 点对点协议 PPP</h3>
+<h4 id="ppp">PPP 协议特点</h4>
+<p>（1）应满足的需求</p>
+<ul>
+<li>简单</li>
+<li>封装成帧</li>
+<li>透明传输</li>
+<li>差错检测</li>
+<li>多种网络层协议</li>
+<li>多种类型链路（串行的或并行的，同步的或异步的，电的或光的，低速的或高速的点对点链路）</li>
+<li>检测连接状态：PPP 需要具备对链路工作状态的及时检测功能</li>
+<li>最大传输单元</li>
+<li>网络层地址协商：必须提供一种机制使得两个网络层的实体可以互相知道网络层地址</li>
+<li>数据压缩协商：必须提供一种机制协商数据压缩算法</li>
+</ul>
+<p>（2）组成</p>
+<ul>
+<li>一个将IP数据报封装到串行链路的方法</li>
+<li>链路控制协议LCP，用于建立、配置和测试数据链路连接</li>
+<li>网络控制协议NCP，用于支持不同的网络层协议</li>
+</ul>
+<p>（3）其他</p>
+<ul>
+<li>PPP没有纠错功能，只保证无差错接收。是不可靠的传输协议，不使用序号和确认机制。</li>
+<li>仅支持点对点的链路通信，不支持多点线路</li>
+<li>只支持全双工链路</li>
+<li>PPP的两端可以运行不同的网络层协议，但仍然可使用同一个PPP进行通信。</li>
+</ul>
+<h4 id="ppp_1">PPP 协议格式</h4>
+<p>（1）信息部分</p>
+<ul>
+<li>通常为网络层交付的IP数据报</li>
+<li>长度可变但有上限，上限称为MTU，默认1500字节。</li>
+<li>PPP是点对点而非总线形，因此不采用CSMA/CD协议，从而没有最短帧的规定，<u>因此信息部分的字节数最小可以是0</u></li>
+</ul>
+<p>（2）首部</p>
+<p>首部的第1个字段（1字节）为标志字段，表示一个帧的开始，值规定为0x7E</p>
+<p>首部的第2、3个字段（各1字节）为地址字段和控制字段，值分别规定0xFF和0x03，保留字段，无意义</p>
+<p>首部的第4个字段（2字节）为协议字段，表示该帧信息字段的协议类型</p>
+<p>（3）尾部</p>
+<p>尾部的第1个字段（2字节）为使用CRC的帧检验序列FCS</p>
+<p>（4）填充</p>
+<p><u>异步传输时，使用<strong>字节填充</strong></u>。转义符为0x7D，填充方法如下：</p>
+<ul>
+<li>信息字段中的0x7E字节转变为0x7D,0x5E</li>
+<li>信息字段中的0x7D字节转变为0x7D,0x5D</li>
+<li>其他ASCII码的控制字符，在前面加入0x7D，同时该字符编码改变</li>
+</ul>
+<p><u>同步传输时，使用<strong>零比特填充</strong></u>。发送端扫描整个信息字段（通常用硬件实现），在每五个连续的1后填入一个0，使信息字段中不会出现连续的六个1。</p>
+<h4 id="ppp_2">PPP协议工作过程</h4>
+<p><strong>（链路静止状态）</strong>用户拨号接入ISP → 建立物理连接<strong>（链路建立状态）</strong></p>
+<p><strong>（链路建立状态）</strong>用户发送LCP分组（被封装为多个PPP协议帧） →　建立LCP连接<strong>（鉴别状态）</strong></p>
+<p><strong>（鉴别状态）</strong>只允许传送LCP协议分组、鉴别协议分组、监测链路质量的分组；口令鉴别协议PAP与更复杂的口令握手鉴别协议CHAP。鉴别失败则转入<strong>（链路终止状态）</strong>，成功则转入<strong>（网络层协议状态）</strong></p>
+<p><strong>（网络层协议状态）</strong>根据PPP链路上运行的协议类型，使用NCP中的对应支持协议进行配置，如IP协议对应的是IP控制协议IPCP，配置双方的IP协议模块（如分配IP地址） <strong>（链路打开状态）</strong></p>
+<p><strong>（链路打开状态）</strong>关闭请求或链路故障<strong>（链路终止状态）</strong></p>
+<p><strong>（链路终止状态）</strong>LCP链路终止，即调制解调器的载波停止<strong>（链路静止状态）</strong></p>
+<h2 id="_32">八、数据链路层设备</h2>
+<h3 id="81">8.1 网桥</h3>
+<ul>
+<li>通过网桥连接的多个以太网各自成为一个网段</li>
+<li>网桥工作在数据链路层的MAC子层，可以使各网段成为隔离开的碰撞域</li>
+<li>网桥具备路径选择功能。网桥接收来自网段1的数据帧，检查帧中地址，若是网段2的地址，则转发到网段2；若是网段1的地址，则直接丢弃，因为目标站可以直接收到该帧，不需要网桥</li>
+</ul>
+<h3 id="82">8.2 局域网交换机</h3>
+<h4 id="_33">工作原理与特点</h4>
+<ul>
+<li>交换机是一个多端口网桥，工作在数据链路层</li>
+<li>在有N个用户的使用交换机的10Mb/s的共享式以太网中，每个用户在通信时是独占，因此拥有N对端口（注意是<u>对</u>不是<u>个</u>）的交换机的总容量为N×10Mb/s</li>
+<li>对工作站透明，管理开销低廉。</li>
+<li>可以方便地实现虚拟局域网VLAN。</li>
+<li>特点：</li>
+<li>每个端口都直接与单台主机相连（而不是一个网段），一般工作在全双工方式</li>
+<li>能同时连通多对端口，使每对相互通信的主机能无碰撞地传输数据</li>
+<li>是一种即插即用设备，内部的帧转发表通过自学习算法自动建立</li>
+<li>使用专用的交换结构芯片，交换速率较高</li>
+<li>以太网交换机独占传输媒体的带宽</li>
+<li>交换模式：</li>
+<li>直通式交换机，只检查帧的目的地址，帧在接收后几乎马上被传出去。但无法支持具有不同速率的端口的交换</li>
+<li>存储转发式交换机，先将接收到的帧缓存在高速缓存器中，并检查数据是否正确，正确则转发，否则丢弃。可靠性高，能支持不同速率端口间的转换，缺点是延迟较大</li>
+</ul>
+<h4 id="_34">自学习功能</h4>
+<p>交换表：表项包含MAC地址、连通该MAC地址的交换机接口。</p>
+<p>交换表的每个表项都设有一定的有效时间，过期表项自动删除，以保证交换表中数据符合当前网络的实际状况。</p>
+<p>自学习过程：</p>
+<ol>
+<li>初始时交换表为空。</li>
+<li>连接交换机接口1的主机A向连接交换机接口3的主机B发送一帧，该帧从接口1进入交换机。</li>
+<li>交换机查找交换表，找不到主机B的对应表项，向除了接口1以外的所有接口广播这个帧</li>
+<li>其他接口丢弃该帧，而B收下该帧</li>
+<li>交换机将（A，1）写入交换表，表示发往主机A的帧都应从接口1转发出去。</li>
+</ol>
+<h3 id="83">8.3 冲突域和广播域</h3>
+<p>物理层设备（如集线器）既不能隔离冲突域，也不能隔离广播域</p>
+<p>数据链路层设备（如交换机）可以隔离冲突域，但不能隔离广播域</p>
+<p>网络层设备（如路由器）既可以隔离冲突域，又可以隔离广播域</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2201 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+      
+      
+        <link rel="next" href="../../Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
+    
+    
+      
+        <title>0x05 IO管理 - 计算机基础 笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13.274 9.537v-.001l-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074ZM4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75Z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.499.75a.75.75 0 0 1 1.5 0v.996C5.9 2.903 6.793 3.65 7.662 4.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873 10.794-.045 12.622.26 14.408.558 16 1.94 16 4.25c0 1.278-.954 2.575-2.44 2.734l.146.508.065.22c.203.701.412 1.455.476 2.226.142 1.707-.4 3.03-1.487 3.898C11.714 14.671 10.27 15 8.75 15h-6a.75.75 0 0 1 0-1.5h1.376a4.484 4.484 0 0 1-.563-1.191 3.835 3.835 0 0 1-.05-2.063 4.647 4.647 0 0 1-2.025-.293.75.75 0 0 1 .525-1.406c1.357.507 2.376-.006 2.698-.318l.009-.01a.747.747 0 0 1 1.06 0 .748.748 0 0 1-.012 1.074c-.912.92-.992 1.835-.768 2.586.221.74.745 1.337 1.196 1.621H8.75c1.343 0 2.398-.296 3.074-.836.635-.507 1.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.425 2.425 0 0 1-.507-.441 3.075 3.075 0 0 1-.633-1.248.75.75 0 0 1 1.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738 0 1.25-.615 1.25-1.25 0-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706 1.345-.46.92-.27 1.774.019 3.062l.042.19a.884.884 0 0 1 .01.05c.348.443.666.949.94 1.553a.75.75 0 1 1-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7 5.527c-.814-.68-1.75-1.462-2.692-2.619a3.737 3.737 0 0 0-1.023.88c-.406.495-.663 1.036-.722 1.508.116.122.306.21.591.239.388.038.797-.06 1.032-.19a.75.75 0 0 1 .728 1.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75 5.677V5.5c0-.984.48-1.94 1.077-2.664.46-.559 1.05-1.055 1.673-1.353V.75Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.756 2.756 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6.24 6.24 0 0 0-.26.16.952.952 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661.103-.067.207-.132.313-.195l.007-.004c.1-.061.182-.11.258-.161a.969.969 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.612.612 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1.01 1.01 0 0 0-.34.398ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343h-.001a8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746Zm1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275ZM6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L6.94 8 4.97 6.03a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018Z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.488 3.488 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327c0 .1-.009.197-.025.292.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5c0 .409-.049.806-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A4.997 4.997 0 0 1 8 16a4.997 4.997 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5.036 5.036 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.677 1.677 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06Zm.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.172.172 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173Z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Zm4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5ZM2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0Z"/></svg>');}</style>
+
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0x05-io" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            计算机基础 笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0x05 IO管理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    计算机基础 笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          数据结构
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          数据结构
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+        0x02 线性表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+        0x03 栈与队列
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
+        0x04 串
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+        0x05 树与二叉树
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/图.md" class="md-nav__link">
+        0x06 图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/查找.md" class="md-nav__link">
+        0x07 查找
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/排序.md" class="md-nav__link">
+        0x08 排序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
+        0x09 树的计算专题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          计算机组成原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          计算机组成原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 计算机系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+        0x02 数据的表示和计算
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x03 存储系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x04 指令系统
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+        0x05 中央处理器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+        0x06 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        0x07 IO系统
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          操作系统原理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          操作系统原理
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        0x01 操作系统概述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x02 进程管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x03 内存管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        0x04 文件管理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          0x05 IO管理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        0x05 IO管理
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    一、I/O管理概述
+  </a>
+  
+    <nav class="md-nav" aria-label="一、I/O管理概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-io" class="md-nav__link">
+    1.1 I/O设备
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 I/O设备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    设备分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_1" class="md-nav__link">
+    I/O接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_2" class="md-nav__link">
+    I/O端口
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-io" class="md-nav__link">
+    1.2 I/O 软件层次结构
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 I/O 软件层次结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#io_3" class="md-nav__link">
+    用户层I/O软件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    设备独立性软件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    设备驱动程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    中断处理程序
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-io" class="md-nav__link">
+    1.3 应用程序I/O接口
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 应用程序I/O接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    字符设备接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    块设备接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    网络设备接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_4" class="md-nav__link">
+    阻塞/非阻塞I/O
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    二、设备独立性软件
+  </a>
+  
+    <nav class="md-nav" aria-label="二、设备独立性软件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 高速缓存与缓冲区管理
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 高速缓存与缓冲区管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    高速缓存
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    缓冲区作用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    单缓冲
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    双缓冲
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    解题
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    循环缓冲
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    缓冲池
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    高速缓存与缓冲区的异同
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 设备分配与回收
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 设备分配与回收">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    设备分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    设备分配的数据结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    设备分配策略
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    设备分配安全性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    逻辑设备名到物理设备名的映射
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-spooling" class="md-nav__link">
+    2.3 SPOOLing技术
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 SPOOLing技术">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    组成部分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    实例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    特点
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    2.4 设备驱动程序接口
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 设备驱动程序接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    是什么
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    为什么
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    驱动程序如何与设备匹配
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    三、外存管理
+  </a>
+  
+    <nav class="md-nav" aria-label="三、外存管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 磁盘
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 磁盘">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    磁盘结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    磁盘驱动器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    磁盘分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    磁盘管理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    磁盘读写时间
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    磁盘调度算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    扇区交替编号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    文件存储策略
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 固态硬盘
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 固态硬盘">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    固态硬盘的特性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    磨损均衡
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          计算机网络
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          计算机网络
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        0x01 绪论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+        0x02 物理层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+        0x03 数据链路层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+        0x04 网络层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+        0x05 传输层.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer_Network_Notes/0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+        0x06 应用层.md
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    一、I/O管理概述
+  </a>
+  
+    <nav class="md-nav" aria-label="一、I/O管理概述">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-io" class="md-nav__link">
+    1.1 I/O设备
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 I/O设备">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    设备分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_1" class="md-nav__link">
+    I/O接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_2" class="md-nav__link">
+    I/O端口
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-io" class="md-nav__link">
+    1.2 I/O 软件层次结构
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 I/O 软件层次结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#io_3" class="md-nav__link">
+    用户层I/O软件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    设备独立性软件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    设备驱动程序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    中断处理程序
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-io" class="md-nav__link">
+    1.3 应用程序I/O接口
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 应用程序I/O接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    字符设备接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    块设备接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    网络设备接口
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_4" class="md-nav__link">
+    阻塞/非阻塞I/O
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    二、设备独立性软件
+  </a>
+  
+    <nav class="md-nav" aria-label="二、设备独立性软件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    2.1 高速缓存与缓冲区管理
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 高速缓存与缓冲区管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    高速缓存
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    缓冲区作用
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    单缓冲
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    双缓冲
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    解题
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    循环缓冲
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    缓冲池
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    高速缓存与缓冲区的异同
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    2.2 设备分配与回收
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 设备分配与回收">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    设备分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    设备分配的数据结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    设备分配策略
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    设备分配安全性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    逻辑设备名到物理设备名的映射
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-spooling" class="md-nav__link">
+    2.3 SPOOLing技术
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 SPOOLing技术">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    组成部分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    实例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    特点
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    2.4 设备驱动程序接口
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 设备驱动程序接口">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    是什么
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    为什么
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    驱动程序如何与设备匹配
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    三、外存管理
+  </a>
+  
+    <nav class="md-nav" aria-label="三、外存管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    3.1 磁盘
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 磁盘">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    磁盘结构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    磁盘驱动器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    磁盘分类
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    磁盘管理
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    磁盘读写时间
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    磁盘调度算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    扇区交替编号
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    文件存储策略
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    3.2 固态硬盘
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 固态硬盘">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_38" class="md-nav__link">
+    固态硬盘的特性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_39" class="md-nav__link">
+    磨损均衡
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="0x05-io">0x05 I/O管理</h1>
+<h2 id="io">一、I/O管理概述</h2>
+<h3 id="11-io">1.1 I/O设备</h3>
+<h4 id="_1">设备分类</h4>
+<ul>
+<li>块设备：信息交换以数据块为单位，有结构，如磁盘。传输速率高、可寻址（即可随机读/写任一块）</li>
+<li>字符设备：信息交换以字符为单位，无结构，如交互式终端机、打印机等。传输速率低、不可寻址，通常采用中断I/O方式</li>
+<li>低速设备：速率几字节、几百字节。键盘、鼠标</li>
+<li>中速设备：速率数千字节、数万字节。激光打印机</li>
+<li>高速设备：速率百千字节、千兆字节。磁盘机、光盘机</li>
+</ul>
+<h4 id="io_1">I/O接口</h4>
+<p>CPU与设备之间通信的媒介。</p>
+<p>主要功能：</p>
+<ul>
+<li>接收和识别CPU发来的命令</li>
+<li>数据交换，包括设备和控制器之间的数据传输、控制器和主存之间的数据传输</li>
+<li>标识和报告设备的状态，以供CPU处理</li>
+<li>地址识别</li>
+<li>数据缓冲</li>
+<li>差错控制</li>
+</ul>
+<p>分为三部分：</p>
+<ul>
+<li>与CPU的接口：数据线、地址线和控制线。数据线与数据寄存器和控制/状态寄存器相连。</li>
+<li>与设备的接口：有一个或多个，从而可以连接一个或多个设备。存在数据、控制、状态三种类型的信号</li>
+<li>I/O逻辑：实现对设备的控制。通过一组控制线与CPU交互，对从CPU收到的I/O命令进行译码。</li>
+</ul>
+<h4 id="io_2">I/O端口</h4>
+<p>I/O接口中可被CPU直接访问的一组寄存器。</p>
+<ul>
+<li>数据寄存器：实现CPU和外设之间的数据缓冲</li>
+<li>状态寄存器：获取执行结果和设备的状态信息</li>
+<li>控制寄存器：由CPU写入，以便启动命令或更改设备模式</li>
+</ul>
+<h3 id="12-io">1.2 I/O 软件层次结构</h3>
+<p><img alt="image-20221030100429671" src="image-20221030100429671.png" /></p>
+<h4 id="io_3">用户层I/O软件</h4>
+<p>用户可直接调用在用户层提供的，与I/O操作有关的库函数，对设备进行操作</p>
+<p>用户层软件必须通过一组系统调用来获取操作系统服务</p>
+<h4 id="_2">设备独立性软件</h4>
+<ol>
+<li>执行所有设备的共有操作，如设备保护、设备分配与释放等，同时为设备管理和数据传送提供必要的存储空间。</li>
+<li>向用户层提供统一接口。</li>
+</ol>
+<p><strong>设备独立性使得应用程序独立于具体使用的物理设备</strong>。建立逻辑设备到物理设备的映射。</p>
+<p>使用逻辑设备名的优点：</p>
+<ol>
+<li>增加设备分配的灵活性</li>
+<li>易于实现I/O重定向，即用于I/O操作的设备可以更换，而不必改变应用程序</li>
+</ol>
+<h4 id="_3">设备驱动程序</h4>
+<p>每类设备配备一个。</p>
+<p>与硬件直接相关，具体实现系统对设备发出的操作指令，驱动I/O设备操作。</p>
+<p>是I/O进程与设备控制器之间的通信程序，常以进程形式存在</p>
+<p>向上层用户程序提供一组标准接口，屏蔽设备具体差异。</p>
+<h4 id="_4">中断处理程序</h4>
+<p>主要任务：进行进程上下文的切换、对处理中断信号源进行测试、读取设备状态和修改进程状态等</p>
+<h3 id="13-io">1.3 应用程序I/O接口</h3>
+<h4 id="_5">字符设备接口</h4>
+<ul>
+<li>数据存取和传输以字符为单位，如键盘、打印机</li>
+<li>传输速率低、不可寻址、采用中断驱动方式</li>
+<li>属于独占设备，需要提供打开和关闭操作，实现互斥共享</li>
+<li>get/put操作：系统为字符设备建立一个字符缓冲区，get操作从缓冲区获取字符；put操作输出到缓冲区</li>
+<li>in-control指令：接口中提供的通用指令，用于处理不同类型的字符设备</li>
+</ul>
+<h4 id="_6">块设备接口</h4>
+<ul>
+<li>数据存取和传输以块为单位，如磁盘</li>
+<li>传输速率高、可寻址、采用DMA方式</li>
+<li>隐藏了磁盘的二维结构</li>
+<li>将抽象命令映射为低层操作</li>
+<li>内存映射接口通过内存的字节数组来访问磁盘，但不提供读/写磁盘操作。当需要访问内存映像时，才由虚拟存储器实际调页</li>
+</ul>
+<h4 id="_7">网络设备接口</h4>
+<ul>
+<li>为网络socket（套接字）接口</li>
+<li>使计算机能够通过网络与其他计算机进行通信</li>
+</ul>
+<h4 id="io_4">阻塞/非阻塞I/O</h4>
+<ul>
+<li>阻塞I/O：当用户进程调用I/O操作时，进程就被阻塞，需要等待I/O操作完成</li>
+<li>非阻塞I/O：用户进程调用I/O操作时，不阻塞该进程。通常需要采用轮询的方式查询I/O操作是否完成</li>
+<li>大多数OS提供的I/O接口都是阻塞I/O</li>
+</ul>
+<h2 id="_8">二、设备独立性软件</h2>
+<p>设备独立性软件执行所有设备的共有操作，如设备保护、设备分配与释放等，同时为设备管理和数据传送提供必要的存储空间，并向用户层提供统一接口。</p>
+<p>因此设备独立性软件负责的工作有缓冲区管理、设备分配与释放等。</p>
+<h3 id="21">2.1 高速缓存与缓冲区管理</h3>
+<h4 id="_9">高速缓存</h4>
+<p>磁盘高速缓存技术用于提高磁盘的I/O速度，访问高速缓存比直接访问原始磁盘数据更高效。</p>
+<p>具体实现是：利用内存中的存储空间来暂存从磁盘中读出的一系列盘块中的信息</p>
+<p>高速缓存<u>在逻辑上</u>属于磁盘，<u>在物理上</u>是驻留在内存中的盘块</p>
+<p>分为两种形式：</p>
+<ol>
+<li>在内存中开辟一个大小固定的单独空间作为磁盘高速缓存</li>
+<li>将未利用的内存空间视为一个缓冲池，供请求分页系统和磁盘I/O时共享</li>
+</ol>
+<h4 id="_10">缓冲区作用</h4>
+<ol>
+<li>缓和CPU与I/O设备之间速度不匹配的矛盾</li>
+<li>减少对CPU的中断频率，放宽对CPU中断响应时间的限制</li>
+<li>解决数据粒度不匹配的问题（如进程会一块一块地输出数据，则I/O设备只能一个一个地输入数据）</li>
+<li>提高CPU与I/O设备之间的并行性</li>
+</ol>
+<h4 id="_11">单缓冲</h4>
+<ul>
+<li>
+<p>OS在主存中为需要I/O的进程分配一个缓冲区</p>
+</li>
+<li>
+<p>缓冲区非空时，不能冲入数据，只能传出数据；缓冲区为空时，可以冲入数据，但必须充满之后才能传出数据</p>
+</li>
+</ul>
+<h4 id="_12">双缓冲</h4>
+<ul>
+<li>若采用双缓冲的策略，主存中为需要I/O的进程分配两个缓冲区</li>
+<li>与单缓冲在通信时的区别：</li>
+<li>采用单缓冲是半双工通信，同一时间只能实现数据的单向传输</li>
+<li>采用双缓冲是全双工通信，同一时间可以存在数据的双向传输</li>
+</ul>
+<h4 id="_13">解题</h4>
+<ul>
+<li>先确定一个初始状态。如双缓冲题目中可假设初始状态为工作区空、其中一个缓冲区满、另一个缓冲区空</li>
+<li>计算到达相同状态所需的时间，即得处理一块数据的平均耗时</li>
+<li>注意将<u>一块数据从磁盘送至缓冲区</u>与<u>CPU处理一块数据</u>是并行执行的，时间取两者中的最大值即可</li>
+</ul>
+<h4 id="_14">循环缓冲</h4>
+<p>将多个大小相等的缓冲区使用循环链表组织起来。</p>
+<p>in指针：指向可以输入数据的第一个空缓冲区，当要从设备接收数据时，就存放到该区域</p>
+<p>out指针：指向可以提取数据的第一个满缓冲区，当运行进程需要数据时，从此缓冲区中提取数据</p>
+<h4 id="_15">缓冲池</h4>
+<p>由多个系统公用的缓冲区组成。</p>
+<p>缓冲区按用途分为四种：</p>
+<ol>
+<li>用于收容输入（设备→进程）数据的工作缓冲区</li>
+<li>用于提取输入数据的工作缓冲区</li>
+<li>用于收容输出（进程→设备）数据的工作缓冲区</li>
+<li>用于提取输出数据的工作缓冲区</li>
+</ol>
+<p>缓冲区按状态组织成队列：</p>
+<ul>
+<li>空缓冲队列</li>
+<li>装满输入数据的缓冲队列/输入队列</li>
+<li>装满输出数据的缓冲队列/输出队列</li>
+</ul>
+<h4 id="_16">高速缓存与缓冲区的异同</h4>
+<p>相同点：都介于高速设备和低速设备之间</p>
+<p>不同点：</p>
+<ul>
+<li><strong>高速缓存</strong>的数据是低速设备上数据的拷贝，所以高速缓存上有的，低速设备上必然有；</li>
+</ul>
+<p><strong>缓冲区</strong>存放的是两种设备之间需要传递的数据，不一定有备份</p>
+<ul>
+<li><strong>高速缓存</strong>的数据是高速设备经常要访问的数据，若高速设备要访问的数据不在高速缓存中，则直接访问低速设备；</li>
+</ul>
+<p><strong>缓冲区</strong>是两种设备之间通信的必经之地，高速设备不可能直接去访问低速设备</p>
+<h3 id="22">2.2 设备分配与回收</h3>
+<h4 id="_17">设备分类</h4>
+<ul>
+<li>独占设备：进程分配到独占设备后，便由其独占，直至该进程释放该设备</li>
+<li>共享设备：可同时分配给多个设备，<strong>分时共享</strong>（不是同一时刻同时使用！）</li>
+<li>虚拟设备：利用SPOOLing技术实现，可以将一个物理设备虚拟为多个虚拟设备，同时分配给多个进程。实质上实现了对设备I/O操作的批处理</li>
+</ul>
+<h4 id="_18">设备分配的数据结构</h4>
+<ul>
+<li>
+<p>设备控制表（DCT）：</p>
+</li>
+<li>
+<p>一个DCT表征一个设备</p>
+</li>
+<li>各表项就是设备的各个属性，如设备类型、标识符、状态等</li>
+</ul>
+<p><img alt="image-20221030150341487" src="image-20221030150341487.png" /></p>
+<ul>
+<li>控制器控制表（COCT）：</li>
+</ul>
+<p><img alt="image-20221030150448440" src="image-20221030150448440.png" /></p>
+<ul>
+<li>通道控制表（CHCT）：</li>
+</ul>
+<p><img alt="image-20221030150459745" src="image-20221030150459745.png" /></p>
+<ul>
+<li>
+<p>系统设备表（SDT）：</p>
+</li>
+<li>
+<p>整个系统只有一张</p>
+</li>
+<li>记录已连接到系统中的所有物理设备的情况，每个物理设备占一个表项</li>
+</ul>
+<p><img alt="image-20221030150509941" src="image-20221030150509941.png" /></p>
+<h4 id="_19">设备分配策略</h4>
+<ul>
+<li>需要考虑的因素</li>
+<li>I/O设备的固有属性</li>
+<li>I/O设备的分配算法</li>
+<li>I/O设备分配的<strong>安全性</strong></li>
+<li>
+<p>I/O设备的<strong>独立性</strong></p>
+</li>
+<li>
+<p>设备分配方式</p>
+</li>
+<li>静态分配：主要用于对独占设备的分配。在用户作业开始执行前一次性分配完毕，分配后设备为该用户作业所独占，直到该作业被撤销。不会出现死锁，但设备使用率低</li>
+<li>动态分配：在进程执行过程中根据需要进行。当进程需要设备时，通过系统调用命令向系统提出设备请求，由系统按某种策略分配设备、控制器，一旦使用完毕立即释放。可提高设备利用率，但若分配算法使用不当，可能造成死锁</li>
+<li>设备分配算法：先请求先分配、优先级高者优先等</li>
+</ul>
+<p>对于独占设备，既可采用动态分配方式，又可采用静态分配方式，一般采用后者。</p>
+<p>对于共享设备，一般采用动态分配方式，但在每个I/O传输的单位时间内依然是独占的，通常采用先请求先分配和优先级高者优先的分配算法</p>
+<h4 id="_20">设备分配安全性</h4>
+<p>安全性是指防止进程发生死锁</p>
+<ul>
+<li>安全分配方式：每当进程发出I/O请求后便进入阻塞态，直到I/O完成时才被唤醒。</li>
+<li>优点：设备分配安全</li>
+<li>缺点：CPU与I/O设备串行工作</li>
+<li>不安全分配方式：进程在发出I/O请求后仍继续运行，需要时又发出第二个、第三个I/O请求。仅当进程那个所请求的设备已被另一进程占用时，才进入阻塞态。</li>
+<li>优点：一个进程可同时操作多个设备，使进程推进迅速</li>
+<li>缺点：有可能造成死锁</li>
+</ul>
+<h4 id="_21">逻辑设备名到物理设备名的映射</h4>
+<ul>
+<li>逻辑设备表（LUT）</li>
+<li>用于将逻辑设备名映射为物理设备名</li>
+<li>表项包括：逻辑设备名、物理设备名、设备驱动程序入口地址</li>
+<li>当进程用逻辑设备名请求分配设备时，系统分配一台相应的物理设备，并在LUT中建立一个表目。</li>
+<li>配置方案</li>
+<li>整个系统中只设置一张LUT。此时不允许有重复的逻辑设备名，适用于单用户系统</li>
+<li>每个用户设置一张LUT。每当用户登录时，系统便为该用户建立一个进程，同时也为之建立一张LUT，并将该表放入进程的PCB中</li>
+</ul>
+<h3 id="23-spooling">2.3 SPOOLing技术</h3>
+<h4 id="_22">概念</h4>
+<p><strong>是什么</strong>：为了缓解CPU的高速性与I/O设备低速性之间的矛盾，引入SPOOLing技术（脱机输入/输出技术），是一项将独占设备改造为共享设备的技术。</p>
+<p><strong>用了什么</strong>：利用了专门的外围控制机（实际上一台都没有，是用进程模拟的）。</p>
+<p><strong>作用是什么</strong>：将低速I/O设备上的数据传送到高速磁盘上</p>
+<p><strong>目的是什么</strong>：提高系统资源/独占设备的利用率</p>
+<p><img alt="image-20221031113058560" src="image-20221031113058560.png" /></p>
+<h4 id="_23">组成部分</h4>
+<ul>
+<li>输入井和输出井：</li>
+<li><strong>是磁盘上的两个区域</strong></li>
+<li>输入井用于收容来自I/O设备的数据</li>
+<li>输出井用于收容来自用户程序的数据</li>
+<li>一个进程的输入/输出数据保存为一个文件，所有进程的输入/输出数据链接成一个输入/输出队列</li>
+<li>输入缓冲区和输入缓冲区：</li>
+<li><strong>是内存上的两个区域</strong></li>
+<li>输入缓冲区用于暂存来自输入设备的数据，之后将送至输入井</li>
+<li>
+<p>输出缓冲区用于暂存来自输出井的数据，之后将送至输出设备</p>
+</li>
+<li>
+<p>输入进程和输出进程：</p>
+</li>
+<li>模拟脱机输入/输出时的外围控制机</li>
+<li>用户要求输入的数据传输路径为：输入设备（I/O设备）→输入缓冲区（内存）→输入井（磁盘），当CPU需要输入数据时，直接从输入井读入内存</li>
+<li>用户要求输出的数据传输路径为：内存→输出井（磁盘）→输出缓冲区（内存）→输出设备（I/O设备）</li>
+</ul>
+<h4 id="_24">实例</h4>
+<p>共享打印机。当用户进程请求打印输出时，SPOOLing系统同意打印，但并不真正立即把打印机分配给该进程，而是由假脱机管理进程完成下列工作：</p>
+<ol>
+<li>在磁盘中申请一个空闲盘块作为输出井，将要打印的数据送入输出井暂存</li>
+<li>为用户进程申请用户请求打印表并填写，并将该表挂到假脱机文件队列上</li>
+</ol>
+<p>虽然此时打印工作未真正开始，但在用户进程看来打印工作已经完成。</p>
+<p>当打印机空闲，并且该任务排在等待队列队首时，打印机才会真正开始打印。</p>
+<h4 id="_25">特点</h4>
+<ol>
+<li>提高了I/O速度，将对低速I/O设备执行的I/O操作转为对磁盘缓冲区中数据的存取</li>
+<li>将独占设备改造为共享设备。</li>
+<li>实现了虚拟设备功能。对于每个进程来说，都认为自己独占了一个设备</li>
+<li>是一个牺牲空间换时间的技术</li>
+</ol>
+<h3 id="24">2.4 设备驱动程序接口</h3>
+<h4 id="_26">是什么</h4>
+<p>操作系统：定义一组驱动程序必须支持的函数，如读、写、格式化等</p>
+<p>驱动程序：用一张函数指针表，将这些规定实现的函数与自身的指针建立对应关系</p>
+<p>操作系统装载驱动程序时，记录驱动程序中这张函数指针表的地址。当操作系统需要调用一个设备相关的函数时，它可以通过这张表格间接调用</p>
+<h4 id="_27">为什么</h4>
+<ul>
+<li>方便操作系统添加一个新设备驱动程序</li>
+<li>方便开发人员编制设备驱动程序</li>
+</ul>
+<h4 id="_28">驱动程序如何与设备匹配</h4>
+<p>设备独立性软件负责该匹配工作。它将符号化的设备名映射到适当的驱动程序上。</p>
+<p>如UNIX中，设备作为命名对象出现在文件系统中。设备名/dev/disk0唯一确定了一个特殊文件的inode，这个inode包含了主设备号（用于定位相应的驱动程序）和次设备号（用于确定要读写的具体设备）</p>
+<h2 id="_29">三、外存管理</h2>
+<h3 id="31">3.1 磁盘</h3>
+<h4 id="_30">磁盘结构</h4>
+<ul>
+<li>磁盘是表面涂有磁性物质的物理盘片，通过一个称为磁头的导体线圈从磁盘存取数据。</li>
+<li>读写操作时，磁头固定，盘片高速旋转。</li>
+<li>磁盘盘面被划分为若干个磁道，每个磁道都与磁头等宽，一个盘面有上千个磁道</li>
+<li>磁道又被划分为几百个扇区，每个扇区固定存储大小（即使物理上的面积不等大），一个扇区称为一个盘块。显然对于扇区而言，从圆心出发由内向外的存储密度逐渐降低，因此<u>磁盘的存储能力受限于最内道的最大记录密度</u></li>
+<li>相邻磁道之间、相邻扇区之间都存在一定间隙，以避免精度错误。</li>
+</ul>
+<h4 id="_31">磁盘驱动器</h4>
+<ul>
+<li>由磁头臂、用于旋转磁盘的主轴、用于数据输入输出的电子设备组成</li>
+<li>磁盘驱动器上安装多个盘片，垂直堆叠构成磁盘组，每个盘面对应一个磁头。</li>
+<li>所有盘片上相对位置相同的磁道构成柱面</li>
+<li><strong>扇区是磁盘可寻址的最小单位</strong></li>
+</ul>
+<p><img alt="image-20221127154306471" src="image-20221127154306471.png" /></p>
+<h4 id="_32">磁盘分类</h4>
+<ul>
+<li>固定头磁盘：磁头相对于盘片的径向方向固定，每个磁道一个磁头</li>
+<li>活动头磁盘：磁头臂可来回伸缩定位磁道</li>
+<li>固定盘磁盘：磁盘永久固定在磁盘驱动器内</li>
+<li>可换盘磁盘：磁盘可移动和替换</li>
+</ul>
+<h4 id="_33">磁盘管理</h4>
+<ol>
+<li>磁盘初始化</li>
+</ol>
+<p>使用一个新的磁盘之前，必须先分成扇区，以便磁盘控制器能够进行读写操作。</p>
+<p><u>这一操作称为低级格式化/物理格式化</u>。</p>
+<p>每个扇区具备特殊的数据结构，通常由头部、数据区域（通常为512B）、尾部组成。头部和尾部包含了一些磁盘控制器的使用信息。</p>
+<ol>
+<li>分区</li>
+</ol>
+<p>操作系统将磁盘分为一个或多个柱面组成的分区（即C盘、D盘等），并将每个分区的起始扇区和大小都记录在磁盘主引导记录的分区表中</p>
+<p>对物理分区进行<u>逻辑格式化</u>（创建文件系统），操作系统将初始的文件系统数据结构存储到磁盘上，包括空闲空间、已分配空间、一个初始为空的目录</p>
+<p>为了提高存储效率，操作系统将若干个相邻扇区组成一簇，<u>以簇为单位存储文件</u>。从而一簇只能存放一个文件的内容，文件的占用空间是簇的整数倍；如果文件大小小于一簇，也要占用一簇的空间</p>
+<ol>
+<li>引导块</li>
+</ol>
+<p>以Windows为例，Windoes将磁盘分为多个分区，其中包含操作系统和设备驱动程序的分区为<u>引导分区</u>，引导分区的第一个扇区为<u>引导扇区</u>。</p>
+<p>主引导记录（MBR）独立在所有分区之外，是磁盘的第0号扇区，存储了引导代码、磁盘分区表和标志（用于指示从哪个分区引导系统）。</p>
+<p>计算机通电时，首先执行主板ROM的引导程序（BIOS），BIOS将磁盘上的MBR读入内存，然后执行MBR读取分区表，找到引导分区并读取引导扇区，初始化操作系统。</p>
+<ol>
+<li>坏块处理</li>
+</ol>
+<p>复杂磁盘由控制器维护坏块列表，该列表在低级格式化时初始化，并在磁盘使用过程中更新。</p>
+<p>低级格式化时会将一些块保留作为备用，对操作系统是透明的。控制器可以采用备用块逻辑地替代坏块，称为<u>扇区备用</u></p>
+<p>对坏块的处理实质上是使用某种机制使系统不去使用坏块</p>
+<h4 id="_34">磁盘读写时间</h4>
+<p>一次磁盘读写操作的时间由<u>寻道时间</u>、<u>旋转延迟时间</u>、<u>传输时间</u>决定</p>
+<p><strong>寻道时间可以通过合适的磁盘调度算法进行优化</strong></p>
+<p><strong>旋转延迟时间可以通过盘面错位编号的方法进行优化</strong></p>
+<p><strong>传输时间是磁盘本身性质决定的，无法优化</strong></p>
+<ul>
+<li>寻道时间（受磁盘调度算法影响）</li>
+</ul>
+<p>活动头磁盘将磁头移动到指定磁道所需时间。包括跨越n条磁道的时间和启动磁臂的时间。设跨越1条磁道的时间为m（是一个与磁盘驱动器有关的常数），启动磁臂的时间为s，则</p>
+<p><u><strong>寻道时间=m×n+s</strong></u></p>
+<p>m约为0.2ms，s约为2ms</p>
+<ul>
+<li>旋转延迟时间（受磁盘旋转速度影响）</li>
+</ul>
+<p>磁头定位到某一磁道的扇区所需时间。设磁盘旋转速度为r（转/分），则</p>
+<p><u><strong>旋转延迟时间=1/2r</strong></u></p>
+<p>如r=5400转/分，则旋转一周需要11.1ms，旋转延迟时间取均值5.55ms</p>
+<ul>
+<li>传输时间（受磁盘旋转速度影响）</li>
+</ul>
+<p>从磁盘读出或向磁盘写入数据所需时间。取决于每次读写的字节数b和磁盘旋转速度，即</p>
+<p><strong><u>传输时间=b/rN</u></strong></p>
+<p>其中r为磁盘旋转速度，N为一个磁道上的字节数</p>
+<ul>
+<li>总平均存取时间</li>
+</ul>
+<p><strong><u>总平均存取时间=寻道时间+旋转延迟时间+传输时间</u></strong></p>
+<h4 id="_35">磁盘调度算法</h4>
+<p>平均查找长度：磁头跨越的磁道数之和/请求数</p>
+<p><strong>磁盘调度算法目的在于减少寻道时间</strong></p>
+<ul>
+<li>先来先服务FCFS</li>
+</ul>
+<p>按进程请求访问磁盘的先后顺序进行调度。最简单</p>
+<p><img alt="image-20221127170836546" src="image-20221127170836546.png" /></p>
+<ul>
+<li>最短寻找时间优先SSTF</li>
+</ul>
+<p>结合当前磁头所处磁道，优先处理磁道最近的请求，使每次寻道时间最短，但不能保证平均寻道时间最短。</p>
+<p><img alt="image-20221127170829202" src="image-20221127170829202.png" /></p>
+<ul>
+<li>扫描SCAN/电梯调度</li>
+</ul>
+<p>结合当前磁头所处磁道和磁头移动方向，优先处理磁道最近的请求。</p>
+<p>实际上就是在SSTF的基础上增加了方向限制，在同一方向的请求都处理完之前都不走回头路。</p>
+<p><img alt="image-20221127170822165" src="image-20221127170822165.png" /></p>
+<ul>
+<li>循环扫描C-SCAN</li>
+</ul>
+<p>在SCAN的基础上，增加要求：在处理完一个方向上的所有请求后，移动到该方向的终点，再快速回到起始端而不处理任何请求，即磁头由始至终都只在一个方向上移动。</p>
+<p><img alt="image-20221127170206925" src="image-20221127170206925.png" /></p>
+<ul>
+<li>LOOK调度/C-LOOK调度</li>
+</ul>
+<p>即处理完方向上最后一个请求之后就立即回头，并从距离起点最近的请求开始处理，而不需要移动到方向的终点再回到起点。</p>
+<p>没有特别说明时默认SCAN和C-SCAN为LOOK/C-LOOK调度</p>
+<p><img alt="image-20221127170351579" src="image-20221127170351579.png" /></p>
+<p><img alt="image-20221127170805052" src="image-20221127170805052.png" /></p>
+<ul>
+<li>磁盘调度算法比较</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FCFS</td>
+<td>公平、简单</td>
+<td>平均寻道距离大，仅应用于磁盘I/O较少的场合</td>
+</tr>
+<tr>
+<td>SSTF</td>
+<td>性能优于FCFS、每次寻道时间都是最短的</td>
+<td>不能保证平均寻道时间最短、可能出现饥饿现象</td>
+</tr>
+<tr>
+<td>SCAN</td>
+<td>寻道性能较好，可避免饥饿现象</td>
+<td>对最近扫描过的区域不公平，在访问局部性方面不如FCFS和SSTF；也不利于远离磁头一端的访问请求</td>
+</tr>
+<tr>
+<td>C-SCAN</td>
+<td>消除了对两端磁道请求的不公平</td>
+<td>——</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_36">扇区交替编号</h4>
+<p><strong>扇区交替编号目的是减少旋转延迟时间</strong></p>
+<p><img alt="image-20221127171241665" src="image-20221127171241665.png" /></p>
+<h4 id="_37">文件存储策略</h4>
+<p>存储一个文件时，若一个磁道存储不下，剩下部分存在同一个柱面上的不同盘面更好，而不是同一盘面的不同磁道。</p>
+<p>因为存在不同磁道会在读写过程中引起磁头的移动，增加文件访问时间，而存在不同盘面的同一柱面上时不需要移动磁道。</p>
+<h3 id="32">3.2 固态硬盘</h3>
+<h4 id="_38">固态硬盘的特性</h4>
+<p><img alt="image-20221127172229406" src="image-20221127172229406.png" /></p>
+<ul>
+<li>采用高性能Flash Memory记录数据，由E2PROM发展而来。实际上是ROM，和U盘没有本质区别，只是容量更大、存取性能更好</li>
+<li>一个闪存由若干个块组成，每块由若干个页组成，<u>数据以页为单位读写</u>。</li>
+<li>只有在一页所属的块全部被擦除后，才能写这一页；如果整个块都被擦除过，则该块内的所有页内可以写。一个块经过约10万次重复写后就会磨损坏，无法使用。</li>
+<li>优点：由半导体存储器构成，没有移动的部件，随机访问时间比机械磁盘快很多，没有任何机械噪声和震动，能耗更低、抗震性好、安全性高等</li>
+<li>缺点：</li>
+<li>擦除块很慢，1ms级；</li>
+<li>如果需要写一个已有数据的页P，则必须先把这些数据复制到一个新的块中，才能写P</li>
+</ul>
+<h4 id="_39">磨损均衡</h4>
+<ul>
+<li>动态磨损均衡：写入数据时，自动选择较新的内存块</li>
+<li>静态磨损均衡：SSD检测并自动进行数据分配，让老的内存块承担无须写数据的存储任务，同时让较新的内存块腾出空间，平时读写操作在较新的内存块中进行</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      
+    
+  </body>
+</html>
