@@ -10,19 +10,21 @@
       
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+        <link rel="next" href="Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/">
+      
+      <link rel="icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.2">
     
     
       
-        <title>考研笔记-数据结构：0x09 树的计算专题 - 计算机基础 笔记</title>
+        <title>计算机基础 笔记</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7bf56d0a.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.7bf56d0a.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.a0c5b2b5.min.css">
       
       
   
@@ -79,7 +81,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -104,7 +106,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#0x09" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +122,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+    <a href="." title="计算机基础 笔记" class="md-header__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -139,7 +141,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              考研笔记-数据结构：0x09 树的计算专题
+              导言
             
           </span>
         </div>
@@ -206,7 +208,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
+    <a href="." title="计算机基础 笔记" class="md-nav__button md-logo" aria-label="计算机基础 笔记" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -223,11 +225,21 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="." class="md-nav__link md-nav__link--active">
         导言
       </a>
+      
     </li>
   
 
@@ -267,7 +279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+      <a href="Data_Structure_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
         0x01 绪论
       </a>
     </li>
@@ -281,7 +293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
+      <a href="Data_Structure_Notes/0x02%20%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="md-nav__link">
         0x02 线性表
       </a>
     </li>
@@ -295,7 +307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
+      <a href="Data_Structure_Notes/0x03%20%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/" class="md-nav__link">
         0x03 栈与队列
       </a>
     </li>
@@ -309,7 +321,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0x04%20%E4%B8%B2/" class="md-nav__link">
+      <a href="Data_Structure_Notes/0x04%20%E4%B8%B2/" class="md-nav__link">
         0x04 串
       </a>
     </li>
@@ -323,7 +335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
+      <a href="Data_Structure_Notes/0x05%20%E6%A0%91%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%A0%91/" class="md-nav__link">
         0x05 树与二叉树
       </a>
     </li>
@@ -337,7 +349,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../图.md" class="md-nav__link">
+      <a href="Data_Structure_Notes/图.md" class="md-nav__link">
         0x06 图
       </a>
     </li>
@@ -351,7 +363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../查找.md" class="md-nav__link">
+      <a href="Data_Structure_Notes/查找.md" class="md-nav__link">
         0x07 查找
       </a>
     </li>
@@ -365,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../排序.md" class="md-nav__link">
+      <a href="Data_Structure_Notes/排序.md" class="md-nav__link">
         0x08 排序
       </a>
     </li>
@@ -379,7 +391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../树的计算专题.md" class="md-nav__link">
+      <a href="Data_Structure_Notes/树的计算专题.md" class="md-nav__link">
         0x09 树的计算专题
       </a>
     </li>
@@ -428,7 +440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+      <a href="Computer_Organization_Notes/0x01%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
         0x01 计算机系统概述
       </a>
     </li>
@@ -442,7 +454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
+      <a href="Computer_Organization_Notes/0x02%20%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E8%AE%A1%E7%AE%97/" class="md-nav__link">
         0x02 数据的表示和计算
       </a>
     </li>
@@ -456,7 +468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+      <a href="Computer_Organization_Notes/0x03%20%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
         0x03 存储系统
       </a>
     </li>
@@ -470,7 +482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+      <a href="Computer_Organization_Notes/0x04%20%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
         0x04 指令系统
       </a>
     </li>
@@ -484,7 +496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
+      <a href="Computer_Organization_Notes/0x05%20%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" class="md-nav__link">
         0x05 中央处理器
       </a>
     </li>
@@ -498,7 +510,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
+      <a href="Computer_Organization_Notes/0x06%20%E6%80%BB%E7%BA%BF/" class="md-nav__link">
         0x06 总线
       </a>
     </li>
@@ -512,7 +524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+      <a href="Computer_Organization_Notes/0x07%20IO%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
         0x07 IO系统
       </a>
     </li>
@@ -561,7 +573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+      <a href="Operating_System_Notes/0x01%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="md-nav__link">
         0x01 操作系统概述
       </a>
     </li>
@@ -575,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
+      <a href="Operating_System_Notes/0x02%20%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="md-nav__link">
         0x02 进程管理
       </a>
     </li>
@@ -589,7 +601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+      <a href="Operating_System_Notes/0x03%20%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
         0x03 内存管理
       </a>
     </li>
@@ -603,7 +615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
+      <a href="Operating_System_Notes/0x04%20%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="md-nav__link">
         0x04 文件管理
       </a>
     </li>
@@ -617,7 +629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
+      <a href="Operating_System_Notes/0x05%20IO%E7%AE%A1%E7%90%86/" class="md-nav__link">
         0x05 IO管理
       </a>
     </li>
@@ -666,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+      <a href="Computer_Network_Notes/0x01%20%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
         0x01 绪论
       </a>
     </li>
@@ -680,7 +692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Network_Notes/0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
+      <a href="Computer_Network_Notes/0x02%20%E7%89%A9%E7%90%86%E5%B1%82/" class="md-nav__link">
         0x02 物理层.md
       </a>
     </li>
@@ -694,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Network_Notes/0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
+      <a href="Computer_Network_Notes/0x03%20%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="md-nav__link">
         0x03 数据链路层.md
       </a>
     </li>
@@ -708,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Network_Notes/0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
+      <a href="Computer_Network_Notes/0x04%20%E7%BD%91%E7%BB%9C%E5%B1%82/" class="md-nav__link">
         0x04 网络层.md
       </a>
     </li>
@@ -722,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Network_Notes/0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
+      <a href="Computer_Network_Notes/0x05%20%E4%BC%A0%E8%BE%93%E5%B1%82/" class="md-nav__link">
         0x05 传输层.md
       </a>
     </li>
@@ -736,7 +748,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Computer_Network_Notes/0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
+      <a href="Computer_Network_Notes/0x06%20%E5%BA%94%E7%94%A8%E5%B1%82/" class="md-nav__link">
         0x06 应用层.md
       </a>
     </li>
@@ -783,75 +795,7 @@
                   
 
 
-<h1 id="0x09">0x09 树的计算专题</h1>
-<p><strong>注意！下文中所有计算沿用王道的说法，均约定：只有根结点的树高度为1，根结点所在深度为1，高度为0的树为空树。</strong></p>
-<ol>
-<li><strong>深度为$h$的平衡树的最少结点数、最多结点数</strong></li>
-</ol>
-<p>最少结点数：只能用递推。设$n_h$为深度为$h$的平衡树的最少结点数，则$n_0=0$，$n_1=1$，$n_h =n_{h-1}+n_{h-2}+1$</p>
-<p>最多结点数：即满二叉树的情况 $n_h=2^h-1$</p>
-<ol>
-<li><strong>结点数为$n$的平衡树的最大深度</strong></li>
-</ol>
-<p>即最少结点数问题的反解。例如，$n=18$，由递推式知 $n_6=20$ 而 $n_5=12$，所以 $n=18$ 时平衡树的最大深度为 $5$。</p>
-<ol>
-<li><strong>高度为$h$、度为$m$的树的最少结点数</strong></li>
-</ol>
-<p>度为$m$的树至少有一个结点有$m$个孩子，最少结点数的情形是：将$h-1$个结点组织成链，末端结点再挂$m$个孩子，故最少结点数为$h-1+m$</p>
-<ol>
-<li><strong>高度为$h$的$m$叉树的最少结点数、最多结点数</strong></li>
-</ol>
-<p>最少结点数：此时树的形态是$h$个结点构成的一条链，故最少结点数为$h$</p>
-<p>最多结点数：满$m$叉树，$m^0+m^1+m^2+...+m^{h-1}=\frac{m^h-1}{m-1}$</p>
-<ol>
-<li><strong>具有$n$个结点的$m$叉树的最小高度、最大高度</strong></li>
-</ol>
-<p>最小高度：即最多结点数问题的反解，注意只有右边才能取得等号，所以最终结果向上取整
-   $$
-   \begin{align}
-   &amp;\frac{m^{h-1}-1}{m-1}&lt;n≤\frac{m^h-1}{m-1}\
-   &amp;\Rightarrow m^{h-1}&lt;n(m-1)+1≤mh\
-   &amp;\Rightarrow h-1&lt;\log_m{(n(m-1)+1)}≤h\
-   &amp;\Rightarrow h_{min}=\lceil\log_m({n(m-1)+1)}\rceil&amp;
-   \end{align}
-   $$
-   最大高度：即最少结点数问题的反解，最大高度为$n$</p>
-<ol>
-<li><strong>高度为$h$的完全二叉树的最少结点数、最多结点数</strong></li>
-</ol>
-<p>最少结点数：第$h$层只有$1$个结点。$n = 2^{h-1}-1+1=2^{h-1}$</p>
-<p>最多结点数：满二叉树的情况。$n = 2^{h}-1$</p>
-<ol>
-<li><strong>具有$n$个结点的完全二叉树的高度</strong></li>
-</ol>
-<p>由于完全二叉树的所有结点按层序编号后能与满二叉树一一对应，所以结点数确定时树的形态是唯一的，其高度也是唯一的。</p>
-<p>以最少结点数反解：由$2^{h-1}≤n$ 解得 $h≤\log_2{n} +1$，又验证当$n=3$时$h=2$，所以式中的$\log_2n$向下取整。由于高度唯一，直接取等号。</p>
-<p>或以最多结点数反解：由$n≤2^h-1$解得$h≥\log_2{(n+1)}$，又验证当$n=2$时$h=2$，所以式中的$\log_2(n+1)$向上取整。由于高度唯一，直接取等号。</p>
-<ol>
-<li><strong>具有$m$个叶子结点的完全二叉树的最多结点数、最少结点数</strong></li>
-</ol>
-<p>题目给出的$m$一般不会是满二叉树的情况，基于这个前提进行讨论。</p>
-<p>最多结点数：此时树中存在1个度为1的结点。</p>
-<p>最少结点数：此时树中不存在度为1的结点。</p>
-<p><img alt="image-20221006105000729" src="assets/image-20221006105000729.png" /></p>
-<ol>
-<li><strong>第$i$层具有$k$个叶子结点的完全二叉树的最少结点数、最多结点数</strong></li>
-</ol>
-<p><img alt="image-20221006105850965" src="assets/image-20221006105850965.png" /></p>
-<ol>
-<li>
-<p><strong>高度为h的$m$阶B树的最小关键字数、最大关键字数</strong></p>
-<p>注意这里高度$h$<u>仅计算包含关键字的结点</u>，不含关键字的叶子结点都在第$h+1$层</p>
-<p>最小关键字数：让各个结点的分叉数/孩子数取最小值。即根结点分叉数取$2$，其他结点分叉数取$k=m/2$（向上取整）。此时B树的（含关键字的）结点总数为：$1+2+2k^1+2k^2+...+2k^{h-2}$，第$h$层共有$2k^{h-2}$个结点。</p>
-<p>最大关键字数：先考虑一棵高为$h$的满$m$叉树，它共有$\frac{m^h-1}{m-1}$个（含关键字的）结点。因为是满m叉的，所以每个结点都一定包含$m-1$个关键字。故高为$h$的$m$阶B树的最多关键字数为$m^h-1$。</p>
-</li>
-<li>
-<p><strong>含有$n$个关键字的$m$阶B树的最小高度、最大高度</strong></p>
-<p>最小高度：由$n≤m^h-1$反解最小高度，得$h≥\log_m{(n+1)}$，由验证知$m=2，n=2$时$h$为$2$，故式中$\log_m{(n+1)}$向上取整。</p>
-<p>综上，最小高度为$\log_m{(n+1)}$向上取整。（这里算得的高度不包括叶子结点）</p>
-<p>最大高度：因为$n$个关键字的B树必有$n+1$个叶子结点，又知第$h+1$层至少有$2\lceil m/2\rceil^{h-1}$个结点，所以有$n+1≥2\lceil m/2\rceil^{h-1}$，由此反解最大高度得$h≤\log_{\lceil m/2\rceil}{(\frac{n+1}{2})+1}$</p>
-</li>
-</ol>
+<h1 id="_1">导言</h1>
 
 
 
@@ -889,10 +833,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.fc8c2696.min.js"></script>
+      <script src="assets/javascripts/bundle.fc8c2696.min.js"></script>
       
     
   </body>
